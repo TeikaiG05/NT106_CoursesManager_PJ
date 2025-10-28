@@ -56,6 +56,13 @@ namespace NT106_BT2
             Session.Clear();
             this.DialogResult = DialogResult.OK;
             this.Close();
+            LogoutForm logoutForm = new LogoutForm();
+            logoutForm.ShowDialog();
+
+            if (logoutForm.IsConfirmed)
+            {
+                Application.Restart();
+            }
         }
         #endregion
     }
