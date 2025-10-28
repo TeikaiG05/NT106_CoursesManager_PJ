@@ -89,6 +89,13 @@
     <Compile Include="Login_Signup.Designer.cs">
       <DependentUpon>Login_Signup.cs</DependentUpon>
     </Compile>
+    <Compile Include="Notifications\NotificationManager.cs" />
+    <Compile Include="Notifications\ToastNotification.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Notifications\ToastNotification.Designer.cs">
+      <DependentUpon>ToastNotification.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session.cs" />

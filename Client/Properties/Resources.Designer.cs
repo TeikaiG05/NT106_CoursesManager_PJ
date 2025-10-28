@@ -143,6 +143,26 @@ namespace NT106_BT2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_eye_close_50 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-eye-close-50", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_eye_open_50 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-eye-open-50", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_gender_50 {
             get {
                 object obj = ResourceManager.GetObject("icons8-gender-50", resourceCulture);
