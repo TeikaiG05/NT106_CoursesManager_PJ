@@ -356,5 +356,10 @@ namespace NT106_BT2
             }
         }
         #endregion
+
+        private void guna2PictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
