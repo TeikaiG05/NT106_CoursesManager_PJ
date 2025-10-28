@@ -363,5 +363,39 @@ namespace NT106_BT2
         {
 
         }
+        
+
+        
+
+        
+
+        private void nw_password_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void nw_password_IRC(object sender, EventArgs e)
+        {
+            nw_password.UseSystemPasswordChar = !nw_password.UseSystemPasswordChar;
+            nw_password.IconRight = nw_password.UseSystemPasswordChar
+                ? Properties.Resources.icons8_eye_close_50
+                : Properties.Resources.icons8_eye_open_50;
+        }
+
+        private void nw_cfpassword_IRC(object sender, EventArgs e)
+        {
+            nw_cfpassword.UseSystemPasswordChar = !nw_cfpassword.UseSystemPasswordChar;
+            nw_cfpassword.IconRight = nw_cfpassword.UseSystemPasswordChar
+                ? Properties.Resources.icons8_eye_close_50
+                : Properties.Resources.icons8_eye_open_50;
+        }
+
+        private void cPassword_IRC(object sender, EventArgs e)
+        {
+            cPassword.UseSystemPasswordChar = !cPassword.UseSystemPasswordChar;
+            cPassword.IconRight = cPassword.UseSystemPasswordChar
+                ? Properties.Resources.icons8_eye_close_50
+                : Properties.Resources.icons8_eye_open_50;
+        }
     }
 }

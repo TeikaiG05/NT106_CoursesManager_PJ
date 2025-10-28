@@ -212,12 +212,16 @@
             this.cPassword.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.cPassword.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.cPassword.IconLeft = global::NT106_BT2.Properties.Resources.Password;
+            this.cPassword.IconRight = global::NT106_BT2.Properties.Resources.icons8_eye_close_50;
+            this.cPassword.IconRightCursor = System.Windows.Forms.Cursors.Hand;
             this.cPassword.Location = new System.Drawing.Point(58, 146);
             this.cPassword.Name = "cPassword";
             this.cPassword.PlaceholderText = "Password";
             this.cPassword.SelectedText = "";
             this.cPassword.Size = new System.Drawing.Size(209, 36);
             this.cPassword.TabIndex = 3;
+            this.cPassword.UseSystemPasswordChar = true;
+            this.cPassword.IconRightClick += new System.EventHandler(this.cPassword_IRC);
             // 
             // cUsername
             // 
@@ -261,7 +265,7 @@
             this.pn_regis.Controls.Add(this.nw_password);
             this.pn_regis.Controls.Add(this.cFirstname);
             this.pn_regis.FillColor = System.Drawing.Color.White;
-            this.pn_regis.Location = new System.Drawing.Point(515, 47);
+            this.pn_regis.Location = new System.Drawing.Point(531, 47);
             this.pn_regis.Name = "pn_regis";
             this.pn_regis.ShadowColor = System.Drawing.Color.BlueViolet;
             this.pn_regis.Size = new System.Drawing.Size(345, 446);
@@ -424,12 +428,16 @@
             this.nw_cfpassword.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.nw_cfpassword.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.nw_cfpassword.IconLeft = global::NT106_BT2.Properties.Resources.Password;
+            this.nw_cfpassword.IconRight = global::NT106_BT2.Properties.Resources.icons8_eye_close_50;
+            this.nw_cfpassword.IconRightCursor = System.Windows.Forms.Cursors.Hand;
             this.nw_cfpassword.Location = new System.Drawing.Point(24, 313);
             this.nw_cfpassword.Name = "nw_cfpassword";
             this.nw_cfpassword.PlaceholderText = "Confirm password";
             this.nw_cfpassword.SelectedText = "";
             this.nw_cfpassword.Size = new System.Drawing.Size(300, 36);
             this.nw_cfpassword.TabIndex = 13;
+            this.nw_cfpassword.UseSystemPasswordChar = true;
+            this.nw_cfpassword.IconRightClick += new System.EventHandler(this.nw_cfpassword_IRC);
             // 
             // cEmail
             // 
@@ -508,12 +516,17 @@
             this.nw_password.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.nw_password.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.nw_password.IconLeft = global::NT106_BT2.Properties.Resources.Password;
+            this.nw_password.IconRight = global::NT106_BT2.Properties.Resources.icons8_eye_close_50;
+            this.nw_password.IconRightCursor = System.Windows.Forms.Cursors.Hand;
             this.nw_password.Location = new System.Drawing.Point(24, 271);
             this.nw_password.Name = "nw_password";
             this.nw_password.PlaceholderText = "Password";
             this.nw_password.SelectedText = "";
             this.nw_password.Size = new System.Drawing.Size(300, 36);
             this.nw_password.TabIndex = 3;
+            this.nw_password.UseSystemPasswordChar = true;
+            this.nw_password.IconRightClick += new System.EventHandler(this.nw_password_IRC);
+            this.nw_password.TextChanged += new System.EventHandler(this.nw_password_TextChanged);
             // 
             // cFirstname
             // 
