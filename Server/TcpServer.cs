@@ -133,7 +133,7 @@ namespace Server
                                     sn = parts.Length > 1 ? parts[parts.Length - 1] : fn;
                                 }
 
-                                Db.InsertUser(fn, sn, bd, "Other", reg.email, reg.passwordHash);
+                                Db.InsertUser(fn, sn, bd, reg.gender, reg.email, reg.passwordHash);
                                 await SendOk(wr, MsgType.REGISTER, "Registered", null); Log(ep, "send: OK register");
                             }
                             continue;

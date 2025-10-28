@@ -165,7 +165,7 @@ namespace NT106_BT2
             string year = cYear.SelectedItem?.ToString();
             string month = cMonth.SelectedItem?.ToString();
             string day = cDay.SelectedItem?.ToString();
-            string gender = GetSelectedGender();
+            string gender = GetSelectedGender().ToString();
             string email = cEmail.Text.Trim();
             string pass = nw_password.Text;
             string conf = nw_cfpassword.Text;
@@ -192,6 +192,7 @@ namespace NT106_BT2
             {
                 type = MsgType.REGISTER,
                 username = email,
+                gender = gender,
                 email = email,
                 passwordHash = hashedPass,
                 fullName = (firstname + " " + surname).Trim(),
