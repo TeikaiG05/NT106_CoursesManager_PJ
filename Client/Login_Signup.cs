@@ -8,6 +8,8 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NT106_BT2.Notifications;
+
 
 namespace NT106_BT2
 {
@@ -170,21 +172,21 @@ namespace NT106_BT2
             string pass = nw_password.Text;
             string conf = nw_cfpassword.Text;
 
-            if (string.IsNullOrWhiteSpace(firstname) || HasDigit(firstname)) { MessageBox.Show("Họ trống hoặc chứa số."); cFirstname.Focus(); return; }
-            if (string.IsNullOrWhiteSpace(surname) || HasDigit(surname)) { MessageBox.Show("Tên trống hoặc chứa số."); cSurname.Focus(); return; }
+            if (string.IsNullOrWhiteSpace(firstname) || HasDigit(firstname)) { NotificationManager.Show(this, "Họ trống hoặc chứa số.", ToastNotification.ToastType.Warning); cFirstname.Focus(); return; }
+            if (string.IsNullOrWhiteSpace(surname) || HasDigit(surname)) { NotificationManager.Show(this, "Tên trống hoặc chứa số.", ToastNotification.ToastType.Warning); cSurname.Focus(); return; }
 
             if (!int.TryParse(year, out int y) || !MONTHS.Contains(month) || !int.TryParse(day, out int d))
-            { MessageBox.Show("Vui lòng chọn ngày sinh hợp lệ."); return; }
+            { NotificationManager.Show(this, "Vui lòng chọn ngày sinh hợp lệ.", ToastNotification.ToastType.Warning); return; }
 
             int m = Array.IndexOf(MONTHS, month) + 1;
             DateTime birthdayDt;
             try { birthdayDt = new DateTime(y, m, d); }
-            catch { MessageBox.Show("Ngày sinh không hợp lệ."); return; }
+            catch { NotificationManager.Show(this, "Ngày sinh không hợp lệ.", ToastNotification.ToastType.Warning); return; }
 
-            if (string.IsNullOrEmpty(gender)) { MessageBox.Show("Vui lòng chọn giới tính."); return; }
-            if (!IsValidEmail(email)) { MessageBox.Show("Email không hợp lệ."); cEmail.Focus(); return; }
-            if (!IsStrongPassword(pass)) { MessageBox.Show("Mật khẩu phải ≥8 ký tự, có hoa, thường, số, ký tự đặc biệt."); nw_password.Focus(); return; }
-            if (pass != conf) { MessageBox.Show("Mật khẩu xác nhận không khớp."); nw_cfpassword.Focus(); return; }
+            if (string.IsNullOrEmpty(gender)) { NotificationManager.Show(this, "Vui lòng chọn giới tính.", ToastNotification.ToastType.Warning); return; }
+            if (!IsValidEmail(email)) { NotificationManager.Show(this, "Email không hợp lệ.", ToastNotification.ToastType.Warning); cEmail.Focus(); return; }
+            if (!IsStrongPassword(pass)) { NotificationManager.Show(this, "Mật khẩu phải ≥8 ký tự, có hoa, thường, số, ký tự đặc biệt.", ToastNotification.ToastType.Warning); nw_password.Focus(); return; }
+            if (pass != conf) { NotificationManager.Show(this, "Mật khẩu xác nhận không khớp.", ToastNotification.ToastType.Warning); nw_cfpassword.Focus(); return; }
 
             var hashedPass = PasswordHasher.Sha256Hex(pass);
 
@@ -208,18 +210,18 @@ namespace NT106_BT2
 
                 if (ok != null && ok.ok && ok.type == MsgType.REGISTER)
                 {
-                    MessageBox.Show("Đăng ký thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    NotificationManager.Show(this, "Đăng ký thành công!", ToastNotification.ToastType.Success);
                     cToLogin_Click(sender, e);
                     ClearSignupFields();
                 }
                 else
                 {
-                    MessageBox.Show(err != null ? err.error : "Đăng ký thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    NotificationManager.Show(this, err != null ? err.error : "Đăng ký thất bại!", ToastNotification.ToastType.Error);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Không kết nối được server: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationManager.Show(this, "Không kết nối được server: " + ex.Message, ToastNotification.ToastType.Error);
             }
         }
         #endregion
@@ -233,13 +235,14 @@ namespace NT106_BT2
             // Admin (local)
             if (email == "admin" && password == "admin")
             {
-                MessageBox.Show("Hello admin", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                NotificationManager.Show(this, "Xin chào Admin!", ToastNotification.ToastType.Info);
+                await Task.Delay(1000);
                 ShowDashboardModal("Admin", "User", DateTime.Now.ToString("yyyy-MM-dd"), "Other", "admin@localhost");
                 return;
             }
 
-            if (!IsValidEmail(email)) { MessageBox.Show("Email không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning); cUsername.Focus(); return; }
-            if (string.IsNullOrEmpty(password)) { MessageBox.Show("Vui lòng nhập mật khẩu.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning); cPassword.Focus(); return; }
+            if (!IsValidEmail(email)) { NotificationManager.Show(this, "Email không hợp lệ.", ToastNotification.ToastType.Warning); cUsername.Focus(); return; }
+            if (string.IsNullOrEmpty(password)) { NotificationManager.Show(this, "Vui lòng nhập mật khẩu.", ToastNotification.ToastType.Warning); cPassword.Focus(); return; }
 
             var req = new LoginReq
             {
@@ -276,17 +279,17 @@ namespace NT106_BT2
                     }
 
                     SplitName(u.fullName, out var first, out var sur);
-                    MessageBox.Show("Login Successfully!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    NotificationManager.Show(this, "Đăng nhập thành công!", ToastNotification.ToastType.Success);
                     ShowDashboardModal(first, sur, u.birthday ?? "", "Other", u.email ?? "");
                 }
                 else
                 {
-                    MessageBox.Show(err != null ? err.error : "Login Failed!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    NotificationManager.Show(this, err != null ? err.error : "Đăng nhập thất bại!", ToastNotification.ToastType.Error);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Không kết nối được server: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationManager.Show(this, "Không kết nối được server: " + ex.Message, ToastNotification.ToastType.Error);
             }
         }
 
@@ -355,5 +358,10 @@ namespace NT106_BT2
             }
         }
         #endregion
+
+        private void guna2PictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

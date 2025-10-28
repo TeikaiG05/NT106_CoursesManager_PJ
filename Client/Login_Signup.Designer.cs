@@ -266,7 +266,6 @@
             this.pn_regis.ShadowColor = System.Drawing.Color.BlueViolet;
             this.pn_regis.Size = new System.Drawing.Size(345, 446);
             this.pn_regis.TabIndex = 13;
-
             // 
             // cOther
             // 
@@ -549,6 +548,7 @@
             this.guna2PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.guna2PictureBox1.TabIndex = 0;
             this.guna2PictureBox1.TabStop = false;
+            this.guna2PictureBox1.Click += new System.EventHandler(this.guna2PictureBox1_Click);
             // 
             // Login_Signup
             // 
