@@ -222,6 +222,7 @@
             this.btnChat.TabIndex = 0;
             this.btnChat.Text = "Chat";
             this.btnChat.UseTransparentBackground = true;
+            this.btnChat.Click += new System.EventHandler(this.btnChat_Click);
             // 
             // guna2ControlBox1
             // 
