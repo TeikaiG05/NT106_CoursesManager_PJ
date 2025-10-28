@@ -399,9 +399,6 @@ namespace NT106_BT2
                 : Properties.Resources.icons8_eye_open_50;
         }
 
-        private void guna2PictureBox1_Click(object sender, EventArgs e)
-        {
 
-        }
     }
 }
