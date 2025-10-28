@@ -280,8 +280,8 @@ namespace NT106_BT2
                     }
 
                     SplitName(u.fullName, out var first, out var sur);
-                    NotificationManager.Show(this, "Đăng nhập thành công!", ToastNotification.ToastType.Success);
-                    ShowDashboardModal(first, sur, u.birthday ?? "", "Other", u.email ?? "");
+                    MessageBox.Show("Login Successfully!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ShowDashboardModal(first, sur, u.birthday ?? "", u.gender ?? "Other", u.email ?? "");
                 }
                 else
                 {
