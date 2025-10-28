@@ -93,7 +93,8 @@ namespace Server
                                     username = login.username,
                                     fullName = (v.Firstname + " " + v.Surname).Trim(),
                                     email = v.Email,
-                                    birthday = v.Birthday.HasValue ? v.Birthday.Value.ToString("yyyy-MM-dd") : null
+                                    birthday = v.Birthday.HasValue ? v.Birthday.Value.ToString("yyyy-MM-dd") : null,
+                                    gender = v.Gender
                                 };
 
                                 var issued = TokenManager.Issue(login.username); // << cấp token
@@ -166,11 +167,13 @@ namespace Server
                                         username = treq.username,
                                         fullName = (v.Firstname + " " + v.Surname).Trim(),
                                         email = v.Email,
-                                        birthday = v.Birthday.HasValue ? v.Birthday.Value.ToString("yyyy-MM-dd") : null
+                                        birthday = v.Birthday.HasValue ? v.Birthday.Value.ToString("yyyy-MM-dd") : null,
+                                        gender = v.Gender
                                     };
 
                                     var issued = TokenManager.Issue(treq.username); // làm mới token
                                     await SendOk(wr, MsgType.LOGIN, "OK", user, issued.token, issued.exp);
+                                    Log(ep, $"send: OK login (token, gender={v.Gender})");
                                     Log(ep, "send: OK token login");
                                 }
                                 else

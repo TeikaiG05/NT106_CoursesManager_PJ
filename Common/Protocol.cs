@@ -37,6 +37,7 @@
     {
         public string username { get; set; }
         public string email { get; set; }
+        public string gender { get; set; }
         public string fullName { get; set; }
         public string birthday { get; set; }
     }

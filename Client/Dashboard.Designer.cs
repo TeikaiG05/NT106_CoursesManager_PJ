@@ -28,200 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.guna2ShadowPanel1 = new Guna.UI2.WinForms.Guna2ShadowPanel();
-            this.btnLogout = new Guna.UI2.WinForms.Guna2Button();
-            this.btnSetting = new Guna.UI2.WinForms.Guna2Button();
-            this.lb_profile = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
-            this.cCommunities = new Guna.UI2.WinForms.Guna2Button();
-            this.cMeet = new Guna.UI2.WinForms.Guna2Button();
-            this.btnChat = new Guna.UI2.WinForms.Guna2Button();
             this.guna2ControlBox1 = new Guna.UI2.WinForms.Guna2ControlBox();
             this.guna2ControlBox2 = new Guna.UI2.WinForms.Guna2ControlBox();
             this.Close_profile = new Guna.UI2.WinForms.Guna2Button();
             this.pn_profile = new Guna.UI2.WinForms.Guna2ShadowPanel();
-            this.cBirthday = new Guna.UI2.WinForms.Guna2TextBox();
-            this.cEmail = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2ShadowPanel2 = new Guna.UI2.WinForms.Guna2ShadowPanel();
             this.cName = new System.Windows.Forms.Label();
+            this.guna2ShadowPanel1 = new Guna.UI2.WinForms.Guna2ShadowPanel();
+            this.lb_profile = new Guna.UI2.WinForms.Guna2Button();
+            this.btnChat = new Guna.UI2.WinForms.Guna2Button();
+            this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
+            this.btnLogout = new Guna.UI2.WinForms.Guna2Button();
+            this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
+            this.cMeet = new Guna.UI2.WinForms.Guna2Button();
+            this.btnSetting = new Guna.UI2.WinForms.Guna2Button();
+            this.cCommunities = new Guna.UI2.WinForms.Guna2Button();
+            this.tbGender = new Guna.UI2.WinForms.Guna2TextBox();
+            this.cBirthday = new Guna.UI2.WinForms.Guna2TextBox();
+            this.cEmail = new Guna.UI2.WinForms.Guna2TextBox();
             this.cAvatar = new Guna.UI2.WinForms.Guna2CirclePictureBox();
-            this.guna2ShadowPanel1.SuspendLayout();
             this.pn_profile.SuspendLayout();
             this.guna2ShadowPanel2.SuspendLayout();
+            this.guna2ShadowPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cAvatar)).BeginInit();
             this.SuspendLayout();
-            // 
-            // guna2ShadowPanel1
-            // 
-            this.guna2ShadowPanel1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2ShadowPanel1.Controls.Add(this.btnLogout);
-            this.guna2ShadowPanel1.Controls.Add(this.btnSetting);
-            this.guna2ShadowPanel1.Controls.Add(this.lb_profile);
-            this.guna2ShadowPanel1.Controls.Add(this.guna2Button2);
-            this.guna2ShadowPanel1.Controls.Add(this.guna2Button1);
-            this.guna2ShadowPanel1.Controls.Add(this.cCommunities);
-            this.guna2ShadowPanel1.Controls.Add(this.cMeet);
-            this.guna2ShadowPanel1.Controls.Add(this.btnChat);
-            this.guna2ShadowPanel1.FillColor = System.Drawing.Color.White;
-            this.guna2ShadowPanel1.Location = new System.Drawing.Point(-116, 0);
-            this.guna2ShadowPanel1.Name = "guna2ShadowPanel1";
-            this.guna2ShadowPanel1.ShadowColor = System.Drawing.Color.Black;
-            this.guna2ShadowPanel1.Size = new System.Drawing.Size(200, 703);
-            this.guna2ShadowPanel1.TabIndex = 1;
-            // 
-            // btnLogout
-            // 
-            this.btnLogout.AutoRoundedCorners = true;
-            this.btnLogout.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnLogout.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnLogout.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnLogout.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnLogout.FillColor = System.Drawing.Color.White;
-            this.btnLogout.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnLogout.ForeColor = System.Drawing.Color.Black;
-            this.btnLogout.Image = global::NT106_BT2.Properties.Resources.icons8_logout_481;
-            this.btnLogout.Location = new System.Drawing.Point(119, 654);
-            this.btnLogout.Name = "btnLogout";
-            this.btnLogout.Size = new System.Drawing.Size(74, 32);
-            this.btnLogout.TabIndex = 7;
-            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
-            // 
-            // btnSetting
-            // 
-            this.btnSetting.AutoRoundedCorners = true;
-            this.btnSetting.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnSetting.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnSetting.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnSetting.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnSetting.FillColor = System.Drawing.Color.White;
-            this.btnSetting.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnSetting.ForeColor = System.Drawing.Color.Black;
-            this.btnSetting.Image = global::NT106_BT2.Properties.Resources.icons8_setting_50;
-            this.btnSetting.Location = new System.Drawing.Point(118, 616);
-            this.btnSetting.Name = "btnSetting";
-            this.btnSetting.Size = new System.Drawing.Size(75, 32);
-            this.btnSetting.TabIndex = 6;
-            // 
-            // lb_profile
-            // 
-            this.lb_profile.AutoRoundedCorners = true;
-            this.lb_profile.BorderRadius = 36;
-            this.lb_profile.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
-            this.lb_profile.Checked = true;
-            this.lb_profile.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.lb_profile.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.lb_profile.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.lb_profile.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.lb_profile.FillColor = System.Drawing.Color.White;
-            this.lb_profile.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lb_profile.ForeColor = System.Drawing.Color.Black;
-            this.lb_profile.Image = global::NT106_BT2.Properties.Resources.icons8_profile_50;
-            this.lb_profile.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lb_profile.Location = new System.Drawing.Point(118, 3);
-            this.lb_profile.Name = "lb_profile";
-            this.lb_profile.Size = new System.Drawing.Size(75, 80);
-            this.lb_profile.TabIndex = 5;
-            this.lb_profile.UseTransparentBackground = true;
-            this.lb_profile.Click += new System.EventHandler(this.lb_profile_Click);
-            // 
-            // guna2Button2
-            // 
-            this.guna2Button2.AutoRoundedCorners = true;
-            this.guna2Button2.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button2.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
-            this.guna2Button2.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button2.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button2.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button2.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button2.FillColor = System.Drawing.Color.White;
-            this.guna2Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.guna2Button2.ForeColor = System.Drawing.Color.Black;
-            this.guna2Button2.Image = global::NT106_BT2.Properties.Resources.icons8_bell_48;
-            this.guna2Button2.Location = new System.Drawing.Point(118, 407);
-            this.guna2Button2.Name = "guna2Button2";
-            this.guna2Button2.Size = new System.Drawing.Size(75, 56);
-            this.guna2Button2.TabIndex = 4;
-            this.guna2Button2.Text = "Activity";
-            this.guna2Button2.UseTransparentBackground = true;
-            // 
-            // guna2Button1
-            // 
-            this.guna2Button1.AutoRoundedCorners = true;
-            this.guna2Button1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button1.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
-            this.guna2Button1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button1.FillColor = System.Drawing.Color.White;
-            this.guna2Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.guna2Button1.ForeColor = System.Drawing.Color.Black;
-            this.guna2Button1.Image = global::NT106_BT2.Properties.Resources.icons8_calendar_50;
-            this.guna2Button1.Location = new System.Drawing.Point(118, 332);
-            this.guna2Button1.Name = "guna2Button1";
-            this.guna2Button1.Size = new System.Drawing.Size(75, 56);
-            this.guna2Button1.TabIndex = 3;
-            this.guna2Button1.Text = "Sched";
-            this.guna2Button1.UseTransparentBackground = true;
-            // 
-            // cCommunities
-            // 
-            this.cCommunities.AutoRoundedCorners = true;
-            this.cCommunities.BackColor = System.Drawing.Color.Transparent;
-            this.cCommunities.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
-            this.cCommunities.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.cCommunities.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.cCommunities.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.cCommunities.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.cCommunities.FillColor = System.Drawing.Color.White;
-            this.cCommunities.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.cCommunities.ForeColor = System.Drawing.Color.Black;
-            this.cCommunities.Image = global::NT106_BT2.Properties.Resources.icons8_people_50__1_;
-            this.cCommunities.Location = new System.Drawing.Point(118, 257);
-            this.cCommunities.Name = "cCommunities";
-            this.cCommunities.Size = new System.Drawing.Size(75, 56);
-            this.cCommunities.TabIndex = 2;
-            this.cCommunities.Text = "Group";
-            this.cCommunities.UseTransparentBackground = true;
-            // 
-            // cMeet
-            // 
-            this.cMeet.AutoRoundedCorners = true;
-            this.cMeet.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
-            this.cMeet.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.cMeet.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.cMeet.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.cMeet.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.cMeet.FillColor = System.Drawing.Color.White;
-            this.cMeet.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.cMeet.ForeColor = System.Drawing.Color.Black;
-            this.cMeet.Image = global::NT106_BT2.Properties.Resources.icons8_camera_24;
-            this.cMeet.Location = new System.Drawing.Point(118, 191);
-            this.cMeet.Name = "cMeet";
-            this.cMeet.Size = new System.Drawing.Size(75, 47);
-            this.cMeet.TabIndex = 1;
-            this.cMeet.Text = "Meet";
-            this.cMeet.UseTransparentBackground = true;
-            // 
-            // btnChat
-            // 
-            this.btnChat.AutoRoundedCorners = true;
-            this.btnChat.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
-            this.btnChat.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnChat.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnChat.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnChat.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnChat.FillColor = System.Drawing.Color.White;
-            this.btnChat.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnChat.ForeColor = System.Drawing.Color.Black;
-            this.btnChat.Image = global::NT106_BT2.Properties.Resources.icons8_chat_50;
-            this.btnChat.Location = new System.Drawing.Point(118, 125);
-            this.btnChat.Name = "btnChat";
-            this.btnChat.Size = new System.Drawing.Size(75, 47);
-            this.btnChat.TabIndex = 0;
-            this.btnChat.Text = "Chat";
-            this.btnChat.UseTransparentBackground = true;
             // 
             // guna2ControlBox1
             // 
@@ -264,15 +94,237 @@
             // pn_profile
             // 
             this.pn_profile.BackColor = System.Drawing.Color.Transparent;
+            this.pn_profile.Controls.Add(this.tbGender);
             this.pn_profile.Controls.Add(this.cBirthday);
             this.pn_profile.Controls.Add(this.cEmail);
             this.pn_profile.Controls.Add(this.guna2ShadowPanel2);
             this.pn_profile.FillColor = System.Drawing.Color.Orchid;
-            this.pn_profile.Location = new System.Drawing.Point(141, 104);
+            this.pn_profile.Location = new System.Drawing.Point(388, 83);
             this.pn_profile.Name = "pn_profile";
             this.pn_profile.ShadowColor = System.Drawing.Color.Black;
-            this.pn_profile.Size = new System.Drawing.Size(821, 426);
+            this.pn_profile.Size = new System.Drawing.Size(439, 394);
             this.pn_profile.TabIndex = 8;
+            // 
+            // guna2ShadowPanel2
+            // 
+            this.guna2ShadowPanel2.BackColor = System.Drawing.Color.Transparent;
+            this.guna2ShadowPanel2.Controls.Add(this.cName);
+            this.guna2ShadowPanel2.Controls.Add(this.cAvatar);
+            this.guna2ShadowPanel2.Controls.Add(this.Close_profile);
+            this.guna2ShadowPanel2.FillColor = System.Drawing.Color.Orchid;
+            this.guna2ShadowPanel2.Location = new System.Drawing.Point(0, 3);
+            this.guna2ShadowPanel2.Name = "guna2ShadowPanel2";
+            this.guna2ShadowPanel2.ShadowColor = System.Drawing.Color.Black;
+            this.guna2ShadowPanel2.Size = new System.Drawing.Size(439, 148);
+            this.guna2ShadowPanel2.TabIndex = 9;
+            // 
+            // cName
+            // 
+            this.cName.AutoSize = true;
+            this.cName.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cName.Location = new System.Drawing.Point(164, 117);
+            this.cName.Name = "cName";
+            this.cName.Size = new System.Drawing.Size(95, 21);
+            this.cName.TabIndex = 9;
+            this.cName.Text = "Kiệt Phùng";
+            // 
+            // guna2ShadowPanel1
+            // 
+            this.guna2ShadowPanel1.BackColor = System.Drawing.Color.Transparent;
+            this.guna2ShadowPanel1.Controls.Add(this.lb_profile);
+            this.guna2ShadowPanel1.Controls.Add(this.btnChat);
+            this.guna2ShadowPanel1.Controls.Add(this.guna2Button2);
+            this.guna2ShadowPanel1.Controls.Add(this.btnLogout);
+            this.guna2ShadowPanel1.Controls.Add(this.guna2Button1);
+            this.guna2ShadowPanel1.Controls.Add(this.cMeet);
+            this.guna2ShadowPanel1.Controls.Add(this.btnSetting);
+            this.guna2ShadowPanel1.Controls.Add(this.cCommunities);
+            this.guna2ShadowPanel1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.guna2ShadowPanel1.FillColor = System.Drawing.Color.White;
+            this.guna2ShadowPanel1.Location = new System.Drawing.Point(0, 0);
+            this.guna2ShadowPanel1.Name = "guna2ShadowPanel1";
+            this.guna2ShadowPanel1.ShadowColor = System.Drawing.Color.Black;
+            this.guna2ShadowPanel1.Size = new System.Drawing.Size(92, 698);
+            this.guna2ShadowPanel1.TabIndex = 0;
+            // 
+            // lb_profile
+            // 
+            this.lb_profile.AutoRoundedCorners = true;
+            this.lb_profile.BackColor = System.Drawing.Color.Transparent;
+            this.lb_profile.BorderRadius = 36;
+            this.lb_profile.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
+            this.lb_profile.Checked = true;
+            this.lb_profile.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.lb_profile.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.lb_profile.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.lb_profile.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.lb_profile.FillColor = System.Drawing.Color.White;
+            this.lb_profile.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lb_profile.ForeColor = System.Drawing.Color.Black;
+            this.lb_profile.Image = global::NT106_BT2.Properties.Resources.icons8_profile_50;
+            this.lb_profile.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.lb_profile.Location = new System.Drawing.Point(10, 7);
+            this.lb_profile.Name = "lb_profile";
+            this.lb_profile.Size = new System.Drawing.Size(75, 80);
+            this.lb_profile.TabIndex = 5;
+            this.lb_profile.UseTransparentBackground = true;
+            this.lb_profile.Click += new System.EventHandler(this.lb_profile_Click);
+            // 
+            // btnChat
+            // 
+            this.btnChat.AutoRoundedCorners = true;
+            this.btnChat.BackColor = System.Drawing.Color.Transparent;
+            this.btnChat.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
+            this.btnChat.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnChat.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnChat.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnChat.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnChat.FillColor = System.Drawing.Color.White;
+            this.btnChat.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnChat.ForeColor = System.Drawing.Color.Black;
+            this.btnChat.Image = global::NT106_BT2.Properties.Resources.icons8_chat_50;
+            this.btnChat.Location = new System.Drawing.Point(10, 129);
+            this.btnChat.Name = "btnChat";
+            this.btnChat.Size = new System.Drawing.Size(75, 47);
+            this.btnChat.TabIndex = 0;
+            this.btnChat.Text = "Chat";
+            this.btnChat.UseTransparentBackground = true;
+            // 
+            // guna2Button2
+            // 
+            this.guna2Button2.AutoRoundedCorners = true;
+            this.guna2Button2.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Button2.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
+            this.guna2Button2.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button2.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button2.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button2.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button2.FillColor = System.Drawing.Color.White;
+            this.guna2Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.guna2Button2.ForeColor = System.Drawing.Color.Black;
+            this.guna2Button2.Image = global::NT106_BT2.Properties.Resources.icons8_bell_48;
+            this.guna2Button2.Location = new System.Drawing.Point(10, 411);
+            this.guna2Button2.Name = "guna2Button2";
+            this.guna2Button2.Size = new System.Drawing.Size(75, 56);
+            this.guna2Button2.TabIndex = 4;
+            this.guna2Button2.Text = "Activity";
+            this.guna2Button2.UseTransparentBackground = true;
+            // 
+            // btnLogout
+            // 
+            this.btnLogout.AutoRoundedCorners = true;
+            this.btnLogout.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnLogout.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnLogout.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnLogout.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnLogout.FillColor = System.Drawing.Color.White;
+            this.btnLogout.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnLogout.ForeColor = System.Drawing.Color.Black;
+            this.btnLogout.Image = global::NT106_BT2.Properties.Resources.icons8_logout_481;
+            this.btnLogout.Location = new System.Drawing.Point(11, 658);
+            this.btnLogout.Name = "btnLogout";
+            this.btnLogout.Size = new System.Drawing.Size(74, 32);
+            this.btnLogout.TabIndex = 7;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
+            // 
+            // guna2Button1
+            // 
+            this.guna2Button1.AutoRoundedCorners = true;
+            this.guna2Button1.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Button1.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
+            this.guna2Button1.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button1.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button1.FillColor = System.Drawing.Color.White;
+            this.guna2Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.guna2Button1.ForeColor = System.Drawing.Color.Black;
+            this.guna2Button1.Image = global::NT106_BT2.Properties.Resources.icons8_calendar_50;
+            this.guna2Button1.Location = new System.Drawing.Point(10, 336);
+            this.guna2Button1.Name = "guna2Button1";
+            this.guna2Button1.Size = new System.Drawing.Size(75, 56);
+            this.guna2Button1.TabIndex = 3;
+            this.guna2Button1.Text = "Sched";
+            this.guna2Button1.UseTransparentBackground = true;
+            // 
+            // cMeet
+            // 
+            this.cMeet.AutoRoundedCorners = true;
+            this.cMeet.BackColor = System.Drawing.Color.Transparent;
+            this.cMeet.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
+            this.cMeet.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.cMeet.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.cMeet.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.cMeet.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.cMeet.FillColor = System.Drawing.Color.White;
+            this.cMeet.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.cMeet.ForeColor = System.Drawing.Color.Black;
+            this.cMeet.Image = global::NT106_BT2.Properties.Resources.icons8_camera_24;
+            this.cMeet.Location = new System.Drawing.Point(10, 195);
+            this.cMeet.Name = "cMeet";
+            this.cMeet.Size = new System.Drawing.Size(75, 47);
+            this.cMeet.TabIndex = 1;
+            this.cMeet.Text = "Meet";
+            this.cMeet.UseTransparentBackground = true;
+            // 
+            // btnSetting
+            // 
+            this.btnSetting.AutoRoundedCorners = true;
+            this.btnSetting.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnSetting.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnSetting.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnSetting.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnSetting.FillColor = System.Drawing.Color.White;
+            this.btnSetting.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnSetting.ForeColor = System.Drawing.Color.Black;
+            this.btnSetting.Image = global::NT106_BT2.Properties.Resources.icons8_setting_50;
+            this.btnSetting.Location = new System.Drawing.Point(10, 620);
+            this.btnSetting.Name = "btnSetting";
+            this.btnSetting.Size = new System.Drawing.Size(75, 32);
+            this.btnSetting.TabIndex = 6;
+            // 
+            // cCommunities
+            // 
+            this.cCommunities.AutoRoundedCorners = true;
+            this.cCommunities.BackColor = System.Drawing.Color.Transparent;
+            this.cCommunities.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
+            this.cCommunities.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.cCommunities.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.cCommunities.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.cCommunities.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.cCommunities.FillColor = System.Drawing.Color.White;
+            this.cCommunities.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.cCommunities.ForeColor = System.Drawing.Color.Black;
+            this.cCommunities.Image = global::NT106_BT2.Properties.Resources.icons8_people_50__1_;
+            this.cCommunities.Location = new System.Drawing.Point(10, 261);
+            this.cCommunities.Name = "cCommunities";
+            this.cCommunities.Size = new System.Drawing.Size(75, 56);
+            this.cCommunities.TabIndex = 2;
+            this.cCommunities.Text = "Group";
+            this.cCommunities.UseTransparentBackground = true;
+            // 
+            // tbGender
+            // 
+            this.tbGender.Animated = true;
+            this.tbGender.BorderRadius = 8;
+            this.tbGender.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.tbGender.DefaultText = "";
+            this.tbGender.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.tbGender.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.tbGender.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.tbGender.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.tbGender.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(244)))), ((int)(((byte)(244)))));
+            this.tbGender.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.tbGender.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.tbGender.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.tbGender.IconLeft = global::NT106_BT2.Properties.Resources.icons8_gender_50;
+            this.tbGender.Location = new System.Drawing.Point(236, 235);
+            this.tbGender.Name = "tbGender";
+            this.tbGender.PlaceholderText = "Gender";
+            this.tbGender.ReadOnly = true;
+            this.tbGender.SelectedText = "";
+            this.tbGender.Size = new System.Drawing.Size(132, 36);
+            this.tbGender.TabIndex = 15;
             // 
             // cBirthday
             // 
@@ -320,34 +372,11 @@
             this.cEmail.Size = new System.Drawing.Size(300, 36);
             this.cEmail.TabIndex = 13;
             // 
-            // guna2ShadowPanel2
-            // 
-            this.guna2ShadowPanel2.BackColor = System.Drawing.Color.Transparent;
-            this.guna2ShadowPanel2.Controls.Add(this.cName);
-            this.guna2ShadowPanel2.Controls.Add(this.cAvatar);
-            this.guna2ShadowPanel2.Controls.Add(this.Close_profile);
-            this.guna2ShadowPanel2.FillColor = System.Drawing.Color.Orchid;
-            this.guna2ShadowPanel2.Location = new System.Drawing.Point(0, 0);
-            this.guna2ShadowPanel2.Name = "guna2ShadowPanel2";
-            this.guna2ShadowPanel2.ShadowColor = System.Drawing.Color.Black;
-            this.guna2ShadowPanel2.Size = new System.Drawing.Size(821, 135);
-            this.guna2ShadowPanel2.TabIndex = 9;
-            // 
-            // cName
-            // 
-            this.cName.AutoSize = true;
-            this.cName.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cName.Location = new System.Drawing.Point(135, 89);
-            this.cName.Name = "cName";
-            this.cName.Size = new System.Drawing.Size(95, 21);
-            this.cName.TabIndex = 9;
-            this.cName.Text = "Kiệt Phùng";
-            // 
             // cAvatar
             // 
             this.cAvatar.Image = global::NT106_BT2.Properties.Resources.avatar_anh_meo_cute_3;
             this.cAvatar.ImageRotate = 0F;
-            this.cAvatar.Location = new System.Drawing.Point(26, 20);
+            this.cAvatar.Location = new System.Drawing.Point(156, 11);
             this.cAvatar.Name = "cAvatar";
             this.cAvatar.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
             this.cAvatar.Size = new System.Drawing.Size(103, 97);
@@ -360,24 +389,23 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1122, 698);
+            this.Controls.Add(this.guna2ShadowPanel1);
             this.Controls.Add(this.pn_profile);
             this.Controls.Add(this.guna2ControlBox2);
             this.Controls.Add(this.guna2ControlBox1);
-            this.Controls.Add(this.guna2ShadowPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Dashboard";
             this.Text = " ";
-            this.guna2ShadowPanel1.ResumeLayout(false);
             this.pn_profile.ResumeLayout(false);
             this.guna2ShadowPanel2.ResumeLayout(false);
             this.guna2ShadowPanel2.PerformLayout();
+            this.guna2ShadowPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.cAvatar)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private Guna.UI2.WinForms.Guna2ShadowPanel guna2ShadowPanel1;
         private Guna.UI2.WinForms.Guna2Button cMeet;
         private Guna.UI2.WinForms.Guna2Button btnChat;
         private Guna.UI2.WinForms.Guna2Button cCommunities;
@@ -395,5 +423,7 @@
         private Guna.UI2.WinForms.Guna2TextBox cEmail;
         private Guna.UI2.WinForms.Guna2TextBox cBirthday;
         private Guna.UI2.WinForms.Guna2Button btnLogout;
+        private Guna.UI2.WinForms.Guna2ShadowPanel guna2ShadowPanel1;
+        private Guna.UI2.WinForms.Guna2TextBox tbGender;
     }
 }

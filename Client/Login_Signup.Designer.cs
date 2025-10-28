@@ -266,7 +266,6 @@
             this.pn_regis.ShadowColor = System.Drawing.Color.BlueViolet;
             this.pn_regis.Size = new System.Drawing.Size(345, 446);
             this.pn_regis.TabIndex = 13;
-
             // 
             // cOther
             // 
