@@ -22,7 +22,7 @@ namespace NT106_BT2
             cName.Text= firstname + " " + surname;
             cBirthday.Text= birthday;
             cEmail.Text= email;
-
+            tbGender.Text = gender;
         }
 
         private void lb_profile_Click(object sender, EventArgs e)
@@ -52,7 +52,7 @@ namespace NT106_BT2
                 await TcpHelper.SendLineAsync(json);
             }
             catch
-            {}
+            { }
             Session.Clear();
             this.DialogResult = DialogResult.OK;
             this.Close();

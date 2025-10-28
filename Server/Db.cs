@@ -27,8 +27,7 @@ namespace Server
             }
         }
 
-        public static void InsertUser(string firstname, string surname, DateTime? birthday,
-                                      string gender, string email, string passwordHex)
+        public static void InsertUser(string firstname, string surname, DateTime? birthday, string gender, string email, string passwordHex)
         {
             using (var cn = new SqlConnection(ConnStr))
             using (var cmd = new SqlCommand(@"INSERT INTO dbo.Users(Firstname,Surname,Birthday,Gender,Email,PasswordEncrypted) VALUES (@fn,@sn,@bd,@gd,@em,@ph)", cn))
@@ -46,11 +45,11 @@ namespace Server
                 cmd.ExecuteNonQuery();
             }
         }
-        public static (string Firstname, string Surname, DateTime? Birthday, string Email)? GetByEmail(string email)
+        public static (string Firstname, string Surname, DateTime? Birthday, string Gender, string Email)? GetByEmail(string email)
         {
             using (var cn = new SqlConnection(ConnStr))
             using (var cmd = new SqlCommand(
-                "SELECT TOP 1 Firstname,Surname,Birthday,Email FROM dbo.Users WHERE Email=@e", cn))
+                "SELECT TOP 1 Firstname,Surname,Birthday,Gender,Email FROM dbo.Users WHERE Email=@e", cn))
             {
                 cmd.Parameters.AddWithValue("@e", email);
                 cn.Open();
@@ -61,13 +60,13 @@ namespace Server
                         rd["Firstname"].ToString(),
                         rd["Surname"].ToString(),
                         rd["Birthday"] == DBNull.Value ? (DateTime?)null : (DateTime)rd["Birthday"],
+                        rd["Gender"].ToString(),
                         rd["Email"].ToString()
                     );
                 }
             }
         }
-        public static (string Firstname, string Surname, DateTime? Birthday, string Gender, string Email)?
-            FindByLogin(string email, string passwordHex)
+        public static (string Firstname, string Surname, DateTime? Birthday, string Gender, string Email)? FindByLogin(string email, string passwordHex)
         {
             using (var cn = new SqlConnection(ConnStr))
             using (var cmd = new SqlCommand(@"SELECT Firstname,Surname,Birthday,Gender,Email FROM dbo.Users WHERE Email=@e AND PasswordEncrypted=@ph", cn))
