@@ -58,5 +58,16 @@ namespace NT106_BT2
             this.Close();
         }
         #endregion
+
+        private void btnChat_Click(object sender, EventArgs e)
+        {
+            pn_profile.Visible = false;
+            ChatForm chatWindow = new ChatForm();
+            chatWindow.StartPosition = FormStartPosition.Manual;
+            int x = this.Location.X + (this.Width - chatWindow.Width) / 2;
+            int y = this.Location.Y + (this.Height - chatWindow.Height) / 2;
+            chatWindow.Location = new Point(x, y);
+            chatWindow.Show();
+        }
     }
 }
