@@ -280,7 +280,7 @@ namespace NT106_BT2
                     }
 
                     SplitName(u.fullName, out var first, out var sur);
-                    MessageBox.Show("Login Successfully!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    NotificationManager.Show(this, "Login Successfully!", ToastNotification.ToastType.Success);
                     ShowDashboardModal(first, sur, u.birthday ?? "", u.gender ?? "Other", u.email ?? "");
                 }
                 else
