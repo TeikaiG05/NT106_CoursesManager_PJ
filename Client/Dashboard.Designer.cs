@@ -53,8 +53,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.cAvatar)).BeginInit();
             this.SuspendLayout();
             // 
-<<<<<<< HEAD
-=======
             // guna2ShadowPanel1
             // 
             this.guna2ShadowPanel1.BackColor = System.Drawing.Color.Transparent;
@@ -227,7 +225,6 @@
             this.btnChat.UseTransparentBackground = true;
             this.btnChat.Click += new System.EventHandler(this.btnChat_Click);
             // 
->>>>>>> origin/Chat/Hieu
             // guna2ControlBox1
             // 
             this.guna2ControlBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
