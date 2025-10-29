@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "..\Thư mục mới\NT106_CoursesManager_PJ-Sched-Cuong\Common\Common.csproj", "{44AA0A2A-6382-4724-9344-587D7BDA62AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "..\Thư mục mới\NT106_CoursesManager_PJ-Sched-Cuong - Sao chép\Client\Client.csproj", "{A6B18C4B-4978-446D-8320-96EF0CA6E909}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "..\NT106_CoursesManager_PJ-Schedule-Cuong\Client\Client.csproj", "{A6B18C4B-4978-446D-8320-96EF0CA6E909}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

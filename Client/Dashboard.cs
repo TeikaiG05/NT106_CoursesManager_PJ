@@ -58,5 +58,38 @@ namespace NT106_BT2
             this.Close();
         }
         #endregion
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+
+        private Form activeform;
+        private void Opensmallform(Form smallform, object btnSender)
+        {
+            if (activeform != null)
+            {
+                activeform.Close();
+
+            }
+            activeform = smallform;
+            smallform.TopLevel = false;
+            smallform.FormBorderStyle = FormBorderStyle.None;
+            smallform.Dock = DockStyle.Fill;
+            this.panel1.Controls.Add(smallform);
+            this.panel1.Tag = smallform;
+            smallform.BringToFront();
+            smallform.Show();
+        }
+        private void guna2Button1_Click(object sender, EventArgs e)
+        {
+            Opensmallform(new Schedule.Scheduler(), sender);
+        }
+
+        private void Dashboard_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
