@@ -1,4 +1,4 @@
-# 📚 CourseManager - Ứng dụng quản lý khóa học trực tuyến  
+# 📚 Online Learning Application - Ứng dụng học tập trực tuyến
   
 
 
@@ -20,7 +20,7 @@
 ---
 
 ## 📝 Giới thiệu
-**CourseManager** là ứng dụng hỗ trợ quản lý khóa học, giảng viên, sinh viên và lịch học một cách trực quan.  
+**Online Learning Application** là ứng dụng hỗ trợ quản lý khóa học, giảng viên, sinh viên và lịch học một cách trực quan.  
 
 - Sinh viên có thể dễ dàng đăng ký môn học, xem thông tin khóa học, thời khóa biểu.  
 - Giảng viên có thể quản lý lớp học, cập nhật tài liệu và điểm.  
@@ -50,7 +50,7 @@
 ---
 ## ⚙️ Cài đặt & Sử dụng
 ### 🔧 Yêu cầu môi trường  
-Để chạy được ứng dụng **CourseManager (WinForms - C#)**, máy của bạn cần:  
+Để chạy được ứng dụng **Online Learning Application (WinForms - C#)**, máy của bạn cần:  
 
 | Thành phần | Mô tả / Phiên bản khuyến nghị |
 |-------------|-------------------------------|
@@ -90,7 +90,7 @@ Sau khi khởi động ứng dụng **CourseManager**, bạn có thể thao tác
 | admin      | admin     |
 
 <p align="center">
-  <img src="NT106_BT2/Resources/Login.png" alt="Login UI" width="600px"/>
+  <img src="Client/Resources/Login.png" alt="Login UI" width="600px"/>
 </p>
 
 #### 📝 2. Đăng ký tài khoản
@@ -100,7 +100,7 @@ Sau khi khởi động ứng dụng **CourseManager**, bạn có thể thao tác
 - Sau khi đăng ký thành công, ứng dụng sẽ quay lại màn hình đăng nhập.
 - 
 <p align="center">
-  <img src="NT106_BT2/Resources/Signup.png" alt="Signup UI" width="600px"/>
+  <img src="Client/Resources/Signup.png" alt="Signup UI" width="600px"/>
 </p>
 
 #### 📊 3. Giao diện Dashboard
@@ -113,7 +113,7 @@ Sau khi đăng nhập, bạn sẽ thấy **màn hình chính (Dashboard)**:
   - Ảnh đại diện (avatar).
 
 <p align="center">
-  <img src="NT106_BT2/Resources/Dashboard.png" alt="Signup UI" width="600px"/>
+  <img src="Client/Resources/Dashboard.png" alt="Signup UI" width="600px"/>
 </p>
 
 ##### Các module khác: 
