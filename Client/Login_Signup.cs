@@ -27,8 +27,78 @@ namespace NT106_BT2
             Guna2Transistion1 = new Guna2Transition();
             pn_login.Visible = true;
             pn_regis.Visible = false;
-            this.Shown += async (_, __) => await TryAutoLoginAsync();
+            this.Shown += async (_, __) =>
+            {
+                await TcpHelper.ConnectAsync(); // 🔹 Kết nối tới server khi app mở
+                TcpHelper.OnError += msg => Invoke(new Action(() =>
+                    NotificationManager.Show(this, msg, ToastNotification.ToastType.Error)));
+
+                TcpHelper.OnMessageReceived += msg => HandleServerMessage(msg); // 🔹 Đăng ký sự kiện nhận phản hồi
+                await TryAutoLoginAsync();
+            };
         }
+        private void HandleServerMessage(string msg)
+        {
+            try
+            {
+                var ok = Newtonsoft.Json.JsonConvert.DeserializeObject<OkRes>(msg);
+                var err = ok == null ? Newtonsoft.Json.JsonConvert.DeserializeObject<ErrRes>(msg) : null;
+
+                if (ok != null && ok.ok)
+                {
+                    Invoke(new Action(() =>
+                    {
+                        switch (ok.type)
+                        {
+                            case Common.MsgType.LOGIN:
+                                var u = ok.user ?? new Common.UserDto();
+
+                                // Lưu session
+                                Session.Email = u.email;
+                                Session.Token = ok.token;
+                                Session.Expire = ok.expires;
+
+                                if (tsRemember.Checked)
+                                {
+                                    SaveRememberToSettings(u.email, ok.token);
+                                    SaveSessionToDisk(u.email, ok.token);
+                                }
+                                else
+                                {
+                                    ClearSavedSession();
+                                }
+
+                                SplitName(u.fullName, out var first, out var sur);
+                                NotificationManager.Show(this, "Đăng nhập thành công!", ToastNotification.ToastType.Success);
+                                ShowDashboardModal(first, sur, u.birthday ?? "", u.gender ?? "Other", u.email ?? "");
+                                break;
+
+                            case Common.MsgType.REGISTER:
+                                NotificationManager.Show(this, "Đăng ký thành công!", ToastNotification.ToastType.Success);
+                                cToLogin_Click(null, EventArgs.Empty);
+                                ClearSignupFields();
+                                break;
+
+                            default:
+                                Console.WriteLine($"📩 Server OK: {ok.type}");
+                                break;
+                        }
+                    }));
+                }
+                else if (err != null)
+                {
+                    Invoke(new Action(() =>
+                    {
+                        NotificationManager.Show(this, err.error, ToastNotification.ToastType.Error);
+                    }));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("⚠️ Parse error: " + ex.Message);
+            }
+        }
+
 
         #region UI: switch 2 panel
         private void cToLogin_Click(object sender, EventArgs e)
@@ -204,21 +274,8 @@ namespace NT106_BT2
             try
             {
                 string jsonReq = Newtonsoft.Json.JsonConvert.SerializeObject(req);
-                string jsonRes = await TcpHelper.SendLineAsync(jsonReq);
-
-                var ok = Newtonsoft.Json.JsonConvert.DeserializeObject<OkRes>(jsonRes);
-                var err = ok == null ? Newtonsoft.Json.JsonConvert.DeserializeObject<ErrRes>(jsonRes) : null;
-
-                if (ok != null && ok.ok && ok.type == MsgType.REGISTER)
-                {
-                    NotificationManager.Show(this, "Đăng ký thành công!", ToastNotification.ToastType.Success);
-                    cToLogin_Click(sender, e);
-                    ClearSignupFields();
-                }
-                else
-                {
-                    NotificationManager.Show(this, err != null ? err.error : "Đăng ký thất bại!", ToastNotification.ToastType.Error);
-                }
+                await TcpHelper.SendLineAsync(jsonReq);
+                NotificationManager.Show(this, "Đang gửi yêu cầu đăng ký...", ToastNotification.ToastType.Info);
             }
             catch (Exception ex)
             {
@@ -255,38 +312,10 @@ namespace NT106_BT2
             try
             {
                 string jsonReq = Newtonsoft.Json.JsonConvert.SerializeObject(req);
-                string jsonRes = await TcpHelper.SendLineAsync(jsonReq);
+                await TcpHelper.SendLineAsync(jsonReq);
 
-                var ok = Newtonsoft.Json.JsonConvert.DeserializeObject<OkRes>(jsonRes);
-                var err = ok == null ? Newtonsoft.Json.JsonConvert.DeserializeObject<ErrRes>(jsonRes) : null;
-
-                if (ok != null && ok.ok && ok.type == MsgType.LOGIN)
-                {
-                    var u = ok.user ?? new UserDto();
-
-                    // session (token)
-                    Session.Email = u.email;
-                    Session.Token = ok.token;
-                    Session.Expire = ok.expires;
-
-                    if (tsRemember.Checked)
-                    {
-                        SaveRememberToSettings(u.email, ok.token);
-                        SaveSessionToDisk(u.email, ok.token); // optional demo
-                    }
-                    else
-                    {
-                        ClearSavedSession();
-                    }
-
-                    SplitName(u.fullName, out var first, out var sur);
-                    NotificationManager.Show(this, "Login Successfully!", ToastNotification.ToastType.Success);
-                    ShowDashboardModal(first, sur, u.birthday ?? "", u.gender ?? "Other", u.email ?? "");
-                }
-                else
-                {
-                    NotificationManager.Show(this, err != null ? err.error : "Đăng nhập thất bại!", ToastNotification.ToastType.Error);
-                }
+                // phản hồi từ server sẽ được xử lý tự động trong HandleServerMessage()
+                NotificationManager.Show(this, "Đang đăng nhập...", ToastNotification.ToastType.Info);
             }
             catch (Exception ex)
             {
@@ -296,6 +325,7 @@ namespace NT106_BT2
 
         private async Task TryAutoLoginAsync()
         {
+            if (Session.IsLoggingOut) return;
             var remember = Properties.Settings.Default.RememberMe;
             var savedEmail = Properties.Settings.Default.SavedEmail;
             var savedToken = Properties.Settings.Default.SavedToken;
@@ -307,38 +337,17 @@ namespace NT106_BT2
             {
                 var req = new TokenLoginReq { username = savedEmail, token = savedToken };
                 string jsonReq = Newtonsoft.Json.JsonConvert.SerializeObject(req);
-                string jsonRes = await TcpHelper.SendLineAsync(jsonReq);
+                await TcpHelper.SendLineAsync(jsonReq);
 
-                var ok = Newtonsoft.Json.JsonConvert.DeserializeObject<OkRes>(jsonRes);
-                if (ok != null && ok.ok && ok.type == Common.MsgType.LOGIN)
-                {
-                    var u = ok.user ?? new Common.UserDto();
-
-                    Session.Email = u.email;
-                    Session.Token = ok.token;
-                    Session.Expire = ok.expires;
-
-                    // GHI LẠI token/email mới nếu Remember đang bật
-                    if (Properties.Settings.Default.RememberMe)
-                    {
-                        Properties.Settings.Default.SavedEmail = u.email ?? "";
-                        Properties.Settings.Default.SavedToken = ok.token ?? "";
-                        Properties.Settings.Default.Save();
-                    }
-
-                    SplitName(u.fullName, out var first, out var sur);
-                    ShowDashboardModal(first, sur, u.birthday ?? "", u.gender ?? "Other", u.email ?? "");
-                }
-                else
-                {
-                    ClearSavedSession(); // token cũ hỏng/hết hạn → xoá để khỏi lặp
-                }
+                // ✅ Không cần chờ phản hồi ở đây — phản hồi được xử lý trong HandleServerMessage()
+                NotificationManager.Show(this, "Đang đăng nhập lại bằng token...", ToastNotification.ToastType.Info);
             }
-            catch
+            catch (Exception ex)
             {
-                // ignore
+                NotificationManager.Show(this, "Không thể tự động đăng nhập: " + ex.Message, ToastNotification.ToastType.Error);
             }
         }
+
         #endregion
 
         #region Remember toggle
@@ -364,11 +373,6 @@ namespace NT106_BT2
         {
 
         }
-        
-
-        
-
-        
 
         private void nw_password_TextChanged(object sender, EventArgs e)
         {
@@ -378,25 +382,19 @@ namespace NT106_BT2
         private void nw_password_IRC(object sender, EventArgs e)
         {
             nw_password.UseSystemPasswordChar = !nw_password.UseSystemPasswordChar;
-            nw_password.IconRight = nw_password.UseSystemPasswordChar
-                ? Properties.Resources.icons8_eye_close_50
-                : Properties.Resources.icons8_eye_open_50;
+            nw_password.IconRight = nw_password.UseSystemPasswordChar ? Properties.Resources.icons8_eye_close_50 : Properties.Resources.icons8_eye_open_50;
         }
 
         private void nw_cfpassword_IRC(object sender, EventArgs e)
         {
             nw_cfpassword.UseSystemPasswordChar = !nw_cfpassword.UseSystemPasswordChar;
-            nw_cfpassword.IconRight = nw_cfpassword.UseSystemPasswordChar
-                ? Properties.Resources.icons8_eye_close_50
-                : Properties.Resources.icons8_eye_open_50;
+            nw_cfpassword.IconRight = nw_cfpassword.UseSystemPasswordChar ? Properties.Resources.icons8_eye_close_50 : Properties.Resources.icons8_eye_open_50;
         }
 
         private void cPassword_IRC(object sender, EventArgs e)
         {
             cPassword.UseSystemPasswordChar = !cPassword.UseSystemPasswordChar;
-            cPassword.IconRight = cPassword.UseSystemPasswordChar
-                ? Properties.Resources.icons8_eye_close_50
-                : Properties.Resources.icons8_eye_open_50;
+            cPassword.IconRight = cPassword.UseSystemPasswordChar ? Properties.Resources.icons8_eye_close_50 : Properties.Resources.icons8_eye_open_50;
         }
 
 

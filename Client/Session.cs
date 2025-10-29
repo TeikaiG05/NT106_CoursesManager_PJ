@@ -11,7 +11,7 @@ namespace NT106_BT2
         public static string Email { get; set; }
         public static string Token { get; set; }
         public static string Expire { get; set; }
-
+        public static bool IsLoggingOut = false;
         public static bool IsLoggedIn
             => !string.IsNullOrEmpty(Email) && !string.IsNullOrEmpty(Token);
 

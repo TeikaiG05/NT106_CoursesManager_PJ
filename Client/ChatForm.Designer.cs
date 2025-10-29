@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.bangChinh = new System.Windows.Forms.TableLayoutPanel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.nutDong = new Guna.UI2.WinForms.Guna2ControlBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.chiaChinh = new System.Windows.Forms.SplitContainer();
             this.khungDanhSachChat = new System.Windows.Forms.Panel();
@@ -56,7 +54,6 @@
             this.luongThanhVien = new System.Windows.Forms.FlowLayoutPanel();
             this.tieuDeChiTiet = new System.Windows.Forms.Label();
             this.bangChinh.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chiaChinh)).BeginInit();
             this.chiaChinh.Panel1.SuspendLayout();
@@ -75,7 +72,6 @@
             this.bangChinh.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 38F));
             this.bangChinh.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.bangChinh.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 188F));
-            this.bangChinh.Controls.Add(this.panel1, 0, 0);
             this.bangChinh.Controls.Add(this.panel2, 1, 0);
             this.bangChinh.Controls.Add(this.panel3, 2, 0);
             this.bangChinh.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -84,31 +80,8 @@
             this.bangChinh.Name = "bangChinh";
             this.bangChinh.RowCount = 1;
             this.bangChinh.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.bangChinh.Size = new System.Drawing.Size(900, 569);
+            this.bangChinh.Size = new System.Drawing.Size(1201, 748);
             this.bangChinh.TabIndex = 0;
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.panel1.Controls.Add(this.nutDong);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(38, 569);
-            this.panel1.TabIndex = 0;
-            // 
-            // nutDong
-            // 
-            this.nutDong.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.nutDong.FillColor = System.Drawing.Color.Transparent;
-            this.nutDong.IconColor = System.Drawing.Color.Black;
-            this.nutDong.Location = new System.Drawing.Point(4, 4);
-            this.nutDong.Margin = new System.Windows.Forms.Padding(2);
-            this.nutDong.Name = "nutDong";
-            this.nutDong.Size = new System.Drawing.Size(30, 24);
-            this.nutDong.TabIndex = 0;
-            this.nutDong.Click += new System.EventHandler(this.nutDong_Click);
             // 
             // panel2
             // 
@@ -118,7 +91,7 @@
             this.panel2.Location = new System.Drawing.Point(38, 0);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(674, 569);
+            this.panel2.Size = new System.Drawing.Size(975, 748);
             this.panel2.TabIndex = 1;
             // 
             // chiaChinh
@@ -135,8 +108,8 @@
             // chiaChinh.Panel2
             // 
             this.chiaChinh.Panel2.Controls.Add(this.khungChatHienTai);
-            this.chiaChinh.Size = new System.Drawing.Size(674, 569);
-            this.chiaChinh.SplitterDistance = 224;
+            this.chiaChinh.Size = new System.Drawing.Size(975, 748);
+            this.chiaChinh.SplitterDistance = 324;
             this.chiaChinh.SplitterWidth = 3;
             this.chiaChinh.TabIndex = 0;
             // 
@@ -148,7 +121,7 @@
             this.khungDanhSachChat.Location = new System.Drawing.Point(0, 0);
             this.khungDanhSachChat.Margin = new System.Windows.Forms.Padding(2);
             this.khungDanhSachChat.Name = "khungDanhSachChat";
-            this.khungDanhSachChat.Size = new System.Drawing.Size(224, 569);
+            this.khungDanhSachChat.Size = new System.Drawing.Size(324, 748);
             this.khungDanhSachChat.TabIndex = 0;
             // 
             // luongChatItems
@@ -163,7 +136,7 @@
             this.luongChatItems.Margin = new System.Windows.Forms.Padding(2);
             this.luongChatItems.Name = "luongChatItems";
             this.luongChatItems.Padding = new System.Windows.Forms.Padding(8);
-            this.luongChatItems.Size = new System.Drawing.Size(224, 569);
+            this.luongChatItems.Size = new System.Drawing.Size(324, 748);
             this.luongChatItems.TabIndex = 1;
             this.luongChatItems.WrapContents = false;
             // 
@@ -216,7 +189,7 @@
             this.khungChatHienTai.Location = new System.Drawing.Point(0, 0);
             this.khungChatHienTai.Margin = new System.Windows.Forms.Padding(2);
             this.khungChatHienTai.Name = "khungChatHienTai";
-            this.khungChatHienTai.Size = new System.Drawing.Size(447, 569);
+            this.khungChatHienTai.Size = new System.Drawing.Size(648, 748);
             this.khungChatHienTai.TabIndex = 0;
             // 
             // khungNhapTin
@@ -227,10 +200,10 @@
             this.khungNhapTin.Controls.Add(this.nutGui);
             this.khungNhapTin.Controls.Add(this.oNhapTin);
             this.khungNhapTin.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.khungNhapTin.Location = new System.Drawing.Point(0, 488);
+            this.khungNhapTin.Location = new System.Drawing.Point(0, 667);
             this.khungNhapTin.Margin = new System.Windows.Forms.Padding(2);
             this.khungNhapTin.Name = "khungNhapTin";
-            this.khungNhapTin.Size = new System.Drawing.Size(447, 81);
+            this.khungNhapTin.Size = new System.Drawing.Size(648, 81);
             this.khungNhapTin.TabIndex = 3;
             // 
             // nutEmoji
@@ -275,7 +248,7 @@
             this.nutGui.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.nutGui.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.nutGui.ForeColor = System.Drawing.Color.White;
-            this.nutGui.Location = new System.Drawing.Point(386, 8);
+            this.nutGui.Location = new System.Drawing.Point(587, 8);
             this.nutGui.Margin = new System.Windows.Forms.Padding(2);
             this.nutGui.Name = "nutGui";
             this.nutGui.Size = new System.Drawing.Size(45, 41);
@@ -284,7 +257,7 @@
             // 
             // oNhapTin
             // 
-            this.oNhapTin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.oNhapTin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.oNhapTin.BorderRadius = 15;
             this.oNhapTin.Cursor = System.Windows.Forms.Cursors.IBeam;
@@ -303,7 +276,7 @@
             this.oNhapTin.Name = "oNhapTin";
             this.oNhapTin.PlaceholderText = "Type a new message";
             this.oNhapTin.SelectedText = "";
-            this.oNhapTin.Size = new System.Drawing.Size(371, 41);
+            this.oNhapTin.Size = new System.Drawing.Size(572, 41);
             this.oNhapTin.TabIndex = 0;
             // 
             // khungTinNhan
@@ -316,7 +289,7 @@
             this.khungTinNhan.Margin = new System.Windows.Forms.Padding(2);
             this.khungTinNhan.Name = "khungTinNhan";
             this.khungTinNhan.Padding = new System.Windows.Forms.Padding(8);
-            this.khungTinNhan.Size = new System.Drawing.Size(447, 529);
+            this.khungTinNhan.Size = new System.Drawing.Size(648, 708);
             this.khungTinNhan.TabIndex = 2;
             this.khungTinNhan.WrapContents = false;
             // 
@@ -326,7 +299,7 @@
             this.duongKe1.Location = new System.Drawing.Point(0, 32);
             this.duongKe1.Margin = new System.Windows.Forms.Padding(2);
             this.duongKe1.Name = "duongKe1";
-            this.duongKe1.Size = new System.Drawing.Size(447, 8);
+            this.duongKe1.Size = new System.Drawing.Size(648, 8);
             this.duongKe1.TabIndex = 1;
             // 
             // tieuDeChat
@@ -338,7 +311,7 @@
             this.tieuDeChat.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.tieuDeChat.Name = "tieuDeChat";
             this.tieuDeChat.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.tieuDeChat.Size = new System.Drawing.Size(447, 32);
+            this.tieuDeChat.Size = new System.Drawing.Size(648, 32);
             this.tieuDeChat.TabIndex = 0;
             this.tieuDeChat.Text = "Weekend escape";
             this.tieuDeChat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -355,10 +328,10 @@
             this.panel3.Controls.Add(this.luongThanhVien);
             this.panel3.Controls.Add(this.tieuDeChiTiet);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(712, 0);
+            this.panel3.Location = new System.Drawing.Point(1013, 0);
             this.panel3.Margin = new System.Windows.Forms.Padding(0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(188, 569);
+            this.panel3.Size = new System.Drawing.Size(188, 748);
             this.panel3.TabIndex = 2;
             // 
             // nutRoiChat
@@ -469,14 +442,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(900, 569);
+            this.ClientSize = new System.Drawing.Size(1201, 748);
             this.Controls.Add(this.bangChinh);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ChatForm";
             this.Text = "ChatForm";
             this.bangChinh.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.chiaChinh.Panel1.ResumeLayout(false);
             this.chiaChinh.Panel2.ResumeLayout(false);
@@ -495,10 +467,8 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel bangChinh;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
-        private Guna.UI2.WinForms.Guna2ControlBox nutDong;
         // Cột giữa
         private System.Windows.Forms.SplitContainer chiaChinh;
         private System.Windows.Forms.Panel khungDanhSachChat;

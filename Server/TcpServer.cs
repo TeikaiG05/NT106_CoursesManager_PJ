@@ -57,14 +57,14 @@ namespace Server
         {
             try
             {
-                using (cli)
-                using (var ns = cli.GetStream())
-                using (var rd = new StreamReader(ns, new UTF8Encoding(false)))
-                using (var wr = new StreamWriter(ns, new UTF8Encoding(false)) { AutoFlush = true })
+                var ns = cli.GetStream();
+                var rd = new StreamReader(ns, new UTF8Encoding(false));
+                var wr = new StreamWriter(ns, new UTF8Encoding(false)) { AutoFlush = true };
                 {
-                    string line;
-                    while ((line = await rd.ReadLineAsync()) != null)
+                    while (cli.Connected)
                     {
+                        string line = await rd.ReadLineAsync();
+                        if (line == null) break;
                         Log(ep, "recv: " + line);
 
                         string type = null;
