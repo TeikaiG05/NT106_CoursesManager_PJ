@@ -78,7 +78,7 @@
 
 ## 🧭 Hướng dẫn sử dụng và giao diện ứng dụng
 ### Client:
-Sau khi khởi động ứng dụng **CourseManager**, bạn có thể thao tác các chức năng sau:
+Sau khi khởi động ứng dụng **Online Learning Application**, bạn có thể thao tác các chức năng sau:
 
 #### 🔑 1. Đăng nhập hệ thống
 - Mở ứng dụng, màn hình **Login** sẽ hiển thị.  
@@ -113,8 +113,16 @@ Sau khi đăng nhập, bạn sẽ thấy **màn hình chính (Dashboard)**:
   - Ảnh đại diện (avatar).
 
 <p align="center">
-  <img src="Client/Resources/Dashboard.png" alt="Signup UI" width="600px"/>
+  <img src="Client/Resources/Dashboardd.png" alt="Signup UI" width="600px"/>
 </p>
+
+##### 💬 Giao diện Chat
+- Cho phép người dùng trao đổi tin nhắn trong thời gian thực với các người dùng khác.
+- Giao diện gồm 2 phần chính:
+  - Danh sách người dùng / cuộc trò chuyện (bên trái): hiển thị tên, trạng thái online/offline.
+  - Khung chat chính: hiển thị nội dung tin nhắn, ô nhập, và nút gửi.
+- Tin nhắn của người dùng hiện bên phải, tin nhắn nhận được hiện bên trái.
+<p align="center"> <img src="Client/Resources/Chat.png" alt="Chat UI" width="600px"/> </p>
 
 ##### Các module khác: 
 > *Sẽ được cập nhật trong tương lai...*
@@ -126,4 +134,4 @@ Sau khi đăng nhập, bạn sẽ thấy **màn hình chính (Dashboard)**:
 > *Sẽ được cập nhật trong tương lai...* 
  
 ---
-✨ *Made by Group13_NT106.Q14 | NT106 - BT3*
+✨ *Made by Group13_NT106.Q14 | NT106 - DoAn*
