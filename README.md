@@ -63,7 +63,7 @@
 ### 🚀 Cách chạy dự án 
 1. Clone repo về máy:  
    ```bash
-   git clone https://github.com/TeikaiG05/NT106_Exercise3.git
+   git clone https://github.com/TeikaiG05/NT106_CoursesManager_PJ.git
 2. Mở solution bằng Visual Studio:  
    ```bash
    CourseManager.sln
