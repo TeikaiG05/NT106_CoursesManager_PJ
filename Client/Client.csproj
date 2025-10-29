@@ -85,6 +85,24 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Schedule\Scheduler.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Schedule\Scheduler.Designer.cs">
+      <DependentUpon>Scheduler.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Schedule\ScheduleUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Schedule\ScheduleUserControl.Designer.cs">
+      <DependentUpon>ScheduleUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Schedule\UCDays.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Schedule\UCDays.Designer.cs">
+      <DependentUpon>UCDays.cs</DependentUpon>
+    </Compile>
     <Compile Include="Session.cs" />
     <Compile Include="TcpClient.cs" />
     <EmbeddedResource Include="Dashboard.resx">
@@ -103,6 +121,15 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Schedule\Scheduler.resx">
+      <DependentUpon>Scheduler.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Schedule\ScheduleUserControl.resx">
+      <DependentUpon>ScheduleUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Schedule\UCDays.resx">
+      <DependentUpon>UCDays.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -163,12 +190,6 @@
     <None Include="Resources\avatar-anh-meo-cute-3.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{44aa0a2a-6382-4724-9344-587d7bda62ad}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\icons8-logout-481.png" />
   </ItemGroup>
   <ItemGroup>
@@ -182,6 +203,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{44aa0a2a-6382-4724-9344-587d7bda62ad}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
