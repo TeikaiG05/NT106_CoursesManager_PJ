@@ -89,12 +89,19 @@ Sau khi khởi động ứng dụng **CourseManager**, bạn có thể thao tác
 |------------|-----------|
 | admin      | admin     |
 
+<p align="center">
+  <img src="NT106_BT2/Resources/Login.png" alt="Login UI" width="600px"/>
+</p>
 
 #### 📝 2. Đăng ký tài khoản
 - Chọn **Đăng ký (Sign up)** ở giao diện đăng nhập.  
 - Điền thông tin cá nhân: họ tên, ngày sinh, giới tính, email, mật khẩu, xác nhận mật khẩu.  
 - Nhấn **Đăng ký** → Hệ thống tự động lưu vào cơ sở dữ liệu.  
 - Sau khi đăng ký thành công, ứng dụng sẽ quay lại màn hình đăng nhập.
+- 
+<p align="center">
+  <img src="NT106_BT2/Resources/Signup.png" alt="Signup UI" width="600px"/>
+</p>
 
 #### 📊 3. Giao diện Dashboard
 Sau khi đăng nhập, bạn sẽ thấy **màn hình chính (Dashboard)**:
@@ -104,6 +111,10 @@ Sau khi đăng nhập, bạn sẽ thấy **màn hình chính (Dashboard)**:
   - 📧 Email người dùng.
   - 📅 Ngày sinh.  
   - Ảnh đại diện (avatar).
+
+<p align="center">
+  <img src="NT106_BT2/Resources/Dashboard.png" alt="Signup UI" width="600px"/>
+</p>
 
 ##### Các module khác: 
 > *Sẽ được cập nhật trong tương lai...*
