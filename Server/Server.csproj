@@ -87,5 +87,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\NT106_CoursesManager_PJ-Schedule-Cuong\Client\Client.csproj">
+      <Project>{a6b18c4b-4978-446d-8320-96ef0ca6e909}</Project>
+      <Name>Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{44aa0a2a-6382-4724-9344-587d7bda62ad}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
