@@ -60,9 +60,11 @@
             this.nw_password = new Guna.UI2.WinForms.Guna2TextBox();
             this.cFirstname = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2PictureBox1 = new Guna.UI2.WinForms.Guna2PictureBox();
+            this.pnTitleBar = new Guna.UI2.WinForms.Guna2Panel();
             this.pn_login.SuspendLayout();
             this.pn_regis.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
+            this.pnTitleBar.SuspendLayout();
             this.SuspendLayout();
             // 
             // guna2Elipse1
@@ -135,7 +137,7 @@
             this.guna2ControlBox1.ControlBoxType = Guna.UI2.WinForms.Enums.ControlBoxType.MinimizeBox;
             this.guna2ControlBox1.FillColor = System.Drawing.Color.White;
             this.guna2ControlBox1.IconColor = System.Drawing.Color.Black;
-            this.guna2ControlBox1.Location = new System.Drawing.Point(764, 12);
+            this.guna2ControlBox1.Location = new System.Drawing.Point(783, 5);
             this.guna2ControlBox1.Name = "guna2ControlBox1";
             this.guna2ControlBox1.Size = new System.Drawing.Size(45, 29);
             this.guna2ControlBox1.TabIndex = 8;
@@ -145,7 +147,7 @@
             this.guna2ControlBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2ControlBox2.FillColor = System.Drawing.Color.White;
             this.guna2ControlBox2.IconColor = System.Drawing.Color.Black;
-            this.guna2ControlBox2.Location = new System.Drawing.Point(815, 12);
+            this.guna2ControlBox2.Location = new System.Drawing.Point(824, 5);
             this.guna2ControlBox2.Name = "guna2ControlBox2";
             this.guna2ControlBox2.Size = new System.Drawing.Size(45, 29);
             this.guna2ControlBox2.TabIndex = 9;
@@ -265,7 +267,7 @@
             this.pn_regis.Controls.Add(this.nw_password);
             this.pn_regis.Controls.Add(this.cFirstname);
             this.pn_regis.FillColor = System.Drawing.Color.White;
-            this.pn_regis.Location = new System.Drawing.Point(531, 47);
+            this.pn_regis.Location = new System.Drawing.Point(515, 47);
             this.pn_regis.Name = "pn_regis";
             this.pn_regis.ShadowColor = System.Drawing.Color.BlueViolet;
             this.pn_regis.Size = new System.Drawing.Size(345, 446);
@@ -526,7 +528,6 @@
             this.nw_password.TabIndex = 3;
             this.nw_password.UseSystemPasswordChar = true;
             this.nw_password.IconRightClick += new System.EventHandler(this.nw_password_IRC);
-            this.nw_password.TextChanged += new System.EventHandler(this.nw_password_TextChanged);
             // 
             // cFirstname
             // 
@@ -561,7 +562,16 @@
             this.guna2PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.guna2PictureBox1.TabIndex = 0;
             this.guna2PictureBox1.TabStop = false;
-            this.guna2PictureBox1.Click += new System.EventHandler(this.guna2PictureBox1_Click);
+            // 
+            // pnTitleBar
+            // 
+            this.pnTitleBar.Controls.Add(this.guna2ControlBox2);
+            this.pnTitleBar.Controls.Add(this.guna2ControlBox1);
+            this.pnTitleBar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnTitleBar.Location = new System.Drawing.Point(0, 0);
+            this.pnTitleBar.Name = "pnTitleBar";
+            this.pnTitleBar.Size = new System.Drawing.Size(872, 41);
+            this.pnTitleBar.TabIndex = 15;
             // 
             // Login_Signup
             // 
@@ -569,11 +579,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(872, 505);
+            this.Controls.Add(this.guna2PictureBox1);
+            this.Controls.Add(this.pnTitleBar);
             this.Controls.Add(this.pn_regis);
             this.Controls.Add(this.pn_login);
-            this.Controls.Add(this.guna2ControlBox2);
-            this.Controls.Add(this.guna2ControlBox1);
-            this.Controls.Add(this.guna2PictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Login_Signup";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -584,6 +593,7 @@
             this.pn_regis.ResumeLayout(false);
             this.pn_regis.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).EndInit();
+            this.pnTitleBar.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -621,6 +631,7 @@
         private Guna.UI2.WinForms.Guna2RadioButton cMale;
         private System.Windows.Forms.Label label7;
         private Guna.UI2.WinForms.Guna2RadioButton cOther;
+        private Guna.UI2.WinForms.Guna2Panel pnTitleBar;
     }
 }
 

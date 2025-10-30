@@ -40,15 +40,17 @@
             this.cCommunities = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2ContainerControl1 = new Guna.UI2.WinForms.Guna2ContainerControl();
+            this.pnTitleBar = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2ShadowPanel1.SuspendLayout();
+            this.pnTitleBar.SuspendLayout();
             this.SuspendLayout();
             // 
             // guna2ControlBox1
             // 
             this.guna2ControlBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2ControlBox1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.guna2ControlBox1.FillColor = System.Drawing.Color.Pink;
             this.guna2ControlBox1.IconColor = System.Drawing.Color.Black;
-            this.guna2ControlBox1.Location = new System.Drawing.Point(1244, 10);
+            this.guna2ControlBox1.Location = new System.Drawing.Point(1192, 12);
             this.guna2ControlBox1.Name = "guna2ControlBox1";
             this.guna2ControlBox1.Size = new System.Drawing.Size(45, 29);
             this.guna2ControlBox1.TabIndex = 2;
@@ -57,9 +59,9 @@
             // 
             this.guna2ControlBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2ControlBox2.ControlBoxType = Guna.UI2.WinForms.Enums.ControlBoxType.MinimizeBox;
-            this.guna2ControlBox2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.guna2ControlBox2.FillColor = System.Drawing.Color.Pink;
             this.guna2ControlBox2.IconColor = System.Drawing.Color.Black;
-            this.guna2ControlBox2.Location = new System.Drawing.Point(1193, 12);
+            this.guna2ControlBox2.Location = new System.Drawing.Point(1141, 12);
             this.guna2ControlBox2.Name = "guna2ControlBox2";
             this.guna2ControlBox2.Size = new System.Drawing.Size(45, 29);
             this.guna2ControlBox2.TabIndex = 3;
@@ -243,26 +245,37 @@
             // 
             // guna2ContainerControl1
             // 
-            this.guna2ContainerControl1.Location = new System.Drawing.Point(97, 47);
+            this.guna2ContainerControl1.Location = new System.Drawing.Point(89, 47);
             this.guna2ContainerControl1.Name = "guna2ContainerControl1";
-            this.guna2ContainerControl1.Size = new System.Drawing.Size(1201, 748);
+            this.guna2ContainerControl1.Size = new System.Drawing.Size(1209, 748);
             this.guna2ContainerControl1.TabIndex = 11;
             this.guna2ContainerControl1.Text = "guna2ContainerControl1";
+            // 
+            // pnTitleBar
+            // 
+            this.pnTitleBar.BackColor = System.Drawing.Color.Pink;
+            this.pnTitleBar.Controls.Add(this.guna2ControlBox2);
+            this.pnTitleBar.Controls.Add(this.guna2ControlBox1);
+            this.pnTitleBar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnTitleBar.Location = new System.Drawing.Point(0, 0);
+            this.pnTitleBar.Name = "pnTitleBar";
+            this.pnTitleBar.Size = new System.Drawing.Size(1245, 52);
+            this.pnTitleBar.TabIndex = 12;
             // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1297, 792);
+            this.ClientSize = new System.Drawing.Size(1245, 792);
             this.Controls.Add(this.guna2ShadowPanel1);
-            this.Controls.Add(this.guna2ControlBox2);
-            this.Controls.Add(this.guna2ControlBox1);
             this.Controls.Add(this.guna2ContainerControl1);
+            this.Controls.Add(this.pnTitleBar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Dashboard";
             this.Text = " ";
             this.Load += new System.EventHandler(this.Dashboard_Load);
             this.guna2ShadowPanel1.ResumeLayout(false);
+            this.pnTitleBar.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -280,5 +293,6 @@
         private Guna.UI2.WinForms.Guna2Button btnLogout;
         private Guna.UI2.WinForms.Guna2ShadowPanel guna2ShadowPanel1;
         private Guna.UI2.WinForms.Guna2ContainerControl guna2ContainerControl1;
+        private Guna.UI2.WinForms.Guna2Panel pnTitleBar;
     }
 }

@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,6 +18,13 @@ namespace NT106_BT2
 {
     public partial class Dashboard : Form
     {
+        [DllImport("user32.dll", EntryPoint = "ReleaseCapture")]
+        private extern static void ReleaseCapture();
+
+        [DllImport("user32.dll", EntryPoint = "SendMessage")]
+        private extern static void SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
+        private const int WM_NCLBUTTONDOWN = 0xA1;
+        private const int HTCAPTION = 0x2;
         private readonly string email;
         private Form currentFormChild;
         private string fullName;
@@ -42,8 +50,8 @@ namespace NT106_BT2
             Session.IsLoggingOut = true;
             await TcpHelper.LogoutAsync(Session.Email, Session.Token);
             Session.Clear();
-            this.Hide();
-            new Login_Signup().Show();
+
+            Application.Restart(); // khởi động lại app từ đầu (quay về Login)
         }
         #endregion
 
@@ -70,17 +78,15 @@ namespace NT106_BT2
             }
             catch
             {
-                // bỏ qua lỗi khi tắt app
             }
             finally
             {
-                TcpHelper.Disconnect(); // 🔌 ngắt kết nối gọn gàng
+                TcpHelper.Disconnect();
                 Application.Exit();
             }
         }
         private void OpenChildForm(Form childForm)
         {
-            // Nếu đã có form con đang mở -> đóng lại
             if (currentFormChild != null)
                 currentFormChild.Close();
 
@@ -89,26 +95,31 @@ namespace NT106_BT2
             childForm.FormBorderStyle = FormBorderStyle.None;
             childForm.Dock = DockStyle.Fill;
 
-            guna2ContainerControl1.Controls.Clear(); // Xóa control cũ trong container
-            guna2ContainerControl1.Controls.Add(childForm); // Thêm form mới vào container
+            guna2ContainerControl1.Controls.Clear();
+            guna2ContainerControl1.Controls.Add(childForm);
             guna2ContainerControl1.Tag = childForm;
             childForm.BringToFront();
             childForm.Show();
-        }
-        private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void splitContainer1_Panel2_Paint_1(object sender, PaintEventArgs e)
-        {
-
         }
 
         private void Dashboard_Load(object sender, EventArgs e)
         {
             OpenChildForm(new Profile(fullName, birthday, gender, email));
             lb_profile.Checked = true;
+            EnableDrag(pnTitleBar);
         }
+        #region Move form
+        private void EnableDrag(Control dragArea)
+        {
+            dragArea.MouseDown += (sender, e) =>
+            {
+                if (e.Button == MouseButtons.Left)
+                {
+                    ReleaseCapture();
+                    SendMessage(this.Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+                }
+            };
+        }
+        #endregion
     }
 }

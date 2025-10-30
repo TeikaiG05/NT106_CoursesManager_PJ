@@ -1,6 +1,7 @@
 ﻿using Common;
 using Guna.UI2.AnimatorNS;
 using Guna.UI2.WinForms;
+using NT106_BT2.Notifications;
 using System;
 using System.IO;
 using System.Linq;
@@ -8,7 +9,8 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using NT106_BT2.Notifications;
+using System.Runtime.InteropServices;
+using static NT106_BT2.Notifications.ToastNotification;
 
 
 namespace NT106_BT2
@@ -16,7 +18,13 @@ namespace NT106_BT2
     public partial class Login_Signup : Form
     {
         private Guna2Transition Guna2Transistion1;
+        [DllImport("user32.dll", EntryPoint = "ReleaseCapture")]
+        private extern static void ReleaseCapture();
 
+        [DllImport("user32.dll", EntryPoint = "SendMessage")]
+        private extern static void SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
+        private const int WM_NCLBUTTONDOWN = 0xA1;
+        private const int HTCAPTION = 0x2;
         private static readonly string SessPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),"NT106_Exercise3", "session.json");
 
         private static readonly string[] MONTHS = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
@@ -24,6 +32,7 @@ namespace NT106_BT2
         public Login_Signup()
         {
             InitializeComponent();
+            EnableDrag(pnTitleBar);
             Guna2Transistion1 = new Guna2Transition();
             pn_login.Visible = true;
             pn_regis.Visible = false;
@@ -99,7 +108,6 @@ namespace NT106_BT2
             }
         }
 
-
         #region UI: switch 2 panel
         private void cToLogin_Click(object sender, EventArgs e)
         {
@@ -169,8 +177,12 @@ namespace NT106_BT2
             if (cMale.Checked) return "Male";
             if (cFemale.Checked) return "Female";
             if (cOther.Checked) return "Other";
+
+            var toast = new ToastNotification("Vui lòng chọn giới tính.", ToastNotification.ToastType.Warning);
+            toast.ShowNotification(this);
             return null;
         }
+
 
         private void ClearSignupFields()
         {
@@ -237,7 +249,7 @@ namespace NT106_BT2
             string year = cYear.SelectedItem?.ToString();
             string month = cMonth.SelectedItem?.ToString();
             string day = cDay.SelectedItem?.ToString();
-            string gender = GetSelectedGender().ToString();
+            string gender = GetSelectedGender();
             string email = cEmail.Text.Trim();
             string pass = nw_password.Text;
             string conf = nw_cfpassword.Text;
@@ -369,15 +381,6 @@ namespace NT106_BT2
         }
         #endregion
 
-        private void guna2PictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void nw_password_TextChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void nw_password_IRC(object sender, EventArgs e)
         {
@@ -396,7 +399,18 @@ namespace NT106_BT2
             cPassword.UseSystemPasswordChar = !cPassword.UseSystemPasswordChar;
             cPassword.IconRight = cPassword.UseSystemPasswordChar ? Properties.Resources.icons8_eye_close_50 : Properties.Resources.icons8_eye_open_50;
         }
-
-
+        #region Move form
+        private void EnableDrag(Control dragArea)
+        {
+            dragArea.MouseDown += (sender, e) =>
+            {
+                if (e.Button == MouseButtons.Left)
+                {
+                    ReleaseCapture();
+                    SendMessage(this.Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+                }
+            };
+        }
+        #endregion
     }
 }
