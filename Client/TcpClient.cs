@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Common;
+using Newtonsoft.Json;
+using System;
 using System.Configuration;
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace NT106_BT2
 {
@@ -17,15 +20,16 @@ namespace NT106_BT2
 
         private static CancellationTokenSource ctsListen;
 
-        private static readonly string Host = ConfigurationManager.AppSettings["ServerHost"] ?? "127.0.0.1";
-        private static readonly int Port = int.TryParse(ConfigurationManager.AppSettings["ServerPort"], out int p) ? p : 8080;
+        private static readonly string Host =
+            ConfigurationManager.AppSettings["ServerHost"] ?? "127.0.0.1";
+        private static readonly int Port =
+            int.TryParse(ConfigurationManager.AppSettings["ServerPort"], out int p) ? p : 8080;
 
-        public static event Action<string> OnMessageReceived;  // 🔹 Sự kiện cho chat realtime (JSON đến từ server)
-        public static event Action<string> OnError;            // 🔹 Báo lỗi kết nối
+        public static event Action<string> OnMessageReceived;
+        public static event Action<string> OnError;
 
         public static bool IsConnected => cli?.Connected ?? false;
 
-        // ========== KẾT NỐI ==========
         public static async Task ConnectAsync()
         {
             try
@@ -39,9 +43,10 @@ namespace NT106_BT2
                 rd = new StreamReader(ns, new UTF8Encoding(false));
                 wr = new StreamWriter(ns, new UTF8Encoding(false)) { AutoFlush = true };
 
-                Console.WriteLine($"✅ Connected to {Host}:{Port}");
+                ctsListen = new CancellationTokenSource();
+                var token = ctsListen.Token;
 
-                // 🔹 Bắt đầu đọc dữ liệu liên tục trong background
+                // VÒNG LẶP LẮNG NGHE
                 _ = Task.Run(async () =>
                 {
                     try
@@ -50,41 +55,25 @@ namespace NT106_BT2
                         {
                             var line = await rd.ReadLineAsync();
                             if (line == null) break;
+
+                            MessageBox.Show("TcpHelper recv: " + line);   // <= tạm bật
+
                             OnMessageReceived?.Invoke(line);
                         }
                     }
                     catch (Exception ex)
                     {
-                        OnError?.Invoke("❌ Connection lost: " + ex.Message);
+                        OnError?.Invoke("Connection lost: " + ex.Message);
                     }
                 });
             }
             catch (Exception ex)
             {
-                OnError?.Invoke("❌ Cannot connect: " + ex.Message);
+                OnError?.Invoke("Cannot connect: " + ex.Message);
                 throw;
             }
         }
-        public static async Task LogoutAsync(string username, string token)
-        {
-            if (cli == null || !cli.Connected) return;
 
-            var req = new
-            {
-                type = Common.MsgType.LOGOUT,
-                username = username,
-                token = token
-            };
-
-            string json = Newtonsoft.Json.JsonConvert.SerializeObject(req);
-            await SendLineAsync(json);
-
-            // Sau khi gửi logout thì ngắt kết nối
-            Disconnect();
-        }
-
-
-        // ========== GỬI DỮ LIỆU ==========
         public static async Task SendLineAsync(string line)
         {
             if (cli == null || !cli.Connected)
@@ -95,37 +84,44 @@ namespace NT106_BT2
                 await wr.WriteLineAsync(line);
                 await wr.FlushAsync();
             }
-            catch (IOException)
+            catch (IOException ex)
             {
-                Console.WriteLine("⚠️ Connection lost. Reconnecting...");
-                await ConnectAsync();
+                OnError?.Invoke("Connection lost while sending: " + ex.Message);
             }
         }
 
-
-        // ========== LẮNG NGHE PHẢN HỒI ==========
-        private static async Task ListenLoop(CancellationToken token)
+        public static async Task SendGroupChatAsync(string roomCode, string message,
+                                                    string fromEmail, string fromName)
         {
-            try
+            var chat = new Common.GroupChatMsg
             {
-                while (!token.IsCancellationRequested && IsConnected)
-                {
-                    string line = await rd.ReadLineAsync();
-                    if (line == null) break;
-                    OnMessageReceived?.Invoke(line); // 🔹 Gửi event lên UI
-                }
-            }
-            catch (Exception ex)
-            {
-                OnError?.Invoke("Listen error: " + ex.Message);
-            }
-            finally
-            {
-                Disconnect();
-            }
+                type = Common.MsgType.GROUP_CHAT,
+                roomCode = roomCode,
+                fromEmail = fromEmail,
+                fromName = fromName,
+                message = message
+            };
+
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(chat);
+            await SendLineAsync(json);
         }
 
-        // ========== NGẮT KẾT NỐI ==========
+        public static async Task LogoutAsync(string username, string token)
+        {
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(token))
+                return;
+
+            var req = new Common.LogoutReq
+            {
+                type = Common.MsgType.LOGOUT,
+                username = username,
+                token = token
+            };
+
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(req);
+            await SendLineAsync(json);
+        }
+
         public static void Disconnect()
         {
             try
@@ -139,7 +135,6 @@ namespace NT106_BT2
                 ns = null;
                 rd = null;
                 wr = null;
-                Console.WriteLine("🔌 Disconnected");
             }
             catch (Exception ex)
             {
@@ -147,4 +142,5 @@ namespace NT106_BT2
             }
         }
     }
+
 }

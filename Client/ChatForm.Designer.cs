@@ -31,11 +31,9 @@
             this.bangChinh = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.chiaChinh = new System.Windows.Forms.SplitContainer();
-            this.khungDanhSachChat = new System.Windows.Forms.Panel();
             this.luongChatItems = new System.Windows.Forms.FlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
-            this.oTimKiem = new Guna.UI2.WinForms.Guna2TextBox();
             this.khungChatHienTai = new System.Windows.Forms.Panel();
             this.khungNhapTin = new System.Windows.Forms.Panel();
             this.nutEmoji = new Guna.UI2.WinForms.Guna2Button();
@@ -53,17 +51,19 @@
             this.tieuDeTuyChon = new System.Windows.Forms.Label();
             this.luongThanhVien = new System.Windows.Forms.FlowLayoutPanel();
             this.tieuDeChiTiet = new System.Windows.Forms.Label();
+            this.khungDanhSachChat = new System.Windows.Forms.Panel();
+            this.oTimKiem = new Guna.UI2.WinForms.Guna2TextBox();
             this.bangChinh.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chiaChinh)).BeginInit();
             this.chiaChinh.Panel1.SuspendLayout();
             this.chiaChinh.Panel2.SuspendLayout();
             this.chiaChinh.SuspendLayout();
-            this.khungDanhSachChat.SuspendLayout();
             this.luongChatItems.SuspendLayout();
             this.khungChatHienTai.SuspendLayout();
             this.khungNhapTin.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.khungDanhSachChat.SuspendLayout();
             this.SuspendLayout();
             // 
             // bangChinh
@@ -109,20 +109,9 @@
             // 
             this.chiaChinh.Panel2.Controls.Add(this.khungChatHienTai);
             this.chiaChinh.Size = new System.Drawing.Size(975, 748);
-            this.chiaChinh.SplitterDistance = 324;
+            this.chiaChinh.SplitterDistance = 315;
             this.chiaChinh.SplitterWidth = 3;
             this.chiaChinh.TabIndex = 0;
-            // 
-            // khungDanhSachChat
-            // 
-            this.khungDanhSachChat.Controls.Add(this.luongChatItems);
-            this.khungDanhSachChat.Controls.Add(this.oTimKiem);
-            this.khungDanhSachChat.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.khungDanhSachChat.Location = new System.Drawing.Point(0, 0);
-            this.khungDanhSachChat.Margin = new System.Windows.Forms.Padding(2);
-            this.khungDanhSachChat.Name = "khungDanhSachChat";
-            this.khungDanhSachChat.Size = new System.Drawing.Size(324, 748);
-            this.khungDanhSachChat.TabIndex = 0;
             // 
             // luongChatItems
             // 
@@ -130,7 +119,6 @@
             this.luongChatItems.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.luongChatItems.Controls.Add(this.label1);
             this.luongChatItems.Controls.Add(this.guna2Separator1);
-            this.luongChatItems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.luongChatItems.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.luongChatItems.Location = new System.Drawing.Point(0, 0);
             this.luongChatItems.Margin = new System.Windows.Forms.Padding(2);
@@ -158,27 +146,6 @@
             this.guna2Separator1.Size = new System.Drawing.Size(210, 10);
             this.guna2Separator1.TabIndex = 2;
             // 
-            // oTimKiem
-            // 
-            this.oTimKiem.BorderRadius = 15;
-            this.oTimKiem.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.oTimKiem.DefaultText = "";
-            this.oTimKiem.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.oTimKiem.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.oTimKiem.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.oTimKiem.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.oTimKiem.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.oTimKiem.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.oTimKiem.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.oTimKiem.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.oTimKiem.Location = new System.Drawing.Point(8, 8);
-            this.oTimKiem.Margin = new System.Windows.Forms.Padding(2);
-            this.oTimKiem.Name = "oTimKiem";
-            this.oTimKiem.PlaceholderText = "Search";
-            this.oTimKiem.SelectedText = "";
-            this.oTimKiem.Size = new System.Drawing.Size(210, 29);
-            this.oTimKiem.TabIndex = 0;
-            // 
             // khungChatHienTai
             // 
             this.khungChatHienTai.Controls.Add(this.khungNhapTin);
@@ -189,7 +156,7 @@
             this.khungChatHienTai.Location = new System.Drawing.Point(0, 0);
             this.khungChatHienTai.Margin = new System.Windows.Forms.Padding(2);
             this.khungChatHienTai.Name = "khungChatHienTai";
-            this.khungChatHienTai.Size = new System.Drawing.Size(648, 748);
+            this.khungChatHienTai.Size = new System.Drawing.Size(657, 748);
             this.khungChatHienTai.TabIndex = 0;
             // 
             // khungNhapTin
@@ -203,7 +170,7 @@
             this.khungNhapTin.Location = new System.Drawing.Point(0, 667);
             this.khungNhapTin.Margin = new System.Windows.Forms.Padding(2);
             this.khungNhapTin.Name = "khungNhapTin";
-            this.khungNhapTin.Size = new System.Drawing.Size(648, 81);
+            this.khungNhapTin.Size = new System.Drawing.Size(657, 81);
             this.khungNhapTin.TabIndex = 3;
             // 
             // nutEmoji
@@ -289,7 +256,7 @@
             this.khungTinNhan.Margin = new System.Windows.Forms.Padding(2);
             this.khungTinNhan.Name = "khungTinNhan";
             this.khungTinNhan.Padding = new System.Windows.Forms.Padding(8);
-            this.khungTinNhan.Size = new System.Drawing.Size(648, 708);
+            this.khungTinNhan.Size = new System.Drawing.Size(657, 708);
             this.khungTinNhan.TabIndex = 2;
             this.khungTinNhan.WrapContents = false;
             // 
@@ -299,7 +266,7 @@
             this.duongKe1.Location = new System.Drawing.Point(0, 32);
             this.duongKe1.Margin = new System.Windows.Forms.Padding(2);
             this.duongKe1.Name = "duongKe1";
-            this.duongKe1.Size = new System.Drawing.Size(648, 8);
+            this.duongKe1.Size = new System.Drawing.Size(657, 8);
             this.duongKe1.TabIndex = 1;
             // 
             // tieuDeChat
@@ -311,7 +278,7 @@
             this.tieuDeChat.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.tieuDeChat.Name = "tieuDeChat";
             this.tieuDeChat.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.tieuDeChat.Size = new System.Drawing.Size(648, 32);
+            this.tieuDeChat.Size = new System.Drawing.Size(657, 32);
             this.tieuDeChat.TabIndex = 0;
             this.tieuDeChat.Text = "Weekend escape";
             this.tieuDeChat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -438,6 +405,38 @@
             this.tieuDeChiTiet.TabIndex = 0;
             this.tieuDeChiTiet.Text = "People (0)";
             // 
+            // khungDanhSachChat
+            // 
+            this.khungDanhSachChat.Controls.Add(this.luongChatItems);
+            this.khungDanhSachChat.Controls.Add(this.oTimKiem);
+            this.khungDanhSachChat.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.khungDanhSachChat.Location = new System.Drawing.Point(0, 0);
+            this.khungDanhSachChat.Margin = new System.Windows.Forms.Padding(2);
+            this.khungDanhSachChat.Name = "khungDanhSachChat";
+            this.khungDanhSachChat.Size = new System.Drawing.Size(315, 748);
+            this.khungDanhSachChat.TabIndex = 0;
+            // 
+            // oTimKiem
+            // 
+            this.oTimKiem.BorderRadius = 15;
+            this.oTimKiem.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.oTimKiem.DefaultText = "";
+            this.oTimKiem.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.oTimKiem.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.oTimKiem.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.oTimKiem.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.oTimKiem.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.oTimKiem.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.oTimKiem.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.oTimKiem.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.oTimKiem.Location = new System.Drawing.Point(8, 8);
+            this.oTimKiem.Margin = new System.Windows.Forms.Padding(2);
+            this.oTimKiem.Name = "oTimKiem";
+            this.oTimKiem.PlaceholderText = "Search";
+            this.oTimKiem.SelectedText = "";
+            this.oTimKiem.Size = new System.Drawing.Size(210, 29);
+            this.oTimKiem.TabIndex = 0;
+            // 
             // ChatForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -454,12 +453,12 @@
             this.chiaChinh.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chiaChinh)).EndInit();
             this.chiaChinh.ResumeLayout(false);
-            this.khungDanhSachChat.ResumeLayout(false);
             this.luongChatItems.ResumeLayout(false);
             this.luongChatItems.PerformLayout();
             this.khungChatHienTai.ResumeLayout(false);
             this.khungNhapTin.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
+            this.khungDanhSachChat.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -471,8 +470,6 @@
         private System.Windows.Forms.Panel panel3;
         // Cột giữa
         private System.Windows.Forms.SplitContainer chiaChinh;
-        private System.Windows.Forms.Panel khungDanhSachChat;
-        private Guna.UI2.WinForms.Guna2TextBox oTimKiem;
         private System.Windows.Forms.FlowLayoutPanel luongChatItems;
         private System.Windows.Forms.Panel khungChatHienTai;
         private System.Windows.Forms.Panel khungNhapTin;
@@ -493,5 +490,7 @@
         private Guna.UI2.WinForms.Guna2Button nutRoiChat;
         private System.Windows.Forms.Label label1;
         private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
+        private System.Windows.Forms.Panel khungDanhSachChat;
+        private Guna.UI2.WinForms.Guna2TextBox oTimKiem;
     }
 }

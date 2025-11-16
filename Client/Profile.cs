@@ -16,11 +16,18 @@ namespace NT106_BT2
         {
             InitializeComponent();
 
-            // Giả sử bạn có các control như Label hoặc TextBox
             lbName.Text = name;
             tbBirthday.Text = birthday;
             tbGender.Text = gender;
             tbEmail.Text = email;
+            string role = Session.Role;
+
+            if (Session.Email == "admin@localhost")
+                tbRole.Text = "Admin";
+            else if (string.Equals(Session.Role, "Owner", StringComparison.OrdinalIgnoreCase))
+                tbRole.Text = "Teacher";
+            else
+                tbRole.Text = "Student";
         }
     }
 }

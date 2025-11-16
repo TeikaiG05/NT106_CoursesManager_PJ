@@ -85,7 +85,7 @@ namespace NT106_BT2
                 Application.Exit();
             }
         }
-        private void OpenChildForm(Form childForm)
+        public void OpenChildForm(Form childForm)
         {
             if (currentFormChild != null)
                 currentFormChild.Close();
@@ -121,5 +121,10 @@ namespace NT106_BT2
             };
         }
         #endregion
+
+        private void btnTeams_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new TeamsForm(this));
+        }
     }
 }

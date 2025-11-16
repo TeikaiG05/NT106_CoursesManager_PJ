@@ -73,6 +73,16 @@ namespace NT106_BT2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_arrow_30 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-arrow-30", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_arrow_right_50 {
             get {
                 object obj = ResourceManager.GetObject("icons8-arrow-right-50", resourceCulture);
@@ -103,6 +113,16 @@ namespace NT106_BT2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_call_24 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-call-24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_camera_24 {
             get {
                 object obj = ResourceManager.GetObject("icons8-camera-24", resourceCulture);
@@ -116,6 +136,16 @@ namespace NT106_BT2.Properties {
         internal static System.Drawing.Bitmap icons8_chat_50 {
             get {
                 object obj = ResourceManager.GetObject("icons8-chat-50", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_comedy_24 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-comedy-24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -163,9 +193,29 @@ namespace NT106_BT2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_file_24 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-file-24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_gender_50 {
             get {
                 object obj = ResourceManager.GetObject("icons8-gender-50", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_join_58 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-join-58", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -233,9 +283,29 @@ namespace NT106_BT2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_send_24 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-send-24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_setting_50 {
             get {
                 object obj = ResourceManager.GetObject("icons8-setting-50", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_video_call_30 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-video-call-30", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

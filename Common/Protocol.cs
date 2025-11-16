@@ -6,6 +6,7 @@
         public const string LOGIN = "LOGIN";
         public const string LOGOUT = "LOGOUT";
         public const string LOGIN_WITH_TOKEN = "LOGIN_WITH_TOKEN";
+        public const string GROUP_CHAT = "GROUP_CHAT";
     }
 
     public class TokenLoginReq
@@ -40,6 +41,16 @@
         public string gender { get; set; }
         public string fullName { get; set; }
         public string birthday { get; set; }
+        public string role { get; set; }
+    }
+
+    public class GroupChatMsg
+    {
+        public string type { get; set; } = MsgType.GROUP_CHAT;
+        public string roomCode { get; set; }
+        public string fromEmail { get; set; }
+        public string fromName { get; set; }
+        public string message { get; set; }
     }
 
     public class OkRes

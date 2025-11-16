@@ -48,8 +48,7 @@ namespace Server
         public static (string Firstname, string Surname, DateTime? Birthday, string Gender, string Email)? GetByEmail(string email)
         {
             using (var cn = new SqlConnection(ConnStr))
-            using (var cmd = new SqlCommand(
-                "SELECT TOP 1 Firstname,Surname,Birthday,Gender,Email FROM dbo.Users WHERE Email=@e", cn))
+            using (var cmd = new SqlCommand("SELECT TOP 1 Firstname,Surname,Birthday,Gender,Email FROM dbo.Users WHERE Email=@e", cn))
             {
                 cmd.Parameters.AddWithValue("@e", email);
                 cn.Open();
@@ -66,27 +65,31 @@ namespace Server
                 }
             }
         }
-        public static (string Firstname, string Surname, DateTime? Birthday, string Gender, string Email)? FindByLogin(string email, string passwordHex)
+        public static (string Firstname, string Surname, DateTime? Birthday, string Gender, string Email, string Role)? FindByLogin(string email, string passwordHex)
         {
             using (var cn = new SqlConnection(ConnStr))
-            using (var cmd = new SqlCommand(@"SELECT Firstname,Surname,Birthday,Gender,Email FROM dbo.Users WHERE Email=@e AND PasswordEncrypted=@ph", cn))
+            using (var cmd = new SqlCommand(@"SELECT Firstname, Surname, Birthday, Gender, Email, Role FROM dbo.Users WHERE Email = @e AND PasswordEncrypted = @ph", cn))
             {
                 cmd.Parameters.AddWithValue("@e", email);
-                var p = cmd.Parameters.Add("@ph", SqlDbType.Char, 64);
-                p.Value = passwordHex;
+                cmd.Parameters.AddWithValue("@ph", passwordHex);
 
                 cn.Open();
                 using (var rd = cmd.ExecuteReader())
                 {
                     if (!rd.Read()) return null;
-                    string fn = rd.GetString(0);
-                    string sn = rd.GetString(1);
+
+                    string fn = rd.IsDBNull(0) ? "" : rd.GetString(0);
+                    string sn = rd.IsDBNull(1) ? "" : rd.GetString(1);
                     DateTime? bd = rd.IsDBNull(2) ? (DateTime?)null : rd.GetDateTime(2);
                     string gd = rd.IsDBNull(3) ? "" : rd.GetString(3);
-                    string em = rd.GetString(4);
-                    return (fn, sn, bd, gd, em);
+                    string em = rd.IsDBNull(4) ? "" : rd.GetString(4);
+                    string role = rd.IsDBNull(5) ? "Student" : rd.GetString(5);
+
+                    return (fn, sn, bd, gd, em, role);
                 }
             }
         }
+
     }
 }
+

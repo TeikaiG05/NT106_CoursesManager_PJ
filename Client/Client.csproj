@@ -77,11 +77,42 @@
     <Compile Include="ChatForm.Designer.cs">
       <DependentUpon>ChatForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ChatPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChatPage.Designer.cs">
+      <DependentUpon>ChatPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CreateClassForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateClassForm.Designer.cs">
+      <DependentUpon>CreateClassForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dashboard.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dashboard.Designer.cs">
       <DependentUpon>Dashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DbClient.cs" />
+    <Compile Include="FilePage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FilePage.Designer.cs">
+      <DependentUpon>FilePage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GroupChatForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GroupChatForm.Designer.cs">
+      <DependentUpon>GroupChatForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="JoinClassForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="JoinClassForm.Designer.cs">
+      <DependentUpon>JoinClassForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Login_Signup.cs">
       <SubType>Form</SubType>
@@ -106,11 +137,35 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="TcpClient.cs" />
+    <Compile Include="TeamsCard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TeamsCard.Designer.cs">
+      <DependentUpon>TeamsCard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TeamsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TeamsForm.Designer.cs">
+      <DependentUpon>TeamsForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="ChatForm.resx">
       <DependentUpon>ChatForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ChatPage.resx">
+      <DependentUpon>ChatPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateClassForm.resx">
+      <DependentUpon>CreateClassForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dashboard.resx">
       <DependentUpon>Dashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GroupChatForm.resx">
+      <DependentUpon>GroupChatForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="JoinClassForm.resx">
+      <DependentUpon>JoinClassForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login_Signup.resx">
       <DependentUpon>Login_Signup.cs</DependentUpon>
@@ -128,6 +183,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="TeamsCard.resx">
+      <DependentUpon>TeamsCard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TeamsForm.resx">
+      <DependentUpon>TeamsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -210,6 +271,27 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\icons8-gender-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-join-58.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-arrow-30.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-file-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-send-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-video-call-30.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-call-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-comedy-24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

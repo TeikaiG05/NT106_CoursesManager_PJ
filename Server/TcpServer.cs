@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Common;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Common;
 
 namespace Server
 {
@@ -14,6 +15,17 @@ namespace Server
     {
         private readonly Action<string, string> log;
         private TcpListener lis;
+
+        class ClientInfo
+        {
+            public TcpClient Client;
+            public StreamWriter Writer;
+            public string Email;
+            public string FullName;
+        }
+
+        private static readonly List<ClientInfo> clients = new List<ClientInfo>();
+        private static readonly object clientsLock = new object();
 
         public TcpServer() : this(null) { }
 
@@ -55,6 +67,7 @@ namespace Server
 
         private async Task Handle(TcpClient cli, string ep)
         {
+            ClientInfo myInfo = null;
             try
             {
                 var ns = cli.GetStream();
@@ -94,12 +107,32 @@ namespace Server
                                     fullName = (v.Firstname + " " + v.Surname).Trim(),
                                     email = v.Email,
                                     birthday = v.Birthday.HasValue ? v.Birthday.Value.ToString("yyyy-MM-dd") : null,
-                                    gender = v.Gender
+                                    gender = v.Gender,
+                                    role = v.Role
                                 };
 
                                 var issued = TokenManager.Issue(login.username); // << cấp token
                                 await SendOk(wr, MsgType.LOGIN, "OK", user, issued.token, issued.exp);
                                 Log(ep, "send: OK login (token)");
+                                if (myInfo == null)
+                                {
+                                    myInfo = new ClientInfo
+                                    {
+                                        Client = cli,
+                                        Writer = wr,
+                                        Email = login.username,
+                                        FullName = user.fullName
+                                    };
+                                    lock (clientsLock)
+                                    {
+                                        clients.Add(myInfo);
+                                    }
+                                }
+                                else
+                                {
+                                    myInfo.Email = login.username;
+                                    myInfo.FullName = user.fullName;
+                                }
                             }
 
                             else
@@ -139,6 +172,7 @@ namespace Server
                             }
                             continue;
                         }
+
                         if (type == MsgType.LOGOUT)
                         {
                             LogoutReq lo = null;
@@ -150,6 +184,7 @@ namespace Server
                             Log(ep, "send: OK logout");
                             continue;
                         }
+
                         if (type == MsgType.LOGIN_WITH_TOKEN)
                         {
                             TokenLoginReq treq = null;
@@ -171,10 +206,29 @@ namespace Server
                                         gender = v.Gender
                                     };
 
-                                    var issued = TokenManager.Issue(treq.username); // làm mới token
+                                    var issued = TokenManager.Issue(treq.username);
                                     await SendOk(wr, MsgType.LOGIN, "OK", user, issued.token, issued.exp);
-                                    Log(ep, $"send: OK login (token, gender={v.Gender})");
                                     Log(ep, "send: OK token login");
+
+                                    if (myInfo == null)
+                                    {
+                                        myInfo = new ClientInfo
+                                        {
+                                            Client = cli,
+                                            Writer = wr,
+                                            Email = treq.username,
+                                            FullName = user.fullName
+                                        };
+                                        lock (clientsLock)
+                                        {
+                                            clients.Add(myInfo);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        myInfo.Email = treq.username;
+                                        myInfo.FullName = user.fullName;
+                                    }
                                 }
                                 else
                                 {
@@ -187,25 +241,73 @@ namespace Server
                             }
                             continue;
                         }
+
+
+                        if (type == MsgType.GROUP_CHAT)
+                        {
+                            GroupChatMsg chat = null;
+                            try
+                            {
+                                chat = JsonConvert.DeserializeObject<GroupChatMsg>(line);
+                            }
+                            catch
+                            {
+                                await SendErr(wr, "GROUP_CHAT: dữ liệu không hợp lệ");
+                                Log(ep, "send: ERROR group_chat json");
+                                continue;
+                            }
+
+                            string json = JsonConvert.SerializeObject(chat);
+
+                            List<ClientInfo> snapshot;
+                            lock (clientsLock)
+                            {
+                                snapshot = clients.ToList();
+                            }
+
+                            Log("GROUP_CHAT", $"clients.Count = {snapshot.Count}");
+                            foreach (var c in snapshot)
+                            {
+                                Log("GROUP_CHAT", $" -> send to {c.Email ?? "null"}");
+                            }
+
+                            foreach (var c in snapshot)
+                            {
+                                try
+                                {
+                                    await c.Writer.WriteLineAsync(json);
+                                    await c.Writer.FlushAsync();
+                                }
+                                catch { }
+                            }
+
+                            Log(ep, $"broadcast: {chat.roomCode} - {chat.fromName}: {chat.message}");
+                            continue;
+                        }
                         await SendErr(wr, "Yêu cầu không hợp lệ"); Log(ep, "send: ERROR unknown type");
                     }
                 }
                 Log(ep, "disconnected");
+                
+                if (myInfo != null)
+                {
+                    lock (clientsLock)
+                    {
+                        clients.Remove(myInfo);
+                    }
+                }
             }
             catch (Exception ex)
             {
                 Log(ep, "error: " + ex.Message);
             }
-
         }
         private static Task SendOk(StreamWriter wr, string type, string message, UserDto user, string token, DateTime exp) => wr.WriteLineAsync(JsonConvert.SerializeObject(new OkRes { ok = true, type = type, message = message, user = user, token = token, expires = exp.ToString("o") }));
 
         private class Envelope { public string type { get; set; } }
 
-        private static Task SendOk(StreamWriter wr, string type, string message, UserDto user)
-            => wr.WriteLineAsync(JsonConvert.SerializeObject(new OkRes { ok = true, type = type, message = message, user = user }));
+        private static Task SendOk(StreamWriter wr, string type, string message, UserDto user) => wr.WriteLineAsync(JsonConvert.SerializeObject(new OkRes { ok = true, type = type, message = message, user = user }));
 
-        private static Task SendErr(StreamWriter wr, string error)
-            => wr.WriteLineAsync(JsonConvert.SerializeObject(new ErrRes { ok = false, type = "ERROR", error = error }));
+        private static Task SendErr(StreamWriter wr, string error) => wr.WriteLineAsync(JsonConvert.SerializeObject(new ErrRes { ok = false, type = "ERROR", error = error }));
     }
 }

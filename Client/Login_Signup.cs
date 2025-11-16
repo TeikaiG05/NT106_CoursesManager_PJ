@@ -66,6 +66,8 @@ namespace NT106_BT2
                                 Session.Email = u.email;
                                 Session.Token = ok.token;
                                 Session.Expire = ok.expires;
+                                Session.Role = u.role;
+                                Session.FullName = u.fullName;
 
                                 if (tsRemember.Checked)
                                 {
@@ -307,6 +309,8 @@ namespace NT106_BT2
             {
                 NotificationManager.Show(this, "Xin chào Admin!", ToastNotification.ToastType.Info);
                 await Task.Delay(1000);
+                Session.Email = "admin@localhost";
+                Session.Role = "Admin";
                 ShowDashboardModal("Admin", "User", DateTime.Now.ToString("yyyy-MM-dd"), "Other", "admin@localhost");
                 return;
             }
@@ -381,7 +385,19 @@ namespace NT106_BT2
         }
         #endregion
 
-
+        #region Move form
+        private void EnableDrag(Control dragArea)
+        {
+            dragArea.MouseDown += (sender, e) =>
+            {
+                if (e.Button == MouseButtons.Left)
+                {
+                    ReleaseCapture();
+                    SendMessage(this.Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+                }
+            };
+        }
+        #endregion
         private void nw_password_IRC(object sender, EventArgs e)
         {
             nw_password.UseSystemPasswordChar = !nw_password.UseSystemPasswordChar;
@@ -399,18 +415,5 @@ namespace NT106_BT2
             cPassword.UseSystemPasswordChar = !cPassword.UseSystemPasswordChar;
             cPassword.IconRight = cPassword.UseSystemPasswordChar ? Properties.Resources.icons8_eye_close_50 : Properties.Resources.icons8_eye_open_50;
         }
-        #region Move form
-        private void EnableDrag(Control dragArea)
-        {
-            dragArea.MouseDown += (sender, e) =>
-            {
-                if (e.Button == MouseButtons.Left)
-                {
-                    ReleaseCapture();
-                    SendMessage(this.Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
-                }
-            };
-        }
-        #endregion
     }
 }
