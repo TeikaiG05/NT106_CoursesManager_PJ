@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Common;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -88,6 +90,52 @@ namespace Server
                     return (fn, sn, bd, gd, em, role);
                 }
             }
+        }
+        public static void InsertGroupMessage(string roomCode, string fromEmail, string fromName, string message, DateTime? sentAt = null)
+        {
+            using (var cn = new SqlConnection(ConnStr))
+            using (var cmd = new SqlCommand(@"INSERT INTO dbo.GroupMessages(RoomCode, FromEmail, FromName, Message, SentAt) VALUES (@rc, @fe, @fn, @msg, @sa)", cn))
+            {
+                cmd.Parameters.AddWithValue("@rc", roomCode);
+                cmd.Parameters.AddWithValue("@fe", fromEmail);
+                cmd.Parameters.AddWithValue("@fn", (object)(fromName ?? ""));
+                cmd.Parameters.AddWithValue("@msg", message);
+                cmd.Parameters.AddWithValue("@sa", (object)(sentAt ?? DateTime.UtcNow));
+
+                cn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public static List<GroupChatMsgEx> GetGroupMessages(string roomCode, int take = 50)
+        {
+            var list = new List<GroupChatMsgEx>();
+
+            using (var cn = new SqlConnection(ConnStr))
+            using (var cmd = new SqlCommand(@"SELECT TOP (@take) RoomCode, FromEmail, FromName, Message, SentAt FROM dbo.GroupMessages WHERE RoomCode = @rc ORDER BY SentAt DESC", cn))
+            {
+                cmd.Parameters.AddWithValue("@take", take);
+                cmd.Parameters.AddWithValue("@rc", roomCode);
+
+                cn.Open();
+                using (var rd = cmd.ExecuteReader())
+                {
+                    while (rd.Read())
+                    {
+                        list.Add(new GroupChatMsgEx
+                        {
+                            roomCode = rd.GetString(0),
+                            fromEmail = rd.GetString(1),
+                            fromName = rd.IsDBNull(2) ? null : rd.GetString(2),
+                            message = rd.GetString(3),
+                            sentAt = rd.GetDateTime(4),
+                        });
+                    }
+                }
+            }
+
+            list.Reverse();
+            return list;
         }
 
     }

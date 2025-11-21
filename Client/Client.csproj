@@ -161,6 +161,9 @@
     <EmbeddedResource Include="Dashboard.resx">
       <DependentUpon>Dashboard.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FilePage.resx">
+      <DependentUpon>FilePage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GroupChatForm.resx">
       <DependentUpon>GroupChatForm.cs</DependentUpon>
     </EmbeddedResource>

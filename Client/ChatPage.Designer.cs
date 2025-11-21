@@ -28,15 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.flpMessages = new System.Windows.Forms.FlowLayoutPanel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
             this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.tblMessages = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnSend = new Guna.UI2.WinForms.Guna2Button();
             this.txtMessage = new Guna.UI2.WinForms.Guna2TextBox();
+            this.btnBrowse = new Guna.UI2.WinForms.Guna2Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -48,18 +49,6 @@
             this.splitContainer2.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // flpMessages
-            // 
-            this.flpMessages.AutoScroll = true;
-            this.flpMessages.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.flpMessages.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flpMessages.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpMessages.Location = new System.Drawing.Point(0, 0);
-            this.flpMessages.Name = "flpMessages";
-            this.flpMessages.Size = new System.Drawing.Size(948, 584);
-            this.flpMessages.TabIndex = 0;
-            this.flpMessages.WrapContents = false;
             // 
             // splitContainer1
             // 
@@ -82,6 +71,7 @@
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.guna2Button2);
             this.panel1.Controls.Add(this.guna2Button1);
@@ -101,9 +91,9 @@
             this.guna2Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2Button2.ForeColor = System.Drawing.Color.White;
             this.guna2Button2.Image = global::NT106_BT2.Properties.Resources.icons8_video_call_30;
-            this.guna2Button2.Location = new System.Drawing.Point(849, 2);
+            this.guna2Button2.Location = new System.Drawing.Point(814, 3);
             this.guna2Button2.Name = "guna2Button2";
-            this.guna2Button2.Size = new System.Drawing.Size(46, 36);
+            this.guna2Button2.Size = new System.Drawing.Size(42, 34);
             this.guna2Button2.TabIndex = 3;
             // 
             // guna2Button1
@@ -116,9 +106,9 @@
             this.guna2Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2Button1.ForeColor = System.Drawing.Color.White;
             this.guna2Button1.Image = global::NT106_BT2.Properties.Resources.icons8_call_24;
-            this.guna2Button1.Location = new System.Drawing.Point(797, 2);
+            this.guna2Button1.Location = new System.Drawing.Point(872, 3);
             this.guna2Button1.Name = "guna2Button1";
-            this.guna2Button1.Size = new System.Drawing.Size(46, 36);
+            this.guna2Button1.Size = new System.Drawing.Size(42, 34);
             this.guna2Button1.TabIndex = 2;
             // 
             // splitContainer2
@@ -131,7 +121,7 @@
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.flpMessages);
+            this.splitContainer2.Panel1.Controls.Add(this.tblMessages);
             // 
             // splitContainer2.Panel2
             // 
@@ -140,9 +130,28 @@
             this.splitContainer2.SplitterDistance = 584;
             this.splitContainer2.TabIndex = 0;
             // 
+            // tblMessages
+            // 
+            this.tblMessages.AutoScroll = true;
+            this.tblMessages.AutoSize = true;
+            this.tblMessages.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tblMessages.ColumnCount = 1;
+            this.tblMessages.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tblMessages.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tblMessages.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tblMessages.Location = new System.Drawing.Point(0, 0);
+            this.tblMessages.Name = "tblMessages";
+            this.tblMessages.RowCount = 1;
+            this.tblMessages.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tblMessages.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tblMessages.Size = new System.Drawing.Size(948, 584);
+            this.tblMessages.TabIndex = 1;
+            // 
             // panel2
             // 
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.btnBrowse);
             this.panel2.Controls.Add(this.btnSend);
             this.panel2.Controls.Add(this.txtMessage);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -163,7 +172,7 @@
             this.btnSend.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnSend.ForeColor = System.Drawing.Color.White;
             this.btnSend.Image = global::NT106_BT2.Properties.Resources.icons8_send_24;
-            this.btnSend.Location = new System.Drawing.Point(718, 16);
+            this.btnSend.Location = new System.Drawing.Point(782, 16);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(47, 36);
             this.btnSend.TabIndex = 1;
@@ -181,12 +190,30 @@
             this.txtMessage.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.txtMessage.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.txtMessage.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.txtMessage.Location = new System.Drawing.Point(214, 16);
+            this.txtMessage.Location = new System.Drawing.Point(225, 16);
             this.txtMessage.Name = "txtMessage";
             this.txtMessage.PlaceholderText = "Reply";
             this.txtMessage.SelectedText = "";
             this.txtMessage.Size = new System.Drawing.Size(498, 36);
             this.txtMessage.TabIndex = 0;
+            this.txtMessage.TextChanged += new System.EventHandler(this.txtMessage_TextChanged);
+            // 
+            // btnBrowse
+            // 
+            this.btnBrowse.Animated = true;
+            this.btnBrowse.AutoRoundedCorners = true;
+            this.btnBrowse.BackColor = System.Drawing.Color.Transparent;
+            this.btnBrowse.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnBrowse.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnBrowse.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnBrowse.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnBrowse.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.btnBrowse.ForeColor = System.Drawing.Color.Black;
+            this.btnBrowse.Location = new System.Drawing.Point(729, 16);
+            this.btnBrowse.Name = "btnBrowse";
+            this.btnBrowse.Size = new System.Drawing.Size(47, 36);
+            this.btnBrowse.TabIndex = 2;
+            this.btnBrowse.Text = "...";
             // 
             // ChatPage
             // 
@@ -203,6 +230,7 @@
             this.splitContainer1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel1.PerformLayout();
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
@@ -212,8 +240,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.FlowLayoutPanel flpMessages;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Panel panel1;
         private Guna.UI2.WinForms.Guna2Button guna2Button2;
@@ -222,5 +248,7 @@
         private System.Windows.Forms.Panel panel2;
         private Guna.UI2.WinForms.Guna2Button btnSend;
         private Guna.UI2.WinForms.Guna2TextBox txtMessage;
+        private System.Windows.Forms.TableLayoutPanel tblMessages;
+        private Guna.UI2.WinForms.Guna2Button btnBrowse;
     }
 }

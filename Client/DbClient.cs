@@ -34,7 +34,7 @@ namespace NT106_BT2
 
                 return classId;
             }
-        }
+        }  
 
         public static DataTable GetClassesByUser(string email)
         {
@@ -59,7 +59,6 @@ namespace NT106_BT2
             using (var cn = new SqlConnection(ConnStr))
             {
                 cn.Open();
-
                 int classId;
                 string name;
                 string realCode;

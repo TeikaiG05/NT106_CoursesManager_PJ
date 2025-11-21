@@ -30,16 +30,16 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TeamsForm));
             this.panelTop = new System.Windows.Forms.Panel();
+            this.btnJoinOrCreate = new Guna.UI2.WinForms.Guna2Button();
+            this.ContextMenu = new Guna.UI2.WinForms.Guna2ContextMenuStrip();
+            this.tsmiCreateTeam = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiJoinTeam = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.panelContent = new System.Windows.Forms.Panel();
             this.flowTeams = new System.Windows.Forms.FlowLayoutPanel();
-            this.ContextMenu = new Guna.UI2.WinForms.Guna2ContextMenuStrip();
-            this.btnJoinOrCreate = new Guna.UI2.WinForms.Guna2Button();
-            this.tsmiCreateTeam = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiJoinTeam = new System.Windows.Forms.ToolStripMenuItem();
             this.panelTop.SuspendLayout();
-            this.panelContent.SuspendLayout();
             this.ContextMenu.SuspendLayout();
+            this.panelContent.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelTop
@@ -53,6 +53,61 @@
             this.panelTop.Name = "panelTop";
             this.panelTop.Size = new System.Drawing.Size(1148, 60);
             this.panelTop.TabIndex = 0;
+            // 
+            // btnJoinOrCreate
+            // 
+            this.btnJoinOrCreate.BackColor = System.Drawing.Color.Transparent;
+            this.btnJoinOrCreate.ContextMenuStrip = this.ContextMenu;
+            this.btnJoinOrCreate.DefaultAutoSize = true;
+            this.btnJoinOrCreate.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnJoinOrCreate.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnJoinOrCreate.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnJoinOrCreate.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnJoinOrCreate.FillColor = System.Drawing.Color.WhiteSmoke;
+            this.btnJoinOrCreate.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnJoinOrCreate.ForeColor = System.Drawing.Color.Black;
+            this.btnJoinOrCreate.Image = ((System.Drawing.Image)(resources.GetObject("btnJoinOrCreate.Image")));
+            this.btnJoinOrCreate.Location = new System.Drawing.Point(964, 16);
+            this.btnJoinOrCreate.Name = "btnJoinOrCreate";
+            this.btnJoinOrCreate.Size = new System.Drawing.Size(161, 27);
+            this.btnJoinOrCreate.TabIndex = 1;
+            this.btnJoinOrCreate.Text = "Join or create team";
+            this.btnJoinOrCreate.Click += new System.EventHandler(this.btnJoinOrCreate_Click);
+            // 
+            // ContextMenu
+            // 
+            this.ContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiCreateTeam,
+            this.tsmiJoinTeam});
+            this.ContextMenu.Name = "guna2ContextMenuStrip1";
+            this.ContextMenu.RenderStyle.ArrowColor = System.Drawing.Color.FromArgb(((int)(((byte)(151)))), ((int)(((byte)(143)))), ((int)(((byte)(255)))));
+            this.ContextMenu.RenderStyle.BorderColor = System.Drawing.Color.Gainsboro;
+            this.ContextMenu.RenderStyle.ColorTable = null;
+            this.ContextMenu.RenderStyle.RoundedEdges = true;
+            this.ContextMenu.RenderStyle.SelectionArrowColor = System.Drawing.Color.White;
+            this.ContextMenu.RenderStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(88)))), ((int)(((byte)(255)))));
+            this.ContextMenu.RenderStyle.SelectionForeColor = System.Drawing.Color.White;
+            this.ContextMenu.RenderStyle.SeparatorColor = System.Drawing.Color.Gainsboro;
+            this.ContextMenu.RenderStyle.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
+            this.ContextMenu.Size = new System.Drawing.Size(144, 48);
+            // 
+            // tsmiCreateTeam
+            // 
+            this.tsmiCreateTeam.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.tsmiCreateTeam.Image = ((System.Drawing.Image)(resources.GetObject("tsmiCreateTeam.Image")));
+            this.tsmiCreateTeam.Name = "tsmiCreateTeam";
+            this.tsmiCreateTeam.Size = new System.Drawing.Size(143, 22);
+            this.tsmiCreateTeam.Text = "Create team";
+            this.tsmiCreateTeam.Click += new System.EventHandler(this.tsmiCreateTeam_Click);
+            // 
+            // tsmiJoinTeam
+            // 
+            this.tsmiJoinTeam.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.tsmiJoinTeam.Image = ((System.Drawing.Image)(resources.GetObject("tsmiJoinTeam.Image")));
+            this.tsmiJoinTeam.Name = "tsmiJoinTeam";
+            this.tsmiJoinTeam.Size = new System.Drawing.Size(143, 22);
+            this.tsmiJoinTeam.Text = "Join team";
+            this.tsmiJoinTeam.Click += new System.EventHandler(this.tsmiJoinTeam_Click);
             // 
             // label1
             // 
@@ -82,61 +137,6 @@
             this.flowTeams.Size = new System.Drawing.Size(1148, 688);
             this.flowTeams.TabIndex = 0;
             // 
-            // ContextMenu
-            // 
-            this.ContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiCreateTeam,
-            this.tsmiJoinTeam});
-            this.ContextMenu.Name = "guna2ContextMenuStrip1";
-            this.ContextMenu.RenderStyle.ArrowColor = System.Drawing.Color.FromArgb(((int)(((byte)(151)))), ((int)(((byte)(143)))), ((int)(((byte)(255)))));
-            this.ContextMenu.RenderStyle.BorderColor = System.Drawing.Color.Gainsboro;
-            this.ContextMenu.RenderStyle.ColorTable = null;
-            this.ContextMenu.RenderStyle.RoundedEdges = true;
-            this.ContextMenu.RenderStyle.SelectionArrowColor = System.Drawing.Color.White;
-            this.ContextMenu.RenderStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(88)))), ((int)(((byte)(255)))));
-            this.ContextMenu.RenderStyle.SelectionForeColor = System.Drawing.Color.White;
-            this.ContextMenu.RenderStyle.SeparatorColor = System.Drawing.Color.Gainsboro;
-            this.ContextMenu.RenderStyle.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
-            this.ContextMenu.Size = new System.Drawing.Size(181, 70);
-            // 
-            // btnJoinOrCreate
-            // 
-            this.btnJoinOrCreate.BackColor = System.Drawing.Color.Transparent;
-            this.btnJoinOrCreate.ContextMenuStrip = this.ContextMenu;
-            this.btnJoinOrCreate.DefaultAutoSize = true;
-            this.btnJoinOrCreate.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnJoinOrCreate.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnJoinOrCreate.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnJoinOrCreate.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnJoinOrCreate.FillColor = System.Drawing.Color.WhiteSmoke;
-            this.btnJoinOrCreate.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnJoinOrCreate.ForeColor = System.Drawing.Color.Black;
-            this.btnJoinOrCreate.Image = ((System.Drawing.Image)(resources.GetObject("btnJoinOrCreate.Image")));
-            this.btnJoinOrCreate.Location = new System.Drawing.Point(964, 16);
-            this.btnJoinOrCreate.Name = "btnJoinOrCreate";
-            this.btnJoinOrCreate.Size = new System.Drawing.Size(161, 27);
-            this.btnJoinOrCreate.TabIndex = 1;
-            this.btnJoinOrCreate.Text = "Join or create team";
-            this.btnJoinOrCreate.Click += new System.EventHandler(this.btnJoinOrCreate_Click);
-            // 
-            // tsmiCreateTeam
-            // 
-            this.tsmiCreateTeam.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.tsmiCreateTeam.Image = ((System.Drawing.Image)(resources.GetObject("tsmiCreateTeam.Image")));
-            this.tsmiCreateTeam.Name = "tsmiCreateTeam";
-            this.tsmiCreateTeam.Size = new System.Drawing.Size(180, 22);
-            this.tsmiCreateTeam.Text = "Create team";
-            this.tsmiCreateTeam.Click += new System.EventHandler(this.tsmiCreateTeam_Click);
-            // 
-            // tsmiJoinTeam
-            // 
-            this.tsmiJoinTeam.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.tsmiJoinTeam.Image = ((System.Drawing.Image)(resources.GetObject("tsmiJoinTeam.Image")));
-            this.tsmiJoinTeam.Name = "tsmiJoinTeam";
-            this.tsmiJoinTeam.Size = new System.Drawing.Size(180, 22);
-            this.tsmiJoinTeam.Text = "Join team";
-            this.tsmiJoinTeam.Click += new System.EventHandler(this.tsmiJoinTeam_Click);
-            // 
             // TeamsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -150,8 +150,8 @@
             this.Text = "TeamsForm";
             this.panelTop.ResumeLayout(false);
             this.panelTop.PerformLayout();
-            this.panelContent.ResumeLayout(false);
             this.ContextMenu.ResumeLayout(false);
+            this.panelContent.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

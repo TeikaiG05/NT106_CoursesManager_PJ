@@ -1,4 +1,7 @@
-﻿namespace Common
+﻿using System;
+using System.Collections.Generic;
+
+namespace Common
 {
     public static class MsgType
     {
@@ -7,6 +10,8 @@
         public const string LOGOUT = "LOGOUT";
         public const string LOGIN_WITH_TOKEN = "LOGIN_WITH_TOKEN";
         public const string GROUP_CHAT = "GROUP_CHAT";
+        public const string GROUP_CHAT_HISTORY_REQ = "GROUP_CHAT_HISTORY_REQ";
+        public const string GROUP_CHAT_HISTORY_RES = "GROUP_CHAT_HISTORY_RES";
     }
 
     public class TokenLoginReq
@@ -78,4 +83,22 @@
         public string token { get; set; }
     }
 
+    public class GroupChatHistoryReq
+    {
+        public string type { get; set; } = MsgType.GROUP_CHAT_HISTORY_REQ;
+        public string roomCode { get; set; }
+        public int take { get; set; } = 50;   // lấy 50 tin gần nhất
+    }
+
+    public class GroupChatHistoryRes
+    {
+        public string type { get; set; } = MsgType.GROUP_CHAT_HISTORY_RES;
+        public string roomCode { get; set; }
+        public List<GroupChatMsgEx> messages { get; set; }
+    }
+
+    public class GroupChatMsgEx : GroupChatMsg
+    {
+        public DateTime sentAt { get; set; }
+    }
 }

@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Common;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Common;
+using System;
+using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing.Drawing2D;
 
 namespace NT106_BT2
 {
@@ -16,114 +13,232 @@ namespace NT106_BT2
     {
         private readonly string roomCode;
 
+        #region CONSTRUCTOR
         public ChatPage(string roomCode)
         {
             InitializeComponent();
-            this.roomCode = roomCode;
+            this.roomCode = roomCode?.Trim();
 
-            // Cấu hình FlowLayoutPanel nếu chưa set trong Designer
-            flpMessages.AutoScroll = true;
-            flpMessages.WrapContents = false;
-            flpMessages.FlowDirection = FlowDirection.TopDown;
+            InitTableLayout();
+            btnSend.Enabled = false;
+            System.Diagnostics.Debug.WriteLine($"[ChatPage] ctor room={this.roomCode}, email={Session.Email}");
 
-            // Đăng ký sự kiện nhận tin
             TcpHelper.OnMessageReceived += TcpHelper_OnMessageReceived;
-        }
+            System.Diagnostics.Debug.WriteLine("[ChatPage] Subscribed to TcpHelper.OnMessageReceived");
 
+            _ = TcpHelper.ConnectAsync();
+            _ = LoadHistoryAsync();
+        }
+        #endregion
+
+        #region FORM CLOSED
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
-            // Hủy đăng ký khi form đóng để tránh leak event
             TcpHelper.OnMessageReceived -= TcpHelper_OnMessageReceived;
+            System.Diagnostics.Debug.WriteLine("[ChatPage] Unsubscribed from TcpHelper.OnMessageReceived");
             base.OnFormClosed(e);
         }
+        #endregion
 
-        private void TcpHelper_OnMessageReceived(string json)
+        #region INIT TABLE LAYOUT
+        private void InitTableLayout()
         {
-            if (this.IsDisposed) return;
+            tblMessages.SuspendLayout();
 
-            // Nếu đang ở thread khác UI → invoke lại
-            if (this.InvokeRequired)
-            {
-                this.BeginInvoke(new Action<string>(TcpHelper_OnMessageReceived), json);
-                return;
-            }
+            tblMessages.Dock = DockStyle.Fill;
+            tblMessages.AutoScroll = true;
 
-            // DEBUG nếu cần:
-            // MessageBox.Show("ChatPage recv: " + json);
+            tblMessages.AutoSize = false;
+            tblMessages.GrowStyle = TableLayoutPanelGrowStyle.AddRows;
 
-            JObject jo;
+            tblMessages.ColumnCount = 1;
+            tblMessages.ColumnStyles.Clear();
+            tblMessages.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
+
+            tblMessages.RowStyles.Clear();
+            tblMessages.RowCount = 0;
+
+            tblMessages.ResumeLayout();
+        }
+        #endregion
+
+        #region LOAD HISTORY
+        private async Task LoadHistoryAsync()
+        {
             try
             {
-                jo = JObject.Parse(json);
+                var req = new GroupChatHistoryReq
+                {
+                    type = MsgType.GROUP_CHAT_HISTORY_REQ,
+                    roomCode = roomCode,
+                    take = 50
+                };
+
+                await TcpHelper.SendLineAsync(JsonConvert.SerializeObject(req));
+                System.Diagnostics.Debug.WriteLine($"[ChatPage] Sent HISTORY_REQ room={roomCode}");
             }
-            catch
+            catch (Exception ex)
             {
-                return;
+                System.Diagnostics.Debug.WriteLine("[ChatPage] LoadHistoryAsync error: " + ex.Message);
             }
-
-            var type = (string)jo["type"];
-            if (!string.Equals(type, MsgType.GROUP_CHAT, StringComparison.OrdinalIgnoreCase))
-                return;
-
-            var rc = (string)jo["roomCode"];
-            if (!string.Equals(rc, roomCode, StringComparison.OrdinalIgnoreCase))
-                return;
-
-            var fromEmail = (string)jo["fromEmail"];
-            var fromName = (string)jo["fromName"];
-            var message = (string)jo["message"];
-
-            if (string.IsNullOrWhiteSpace(message))
-                return;
-
-            bool isMe = string.Equals(fromEmail, Session.Email, StringComparison.OrdinalIgnoreCase);
-            string prefix = isMe ? "Me" : (fromName ?? fromEmail);
-
-            AddMessageBubble($"{prefix}: {message}", isMe);
         }
+        #endregion
 
+        #region SEND
         private async void btnSend_Click(object sender, EventArgs e)
         {
             string msg = txtMessage.Text.Trim();
             if (string.IsNullOrEmpty(msg)) return;
 
-            // Hiện luôn trên flpMessages cho chính mình
-            string selfLine = $"Me: {msg}";
-            AddMessageBubble(selfLine, true);
-
+            AddBubble($"Me: {msg}", true);
             txtMessage.Clear();
 
-            // Gửi lên server cho các client khác
-            await TcpHelper.SendGroupChatAsync(
-                roomCode,
-                msg,
-                Session.Email,
-                Session.FullName ?? Session.Email
-            );
+            try
+            {
+                await TcpHelper.SendGroupChatAsync(roomCode, msg, Session.Email, Session.FullName ?? Session.Email
+                    );
+                System.Diagnostics.Debug.WriteLine($"[ChatPage] Sent GROUP_CHAT room={roomCode}, msg={msg}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Send error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+        #endregion
 
-        private void AddMessageBubble(string text, bool isMe)
+        #region RECEIVE
+        private void TcpHelper_OnMessageReceived(string json)
         {
-            var bubble = new Panel();
-            bubble.AutoSize = true;
-            bubble.MaximumSize = new Size(flpMessages.Width - 40, 0);
-            bubble.Padding = new Padding(10);
-            bubble.Margin = new Padding(5);
-            bubble.BackColor = isMe ? Color.LightSkyBlue : Color.Gainsboro;
+            if (IsDisposed) return;
 
-            var lbl = new Label();
-            lbl.AutoSize = true;
-            lbl.MaximumSize = new Size(bubble.MaximumSize.Width - 20, 0);
-            lbl.Text = text;
-            lbl.ForeColor = isMe ? Color.White : Color.Black;
+            if (InvokeRequired)
+            {
+                BeginInvoke(new Action<string>(TcpHelper_OnMessageReceived), json);
+                return;
+            }
+
+            JObject obj;
+            try { obj = JObject.Parse(json); }
+            catch { return; }
+
+            string type = ((string)obj["type"] ?? "").Trim();
+
+            if (type.Equals(MsgType.GROUP_CHAT_HISTORY_RES, StringComparison.OrdinalIgnoreCase))
+            {
+                try
+                {
+                    var res = JsonConvert.DeserializeObject<GroupChatHistoryRes>(json);
+                    if (res?.messages == null) return;
+                    if (!string.Equals(res.roomCode?.Trim(), roomCode, StringComparison.OrdinalIgnoreCase))
+                        return;
+
+                    System.Diagnostics.Debug.WriteLine($"[ChatPage] HISTORY_RES count={res.messages.Count}");
+
+                    foreach (var m in res.messages)
+                    {
+                        bool isMe = string.Equals(
+                            m.fromEmail?.Trim(),
+                            Session.Email?.Trim(),
+                            StringComparison.OrdinalIgnoreCase);
+
+                        string display = isMe ? $"Me: {m.message}" : $"{m.fromName ?? m.fromEmail}: {m.message}";
+
+                        AddBubble(display, isMe);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("[ChatPage] HISTORY_RES parse error: " + ex.Message);
+                }
+
+                return;
+            }
+
+            if (!type.Equals(MsgType.GROUP_CHAT, StringComparison.OrdinalIgnoreCase))
+                return;
+
+            GroupChatMsg chat;
+            try { chat = JsonConvert.DeserializeObject<GroupChatMsg>(json); }
+            catch { return; }
+
+            if (chat == null) return;
+
+            string rc = chat.roomCode?.Trim();
+            if (!string.Equals(rc, roomCode, StringComparison.OrdinalIgnoreCase))
+                return;
+
+            bool me = string.Equals(
+                chat.fromEmail?.Trim(),
+                Session.Email?.Trim(),
+                StringComparison.OrdinalIgnoreCase);
+
+            if (me) return;
+
+            string displayText = $"{chat.fromName ?? chat.fromEmail}: {chat.message}";
+            AddBubble(displayText, false);
+        }
+        #endregion
+
+        #region UI BUBBLE
+        private void AddBubble(string text, bool isMe)
+        {
+            if (IsDisposed) return;
+
+            if (InvokeRequired)
+            {
+                BeginInvoke(new Action<string, bool>(AddBubble), text, isMe);
+                return;
+            }
+
+            int maxWidth = tblMessages.ClientSize.Width - 60;
+            if (maxWidth < 150) maxWidth = 150;
+
+            var bubble = new Panel
+            {
+                AutoSize = true,
+                MaximumSize = new Size(maxWidth, 0),
+                BackColor = isMe ? Color.SteelBlue : Color.Gainsboro,
+                Padding = new Padding(10),
+                Margin = isMe ? new Padding(150, 5, 10, 5) : new Padding(10, 5, 150, 5),
+                Anchor = isMe ? AnchorStyles.Right : AnchorStyles.Left
+            };
+
+            var lbl = new Label
+            {
+                AutoSize = true,
+                MaximumSize = new Size(maxWidth - 20, 0),
+                Text = text,
+                ForeColor = isMe ? Color.White : Color.Black,
+                Font = new Font("Segoe UI", 10F),
+                TextAlign = ContentAlignment.MiddleCenter
+            };
 
             bubble.Controls.Add(lbl);
+            lbl.AutoSize = true;
 
-            // Với FlowLayoutPanel, muốn canh trái/phải thì xài RightToLeft
-            bubble.RightToLeft = isMe ? RightToLeft.Yes : RightToLeft.No;
+            tblMessages.RowCount++;
+            tblMessages.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            tblMessages.Controls.Add(bubble, 0, tblMessages.RowCount - 1);
 
-            flpMessages.Controls.Add(bubble);
-            flpMessages.ScrollControlIntoView(bubble);
+            tblMessages.ScrollControlIntoView(bubble);
+
+            System.Diagnostics.Debug.WriteLine($"[ChatPage] Bubble added: {text}");
         }
+        #endregion
+
+        #region BTN ENABLE
+        private void txtMessage_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtMessage.Text))
+            {
+                btnSend.Enabled = false;
+            }
+
+            else
+            {
+                btnSend.Enabled = true;
+            }
+        }
+        #endregion
     }
 }

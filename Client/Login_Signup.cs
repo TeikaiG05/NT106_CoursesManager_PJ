@@ -29,25 +29,70 @@ namespace NT106_BT2
 
         private static readonly string[] MONTHS = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
         private bool initDone = false;
+        private bool tcpSubscribed = false;
         public Login_Signup()
         {
             InitializeComponent();
             EnableDrag(pnTitleBar);
+
             Guna2Transistion1 = new Guna2Transition();
             pn_login.Visible = true;
             pn_regis.Visible = false;
+            SubscribeTcpOnce();
             this.Shown += async (_, __) =>
             {
-                await TcpHelper.ConnectAsync(); // 🔹 Kết nối tới server khi app mở
-                TcpHelper.OnError += msg => Invoke(new Action(() =>
-                    NotificationManager.Show(this, msg, ToastNotification.ToastType.Error)));
-
-                TcpHelper.OnMessageReceived += msg => HandleServerMessage(msg); // 🔹 Đăng ký sự kiện nhận phản hồi
+                await TcpHelper.ConnectAsync();
                 await TryAutoLoginAsync();
             };
         }
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            UnsubscribeTcp();
+            base.OnFormClosed(e);
+        }
+
+        private void SubscribeTcpOnce()
+        {
+            if (tcpSubscribed) return;
+
+            TcpHelper.OnError += Tcp_OnError;
+            TcpHelper.OnMessageReceived += HandleServerMessage;
+
+            tcpSubscribed = true;
+        }
+
+        private void UnsubscribeTcp()
+        {
+            if (!tcpSubscribed) return;
+
+            TcpHelper.OnError -= Tcp_OnError;
+            TcpHelper.OnMessageReceived -= HandleServerMessage;
+
+            tcpSubscribed = false;
+        }
+
+        private void Tcp_OnError(string msg)
+        {
+            if (IsDisposed) return;
+            BeginInvoke(new Action(() =>
+                MessageBox.Show("TCP ERROR: " + msg)));
+        }
+
         private void HandleServerMessage(string msg)
         {
+            try
+            {
+                var probe = Newtonsoft.Json.Linq.JObject.Parse(msg);
+                var typeProbe = ((string)probe["type"] ?? "").Trim();
+                if (typeProbe.Equals(Common.MsgType.GROUP_CHAT, StringComparison.OrdinalIgnoreCase))
+                    return;
+            }
+            catch
+            {
+                return; // không parse được json thì bỏ
+            }
+
             try
             {
                 var ok = Newtonsoft.Json.JsonConvert.DeserializeObject<OkRes>(msg);
@@ -55,58 +100,66 @@ namespace NT106_BT2
 
                 if (ok != null && ok.ok)
                 {
-                    Invoke(new Action(() =>
+                    if (IsDisposed) return;
+
+                    BeginInvoke(new Action(() =>
                     {
                         switch (ok.type)
                         {
                             case Common.MsgType.LOGIN:
-                                var u = ok.user ?? new Common.UserDto();
-
-                                // Lưu session
-                                Session.Email = u.email;
-                                Session.Token = ok.token;
-                                Session.Expire = ok.expires;
-                                Session.Role = u.role;
-                                Session.FullName = u.fullName;
-
-                                if (tsRemember.Checked)
                                 {
-                                    SaveRememberToSettings(u.email, ok.token);
-                                    SaveSessionToDisk(u.email, ok.token);
-                                }
-                                else
-                                {
-                                    ClearSavedSession();
-                                }
+                                    var u = ok.user ?? new Common.UserDto();
 
-                                SplitName(u.fullName, out var first, out var sur);
-                                NotificationManager.Show(this, "Đăng nhập thành công!", ToastNotification.ToastType.Success);
-                                ShowDashboardModal(first, sur, u.birthday ?? "", u.gender ?? "Other", u.email ?? "");
-                                break;
+                                    // Lưu session
+                                    Session.Email = u.email;
+                                    Session.Token = ok.token;
+                                    Session.Expire = ok.expires;
+                                    Session.Role = u.role;
+                                    Session.FullName = u.fullName;
+
+                                    if (tsRemember.Checked)
+                                    {
+                                        SaveRememberToSettings(u.email, ok.token);
+                                        SaveSessionToDisk(u.email, ok.token);
+                                    }
+                                    else
+                                    {
+                                        ClearSavedSession();
+                                    }
+
+                                    SplitName(u.fullName ?? "", out string first, out string sur);
+                                    string bday = u.birthday ?? "";
+                                    string gender = u.gender ?? "";
+                                    string email = u.email ?? Session.Email;
+
+                                    ShowDashboardModal(first, sur, bday, gender, email);
+                                    break;
+                                }
 
                             case Common.MsgType.REGISTER:
-                                NotificationManager.Show(this, "Đăng ký thành công!", ToastNotification.ToastType.Success);
+                                NotificationManager.Show(this, "Đăng ký thành công!", ToastType.Success);
                                 cToLogin_Click(null, EventArgs.Empty);
                                 ClearSignupFields();
                                 break;
 
                             default:
-                                Console.WriteLine($"📩 Server OK: {ok.type}");
+                                Console.WriteLine($"Server OK: {ok.type}");
                                 break;
                         }
                     }));
                 }
                 else if (err != null)
                 {
-                    Invoke(new Action(() =>
+                    if (IsDisposed) return;
+                    BeginInvoke(new Action(() =>
                     {
-                        NotificationManager.Show(this, err.error, ToastNotification.ToastType.Error);
+                        NotificationManager.Show(this, err.error, ToastType.Error);
                     }));
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("⚠️ Parse error: " + ex.Message);
+                Console.WriteLine("HandleServerMessage error: " + ex.Message);
             }
         }
 
@@ -129,31 +182,34 @@ namespace NT106_BT2
         {
             InitCombos();
 
-            initDone = false; // ĐANG KHỞI TẠO
+            initDone = false;
             tsRemember.Checked = Properties.Settings.Default.RememberMe;
             cUsername.Text = Properties.Settings.Default.SavedEmail ?? "";
-            initDone = true;  // KHỞI TẠO XONG
+            initDone = true;
         }
         #endregion
 
         #region Helpers (validate + ui + session)
         private void InitCombos()
         {
-            // Year
             cYear.Items.Clear();
             int currentYear = DateTime.Now.Year;
             for (int y = currentYear; y >= 1950; y--) cYear.Items.Add(y.ToString());
-            cYear.MaxDropDownItems = 5; cYear.DropDownHeight = 120; cYear.SelectedIndex = 0;
+            cYear.MaxDropDownItems = 5;
+            cYear.DropDownHeight = 120;
+            cYear.SelectedIndex = 0;
 
-            // Month
             cMonth.Items.Clear();
             foreach (var m in MONTHS) cMonth.Items.Add(m);
-            cMonth.MaxDropDownItems = 5; cMonth.DropDownHeight = 120; cMonth.SelectedIndex = 0;
+            cMonth.MaxDropDownItems = 5;
+            cMonth.DropDownHeight = 120;
+            cMonth.SelectedIndex = 0;
 
-            // Day
             cDay.Items.Clear();
             for (int d = 1; d <= 31; d++) cDay.Items.Add(d.ToString());
-            cDay.MaxDropDownItems = 5; cDay.DropDownHeight = 120; cDay.SelectedIndex = 0;
+            cDay.MaxDropDownItems = 5;
+            cDay.DropDownHeight = 120;
+            cDay.SelectedIndex = 0;
         }
 
         private static bool HasDigit(string s) => !string.IsNullOrEmpty(s) && s.Any(char.IsDigit);
@@ -180,7 +236,7 @@ namespace NT106_BT2
             if (cFemale.Checked) return "Female";
             if (cOther.Checked) return "Other";
 
-            var toast = new ToastNotification("Vui lòng chọn giới tính.", ToastNotification.ToastType.Warning);
+            var toast = new ToastNotification("Vui lòng chọn giới tính.", ToastType.Warning);
             toast.ShowNotification(this);
             return null;
         }
@@ -211,7 +267,7 @@ namespace NT106_BT2
                 if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
                 File.WriteAllText(SessPath, Newtonsoft.Json.JsonConvert.SerializeObject(new { email, token }));
             }
-            catch { /* ignore */ }
+            catch { }
         }
 
         private static void SaveRememberToSettings(string email, string token)
@@ -238,7 +294,10 @@ namespace NT106_BT2
             {
                 dr = main.ShowDialog(this);
             }
-            if (dr == DialogResult.OK) this.Show(); else this.Close();
+
+            if (dr == DialogResult.OK) this.Show();
+            else this.Close();
+
             return dr;
         }
         #endregion
@@ -342,6 +401,7 @@ namespace NT106_BT2
         private async Task TryAutoLoginAsync()
         {
             if (Session.IsLoggingOut) return;
+
             var remember = Properties.Settings.Default.RememberMe;
             var savedEmail = Properties.Settings.Default.SavedEmail;
             var savedToken = Properties.Settings.Default.SavedToken;
@@ -352,15 +412,12 @@ namespace NT106_BT2
             try
             {
                 var req = new TokenLoginReq { username = savedEmail, token = savedToken };
-                string jsonReq = Newtonsoft.Json.JsonConvert.SerializeObject(req);
-                await TcpHelper.SendLineAsync(jsonReq);
-
-                // ✅ Không cần chờ phản hồi ở đây — phản hồi được xử lý trong HandleServerMessage()
-                NotificationManager.Show(this, "Đang đăng nhập lại bằng token...", ToastNotification.ToastType.Info);
+                await TcpHelper.SendLineAsync(Newtonsoft.Json.JsonConvert.SerializeObject(req));
+                NotificationManager.Show(this, "Đang đăng nhập lại bằng token...", ToastType.Info);
             }
             catch (Exception ex)
             {
-                NotificationManager.Show(this, "Không thể tự động đăng nhập: " + ex.Message, ToastNotification.ToastType.Error);
+                NotificationManager.Show(this, "Không thể tự động đăng nhập: " + ex.Message, ToastType.Error);
             }
         }
 
@@ -383,6 +440,7 @@ namespace NT106_BT2
                 Properties.Settings.Default.Save();
             }
         }
+
         #endregion
 
         #region Move form
