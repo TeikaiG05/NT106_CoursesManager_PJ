@@ -12,6 +12,8 @@ namespace NT106_BT2
 {
     public partial class ChatPage : Form
     {
+        private LobbyForm lobby;
+        private bool joinBubbleShown = false;
         private readonly string roomCode;
 
         #region CONSTRUCTOR
@@ -19,7 +21,7 @@ namespace NT106_BT2
         {
             InitializeComponent();
             this.roomCode = roomCode?.Trim();
-
+            btnCall.Click += btnCall_Click;
             InitTableLayout();
             btnBrowse.Click += btnBrowse_Click;
             btnSend.Enabled = false;
@@ -86,6 +88,25 @@ namespace NT106_BT2
         }
         #endregion
 
+        // ===== Timeline mix message + file =====
+        private enum TimelineKind
+        {
+            Text,
+            File
+        }
+
+        private sealed class TimelineItem
+        {
+            public TimelineKind Kind { get; set; }
+            public DateTime Time { get; set; }
+
+            // nếu là tin nhắn
+            public GroupChatMsgEx Message { get; set; }
+
+            // nếu là file
+            public DataRow FileRow { get; set; }
+        }
+
         #region SEND
         private async void btnSend_Click(object sender, EventArgs e)
         {
@@ -136,18 +157,88 @@ namespace NT106_BT2
 
                     System.Diagnostics.Debug.WriteLine($"[ChatPage] HISTORY_RES count={res.messages.Count}");
 
+                    DataTable fileTable = DbClient.GetFilesByRoom(roomCode);
+                    System.Diagnostics.Debug.WriteLine($"[ChatPage] FileHistory count={fileTable.Rows.Count}");
+
+                    var timeline = new System.Collections.Generic.List<TimelineItem>();
+
                     foreach (var m in res.messages)
                     {
-                        bool isMe = string.Equals(
-                            m.fromEmail?.Trim(),
-                            Session.Email?.Trim(),
-                            StringComparison.OrdinalIgnoreCase);
-
-                        string display = isMe ? $"Me: {m.message}" : $"{m.fromName ?? m.fromEmail}: {m.message}";
-
-                        AddBubble(display, isMe);
+                        timeline.Add(new TimelineItem
+                        {
+                            Kind = TimelineKind.Text,
+                            Time = m.sentAt,
+                            Message = m
+                        });
                     }
-                    LoadFileHistory();
+
+                    foreach (DataRow row in fileTable.Rows)
+                    {
+                        DateTime uploadedAt;
+
+                        var uploadedObj = row["UploadedAt"];
+                        if (uploadedObj is DateTime dt)
+                            uploadedAt = dt;
+                        else
+                            uploadedAt = DateTime.MinValue;
+
+                        timeline.Add(new TimelineItem
+                        {
+                            Kind = TimelineKind.File,
+                            Time = uploadedAt,
+                            FileRow = row
+                        });
+                    }
+                    timeline.Sort((a, b) => a.Time.CompareTo(b.Time));
+
+                    tblMessages.SuspendLayout();
+                    tblMessages.Controls.Clear();
+                    tblMessages.RowStyles.Clear();
+                    tblMessages.RowCount = 0;
+
+                    foreach (var item in timeline)
+                    {
+                        if (item.Kind == TimelineKind.Text)
+                        {
+                            var m = item.Message;
+
+                            bool isMe = string.Equals(
+                                m.fromEmail?.Trim(),
+                                Session.Email?.Trim(),
+                                StringComparison.OrdinalIgnoreCase);
+
+                            string display = isMe ? $"Me: {m.message}" : $"{m.fromName ?? m.fromEmail}: {m.message}";
+
+                            AddBubble(display, isMe);
+                        }
+                        else
+                        {
+                            string filePath = item.FileRow["FilePath"].ToString();
+                            string fileName = item.FileRow["FileName"].ToString();
+                            long sizeBytes = Convert.ToInt64(item.FileRow["FileSizeBytes"]);
+
+                            bool isMeFile = false;
+                            if (item.FileRow.Table.Columns.Contains("UploaderEmail"))
+                            {
+                                string uploader = item.FileRow["UploaderEmail"]?.ToString();
+                                isMeFile = string.Equals(
+                                    uploader?.Trim(),
+                                    Session.Email?.Trim(),
+                                    StringComparison.OrdinalIgnoreCase);
+                            }
+
+                            if (IsImage(filePath))
+                            {
+                                AddImageBubble_Me(filePath);
+                            }
+                            else
+                            {
+                                AddFileBubble_Me(filePath, fileName, sizeBytes);
+                            }
+                        }
+                    }
+
+                    tblMessages.ResumeLayout();
                 }
                 catch (Exception ex)
                 {
@@ -156,6 +247,67 @@ namespace NT106_BT2
 
                 return;
             }
+
+
+            if (type.Equals(MsgType.CALL_STATE, StringComparison.OrdinalIgnoreCase))
+            {
+                try
+                {
+                    var state = JsonConvert.DeserializeObject<CallStateRes>(json);
+                    if (state == null) return;
+
+                    if (!string.Equals(state.roomCode?.Trim(), roomCode, StringComparison.OrdinalIgnoreCase))
+                        return;
+
+                    if (lobby != null && !lobby.IsDisposed && state.members != null)
+                    {
+                        var names = new System.Collections.Generic.List<string>();
+                        foreach (var m in state.members)
+                        {
+                            string display = !string.IsNullOrWhiteSpace(m.name)
+                                ? m.name
+                                : m.email;
+                            names.Add(display);
+                        }
+
+                        lobby.SetParticipants(names);
+                    }
+
+                    bool isMember = false;
+                    if (state.members != null)
+                    {
+                        foreach (var m in state.members)
+                        {
+                            if (string.Equals(m.email?.Trim(), Session.Email?.Trim(),
+                                StringComparison.OrdinalIgnoreCase))
+                            {
+                                isMember = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    bool hasCall = state.members != null && state.members.Count > 0;
+
+                    if (hasCall && !isMember && !joinBubbleShown)
+                    {
+                        AddJoinCallBubble();
+                        joinBubbleShown = true;
+                    }
+
+                    if (!hasCall)
+                    {
+                        joinBubbleShown = false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("[ChatPage] CALL_STATE parse error: " + ex.Message);
+                }
+
+                return;
+            }
+
 
             if (!type.Equals(MsgType.GROUP_CHAT, StringComparison.OrdinalIgnoreCase))
                 return;
@@ -263,6 +415,70 @@ namespace NT106_BT2
 
             System.Diagnostics.Debug.WriteLine($"[ChatPage] Bubble added: {text}");
         }
+
+        private void AddJoinCallBubble()
+        {
+            if (IsDisposed) return;
+
+            if (InvokeRequired)
+            {
+                BeginInvoke(new Action(AddJoinCallBubble));
+                return;
+            }
+
+            int maxWidth = tblMessages.ClientSize.Width - 60;
+            if (maxWidth < 200) maxWidth = 200;
+
+            var bubble = new Panel
+            {
+                AutoSize = true,
+                MaximumSize = new Size(maxWidth, 0),
+                BackColor = Color.LightYellow,
+                Padding = new Padding(10),
+                Margin = new Padding(10, 5, 150, 5), // giống message "bên trái"
+                Anchor = AnchorStyles.Left | AnchorStyles.Top
+            };
+
+            var lbl = new Label
+            {
+                AutoSize = true,
+                MaximumSize = new Size(maxWidth - 20, 0),
+                Text = "Đang có cuộc gọi nhóm trong lớp này. Nhấn 'Tham gia' để vào.",
+                Font = new Font("Segoe UI", 9F)
+            };
+
+            var btnJoin = new Button
+            {
+                AutoSize = true,
+                Text = "Tham gia cuộc gọi",
+                Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                BackColor = Color.SteelBlue,
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Margin = new Padding(0, 6, 0, 0)
+            };
+            btnJoin.FlatAppearance.BorderSize = 0;
+
+            lbl.Location = new Point(0, 0);
+            btnJoin.Location = new Point(0, lbl.Bottom + 5);
+
+            bubble.Controls.Add(lbl);
+            bubble.Controls.Add(btnJoin);
+
+            // click "Tham gia"
+            btnJoin.Click += async (s, e) =>
+            {
+                OpenLobbyForm();
+                await TcpHelper.SendCallJoinAsync(roomCode);
+            };
+
+            tblMessages.RowCount++;
+            tblMessages.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            tblMessages.Controls.Add(bubble, 0, tblMessages.RowCount - 1);
+
+            tblMessages.ScrollControlIntoView(bubble);
+        }
+
         #endregion
 
         #region BTN ENABLE
@@ -456,6 +672,25 @@ namespace NT106_BT2
             if (kb < 1024) return $"{kb:0.#} KB";
             double mb = kb / 1024.0;
             return $"{mb:0.#} MB";
+        }
+
+        private void OpenLobbyForm()
+        {
+            if (lobby == null || lobby.IsDisposed)
+            {
+                string displayName = roomCode;
+                lobby = new LobbyForm(roomCode, displayName);
+            }
+
+            lobby.Show();
+            lobby.Activate();
+        }
+
+        private async void btnCall_Click(object sender, EventArgs e)
+        {
+            OpenLobbyForm();
+
+            await TcpHelper.SendCallJoinAsync(roomCode);
         }
     }
 }

@@ -1,0 +1,196 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace NT106_BT2
+{
+    public partial class LobbyForm : Form
+    {
+        private readonly string roomCode;
+        private readonly string roomName;
+
+        private bool cameraOn = true;
+        private bool micOn = true;
+        private bool shareOn = false;
+
+        private Label lblShareInfo;
+        public LobbyForm(string roomCode, string roomName)
+        {
+            InitializeComponent();
+
+            this.roomCode = roomCode;
+            this.roomName = roomName;
+
+            Text = $"Meeting in \"{roomName}\"";
+
+            Load += LobbyForm_Load;
+            btnVideo.Click += BtnVideo_Click;
+            btnMic.Click += btnMic_Click;
+            btnShare.Click += btnShare_Click;
+            btnLeave.Click += btnLeave_Click;
+        }
+        private void LobbyForm_Load(object sender, EventArgs e)
+        {
+            splitContainer2.Orientation = Orientation.Horizontal;
+            splitContainer2.FixedPanel = FixedPanel.Panel2;
+            splitContainer2.SplitterWidth = 4;
+            splitContainer2.IsSplitterFixed = false;
+
+            pnlShare.BackColor = Color.Black;
+
+            lblShareInfo = new Label
+            {
+                Dock = DockStyle.Fill,
+                TextAlign = ContentAlignment.MiddleCenter,
+                ForeColor = Color.White,
+                Font = new Font("Segoe UI", 12f),
+                Text = "No one is sharing screen"
+            };
+            pnlShare.Controls.Add(lblShareInfo);
+
+            flpParticipants.AutoScroll = true;
+            flpParticipants.WrapContents = true;
+            flpParticipants.FlowDirection = FlowDirection.LeftToRight;
+
+            string me = Session.FullName ?? Session.Email;
+            SetParticipants(new[] { me });
+
+            UpdateVideoButtonUI();
+            UpdateMicButtonUI();
+            UpdateShareButtonUI();
+        }
+
+        #region Public API – ChatPage gọi sang
+
+        public void SetParticipants(IEnumerable<string> displayNames)
+        {
+            if (InvokeRequired)
+            {
+                BeginInvoke(new Action<IEnumerable<string>>(SetParticipants), displayNames);
+                return;
+            }
+
+            flpParticipants.SuspendLayout();
+            flpParticipants.Controls.Clear();
+
+            if (displayNames != null)
+            {
+                foreach (var name in displayNames)
+                {
+                    if (string.IsNullOrWhiteSpace(name)) continue;
+
+                    var tile = new ParticipantTile
+                    {
+                        Width = 140,
+                        Height = 180,
+                        Margin = new Padding(10),
+                        DisplayName = name
+                    };
+
+                    flpParticipants.Controls.Add(tile);
+                }
+            }
+
+            flpParticipants.ResumeLayout();
+        }
+
+        public void SetSharingUser(string sharerName)
+        {
+            if (InvokeRequired)
+            {
+                BeginInvoke(new Action<string>(SetSharingUser), sharerName);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(sharerName))
+                lblShareInfo.Text = "No one is sharing screen";
+            else
+                lblShareInfo.Text = $"Screen shared by {sharerName}";
+        }
+
+        #endregion
+
+        #region Button events
+
+        private void BtnVideo_Click(object sender, EventArgs e)
+        {
+            cameraOn = !cameraOn;
+            UpdateVideoButtonUI();
+        }
+
+        private void btnMic_Click(object sender, EventArgs e)
+        {
+            micOn = !micOn;
+            UpdateMicButtonUI();
+        }
+
+        private void btnShare_Click(object sender, EventArgs e)
+        {
+            shareOn = !shareOn;
+            UpdateShareButtonUI();
+        }
+
+        private void btnLeave_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        #endregion
+
+        #region Update button UI
+
+        private void UpdateVideoButtonUI()
+        {
+            if (cameraOn)
+            {
+                btnVideo.BackColor = Color.FromArgb(255, 197, 140, 255); // màu bạn đang dùng
+                btnVideo.ForeColor = Color.Black;
+                btnVideo.Text = "  Video";
+            }
+            else
+            {
+                btnVideo.BackColor = Color.DarkGray;
+                btnVideo.ForeColor = Color.White;
+                btnVideo.Text = "  Video off";
+            }
+        }
+
+        private void UpdateMicButtonUI()
+        {
+            if (micOn)
+            {
+                btnMic.BackColor = Color.FromArgb(255, 197, 140, 255);
+                btnMic.ForeColor = Color.Black;
+                btnMic.Text = "  Mic";
+            }
+            else
+            {
+                btnMic.BackColor = Color.DarkGray;
+                btnMic.ForeColor = Color.White;
+                btnMic.Text = "  Muted";
+            }
+        }
+
+        private void UpdateShareButtonUI()
+        {
+            if (shareOn)
+            {
+                btnShare.BackColor = Color.FromArgb(255, 197, 140, 255);
+                btnShare.ForeColor = Color.Black;
+            }
+            else
+            {
+                btnShare.BackColor = Color.WhiteSmoke;
+                btnShare.ForeColor = Color.Black;
+            }
+        }
+
+        #endregion
+    }
+}

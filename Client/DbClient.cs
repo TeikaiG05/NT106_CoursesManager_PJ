@@ -99,8 +99,7 @@ namespace NT106_BT2
         {
             using (var cn = new SqlConnection(ConnStr))
             using (var cmd = new SqlCommand(
-                @"INSERT INTO dbo.RoomFiles(RoomCode, FileName, FilePath, FileSizeBytes, UploadedAt, UploadedBy)
-          VALUES (@room, @name, @path, @size, SYSDATETIME(), @user)", cn))
+                @"INSERT INTO dbo.RoomFiles(RoomCode, FileName, FilePath, FileSizeBytes, UploadedAt, UploadedBy) VALUES (@room, @name, @path, @size, SYSDATETIME(), @user)", cn))
             {
                 cmd.Parameters.AddWithValue("@room", roomCode);
                 cmd.Parameters.AddWithValue("@name", fileName);
@@ -120,8 +119,7 @@ namespace NT106_BT2
             var table = new DataTable();
 
             using (var cn = new SqlConnection(ConnStr))
-            using (var cmd = new SqlCommand(
-                @"SELECT FileName, FilePath, FileSizeBytes, UploadedBy FROM dbo.RoomFiles WHERE RoomCode = @room ORDER BY UploadedAt", cn))
+            using (var cmd = new SqlCommand(@"SELECT FileName, FilePath, FileSizeBytes, UploadedAt, UploadedBy FROM dbo.RoomFiles WHERE RoomCode = @room ORDER BY UploadedAt ASC;", cn))
             {
                 cmd.Parameters.AddWithValue("@room", roomCode);
                 cn.Open();

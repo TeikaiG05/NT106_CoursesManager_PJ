@@ -12,6 +12,10 @@ namespace Common
         public const string GROUP_CHAT = "GROUP_CHAT";
         public const string GROUP_CHAT_HISTORY_REQ = "GROUP_CHAT_HISTORY_REQ";
         public const string GROUP_CHAT_HISTORY_RES = "GROUP_CHAT_HISTORY_RES";
+
+        public const string CALL_JOIN = "CALL_JOIN";
+        public const string CALL_LEAVE = "CALL_LEAVE";
+        public const string CALL_STATE = "CALL_STATE";
     }
 
     public class TokenLoginReq
@@ -100,5 +104,36 @@ namespace Common
     public class GroupChatMsgEx : GroupChatMsg
     {
         public DateTime sentAt { get; set; }
+    }
+
+    public class CallJoinReq
+    {
+        public string type { get; set; } = MsgType.CALL_JOIN;
+        public string roomCode { get; set; }
+        public string email { get; set; }
+        public string name { get; set; }
+    }
+
+    public class CallLeaveReq
+    {
+        public string type { get; set; } = MsgType.CALL_LEAVE;
+        public string roomCode { get; set; }
+        public string email { get; set; }
+    }
+
+    public class CallMemberDto
+    {
+        public string email { get; set; }
+        public string name { get; set; }
+
+        public bool cameraOn { get; set; }
+        public bool micOn { get; set; }
+    }
+
+    public class CallStateRes
+    {
+        public string type { get; set; } = MsgType.CALL_STATE;
+        public string roomCode { get; set; }
+        public System.Collections.Generic.List<CallMemberDto> members { get; set; }
     }
 }

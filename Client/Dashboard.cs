@@ -43,7 +43,7 @@ namespace NT106_BT2
         }
         #endregion
 
-        #region] Profile Click
+        #region Profile Click
         private void lb_profile_Click(object sender, EventArgs e)
         {
             OpenChildForm(new Profile(fullName, birthday, gender, email));

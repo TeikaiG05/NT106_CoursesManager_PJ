@@ -34,14 +34,12 @@ namespace NT106_BT2
         {
             try
             {
-                // Nếu đã kết nối + đã listen => khỏi tạo thêm
                 if (cli != null && cli.Connected && listening)
                 {
                     System.Diagnostics.Debug.WriteLine("[TCP] Already connected & listening");
                     return;
                 }
 
-                // Nếu TcpClient đã tồn tại nhưng stream chết => tạo lại stream
                 if (cli != null && cli.Connected && !listening)
                 {
                     System.Diagnostics.Debug.WriteLine("[TCP] Connected nhưng loop chưa chạy → start loop");
@@ -50,7 +48,6 @@ namespace NT106_BT2
                     return;
                 }
 
-                // Tạo kết nối mới
                 System.Diagnostics.Debug.WriteLine($"[TCP] Connecting to {Host}:{Port}");
                 cli = new TcpClient();
                 await cli.ConnectAsync(Host, Port);
@@ -155,8 +152,7 @@ namespace NT106_BT2
             }
         }
 
-        public static Task SendGroupChatAsync(string roomCode, string message,
-                                              string fromEmail, string fromName)
+        public static Task SendGroupChatAsync(string roomCode, string message, string fromEmail, string fromName)
         {
             var chat = new GroupChatMsg
             {
@@ -186,6 +182,22 @@ namespace NT106_BT2
             return SendLineAsync(json);
         }
         #endregion
+
+        public static Task SendCallJoinAsync(string roomCode)
+        {
+            if (string.IsNullOrWhiteSpace(roomCode))
+                throw new ArgumentException("roomCode is required", nameof(roomCode));
+
+            var req = new CallJoinReq
+            {
+                roomCode = roomCode,
+                email = Session.Email,
+                name = Session.FullName ?? Session.Email
+            };
+
+            string json = JsonConvert.SerializeObject(req);
+            return SendLineAsync(json);
+        }
 
         #region DISCONNECT
         public static void Disconnect()

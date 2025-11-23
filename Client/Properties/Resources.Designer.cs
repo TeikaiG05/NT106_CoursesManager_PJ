@@ -183,6 +183,16 @@ namespace NT106_BT2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_end_call_30 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-end-call-30", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_eye_close_50 {
             get {
                 object obj = ResourceManager.GetObject("icons8-eye-close-50", resourceCulture);
@@ -263,6 +273,16 @@ namespace NT106_BT2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_mic_48 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-mic-48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_people_50 {
             get {
                 object obj = ResourceManager.GetObject("icons8-people-50", resourceCulture);
@@ -276,6 +296,16 @@ namespace NT106_BT2.Properties {
         internal static System.Drawing.Bitmap icons8_people_50__1_ {
             get {
                 object obj = ResourceManager.GetObject("icons8-people-50 (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_present_to_all_48 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-present-to-all-48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
