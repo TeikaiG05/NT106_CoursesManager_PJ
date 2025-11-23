@@ -8,15 +8,17 @@ namespace Server
 {
     internal static class Db
     {
+        #region Connection String
         private static string ConnStr
         {
             get
             {
-                return System.Configuration.ConfigurationManager
-                       .ConnectionStrings["DefaultConnection"].ConnectionString;
+                return System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             }
         }
+        #endregion
 
+        #region UsernameExists
         public static bool UsernameExists(string email)
         {
             using (var cn = new SqlConnection(ConnStr))
@@ -28,7 +30,9 @@ namespace Server
                 return o != null;
             }
         }
+        #endregion
 
+        #region InsertUser
         public static void InsertUser(string firstname, string surname, DateTime? birthday, string gender, string email, string passwordHex)
         {
             using (var cn = new SqlConnection(ConnStr))
@@ -47,6 +51,9 @@ namespace Server
                 cmd.ExecuteNonQuery();
             }
         }
+        #endregion
+
+        #region GetByEmail
         public static (string Firstname, string Surname, DateTime? Birthday, string Gender, string Email)? GetByEmail(string email)
         {
             using (var cn = new SqlConnection(ConnStr))
@@ -67,6 +74,9 @@ namespace Server
                 }
             }
         }
+        #endregion
+
+        #region FindByLogin
         public static (string Firstname, string Surname, DateTime? Birthday, string Gender, string Email, string Role)? FindByLogin(string email, string passwordHex)
         {
             using (var cn = new SqlConnection(ConnStr))
@@ -91,6 +101,9 @@ namespace Server
                 }
             }
         }
+        #endregion
+
+        #region InsertGroupMessage
         public static void InsertGroupMessage(string roomCode, string fromEmail, string fromName, string message, DateTime? sentAt = null)
         {
             using (var cn = new SqlConnection(ConnStr))
@@ -106,7 +119,9 @@ namespace Server
                 cmd.ExecuteNonQuery();
             }
         }
+        #endregion
 
+        #region GetGroupMessages
         public static List<GroupChatMsgEx> GetGroupMessages(string roomCode, int take = 50)
         {
             var list = new List<GroupChatMsgEx>();
@@ -137,6 +152,7 @@ namespace Server
             list.Reverse();
             return list;
         }
+        #endregion
 
     }
 }

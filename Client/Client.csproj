@@ -108,6 +108,12 @@
     <Compile Include="GroupChatForm.Designer.cs">
       <DependentUpon>GroupChatForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImagePreviewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImagePreviewForm.Designer.cs">
+      <DependentUpon>ImagePreviewForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="JoinClassForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -166,6 +172,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GroupChatForm.resx">
       <DependentUpon>GroupChatForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImagePreviewForm.resx">
+      <DependentUpon>ImagePreviewForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="JoinClassForm.resx">
       <DependentUpon>JoinClassForm.cs</DependentUpon>
@@ -295,6 +304,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\icons8-comedy-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-dot-30.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -22,12 +22,14 @@ namespace NT106_BT2
             tbEmail.Text = email;
             string role = Session.Role;
 
+            #region Set Role Text
             if (Session.Email == "admin@localhost")
                 tbRole.Text = "Admin";
             else if (string.Equals(Session.Role, "Owner", StringComparison.OrdinalIgnoreCase))
                 tbRole.Text = "Teacher";
             else
                 tbRole.Text = "Student";
+            #endregion
         }
     }
 }

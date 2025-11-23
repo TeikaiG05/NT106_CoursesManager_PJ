@@ -39,6 +39,7 @@
             this.lbClassname.AutoSize = true;
             this.lbClassname.Font = new System.Drawing.Font("Microsoft Tai Le", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbClassname.Location = new System.Drawing.Point(129, 37);
+            this.lbClassname.MaximumSize = new System.Drawing.Size(150, 0);
             this.lbClassname.Name = "lbClassname";
             this.lbClassname.Size = new System.Drawing.Size(113, 19);
             this.lbClassname.TabIndex = 0;
@@ -48,7 +49,7 @@
             // 
             this.lbClasscode.AutoSize = true;
             this.lbClasscode.Font = new System.Drawing.Font("Microsoft Tai Le", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbClasscode.Location = new System.Drawing.Point(129, 60);
+            this.lbClasscode.Location = new System.Drawing.Point(129, 79);
             this.lbClasscode.Name = "lbClasscode";
             this.lbClasscode.Size = new System.Drawing.Size(81, 19);
             this.lbClasscode.TabIndex = 2;
@@ -73,8 +74,9 @@
             this.Controls.Add(this.lbClasscode);
             this.Controls.Add(this.picAvatar);
             this.Controls.Add(this.lbClassname);
+            this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "TeamsCard";
-            this.Size = new System.Drawing.Size(274, 148);
+            this.Size = new System.Drawing.Size(270, 148);
             ((System.ComponentModel.ISupportInitialize)(this.picAvatar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

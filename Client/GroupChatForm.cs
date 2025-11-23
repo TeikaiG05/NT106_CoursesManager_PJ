@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace NT106_BT2
 {
@@ -8,8 +10,6 @@ namespace NT106_BT2
     {
         private readonly Dashboard parent;
         private Form currentChildForm;
-
-        // Cache mỗi chat page theo room
         private readonly Dictionary<string, ChatPage> chatPages = new Dictionary<string, ChatPage>();
 
         public GroupChatForm()
@@ -17,15 +17,19 @@ namespace NT106_BT2
             InitializeComponent();
         }
 
-        public GroupChatForm(string className, string classCode, Dashboard dashboardParent) : this()
+        public GroupChatForm(string className, string classCode, Image avatar, Dashboard dashboardParent) : this()
         {
             parent = dashboardParent;
             lbClassname.Text = className;
             lbClasscode.Text = classCode;
 
+            if (avatar != null)
+                picAvatar.Image = avatar;
+
             OpenChatPage(classCode);
         }
 
+        #region Button Clicks
         private void btnBack_Click(object sender, EventArgs e)
         {
             parent.OpenChildForm(new TeamsForm(parent));
@@ -38,18 +42,16 @@ namespace NT106_BT2
 
         private void btnFile_Click(object sender, EventArgs e)
         {
-            ShowChild(new FilePage());
+            string roomCode = lbClasscode.Text;
+            ShowChild(new FilePage(roomCode));
         }
+        #endregion
 
-        // -----------------------------------------
-        // CHỈ SỬA 2 HÀM DƯỚI LÀ FIX TOÀN BỘ LỖI
-        // -----------------------------------------
-
+        #region Form Events
         private void OpenChatPage(string roomCode)
         {
             ChatPage page;
 
-            // Tạo 1 lần duy nhất
             if (!chatPages.ContainsKey(roomCode))
             {
                 page = new ChatPage(roomCode);
@@ -59,14 +61,16 @@ namespace NT106_BT2
             {
                 page = chatPages[roomCode];
             }
-
+            
             ShowChild(page);
         }
+        #endregion
 
+        #region Helper Methods
         private void ShowChild(Form child)
         {
             if (currentChildForm != null)
-                currentChildForm.Hide();  // Không Close() nữa!!
+                currentChildForm.Hide();
 
             currentChildForm = child;
 
@@ -79,5 +83,6 @@ namespace NT106_BT2
 
             child.Show();
         }
+        #endregion
     }
 }

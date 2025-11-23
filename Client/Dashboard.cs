@@ -30,6 +30,8 @@ namespace NT106_BT2
         private string fullName;
         private string birthday;
         private string gender;
+
+        #region Constructor
         public Dashboard(string firstname, string surname, string birthday, string gender, string email)
         {
             InitializeComponent();
@@ -39,11 +41,15 @@ namespace NT106_BT2
             this.email = email;
             this.Load += Dashboard_Load;
         }
+        #endregion
 
+        #region] Profile Click
         private void lb_profile_Click(object sender, EventArgs e)
         {
             OpenChildForm(new Profile(fullName, birthday, gender, email));
         }
+        #endregion
+
         #region Logout
         private async void btnLogout_Click(object sender, EventArgs e)
         {
@@ -55,21 +61,18 @@ namespace NT106_BT2
         }
         #endregion
 
+        #region btn Chat
         private void btnChat_Click(object sender, EventArgs e)
         {
             OpenChildForm(new ChatForm());
-            //ChatForm chatWindow = new ChatForm();
-            //chatWindow.StartPosition = FormStartPosition.Manual;
-            //int x = this.Location.X + (this.Width - chatWindow.Width) / 2;
-            //int y = this.Location.Y + (this.Height - chatWindow.Height) / 2;
-            //chatWindow.Location = new Point(x, y);
-            //chatWindow.Show();
         }
+        #endregion
+
+        #region Dashboard Close
         private async void Dashboard_FormClosing(object sender, FormClosingEventArgs e)
         {
             try
             {
-                // 🔒 Chỉ logout nếu đang đăng nhập và chưa gọi logout trước đó
                 if (!Session.IsLoggingOut && Session.Email != null && Session.Token != null)
                 {
                     Session.IsLoggingOut = true;
@@ -85,6 +88,9 @@ namespace NT106_BT2
                 Application.Exit();
             }
         }
+        #endregion
+
+        #region Child Form
         public void OpenChildForm(Form childForm)
         {
             if (currentFormChild != null)
@@ -101,13 +107,17 @@ namespace NT106_BT2
             childForm.BringToFront();
             childForm.Show();
         }
+        #endregion
 
+        #region Dashboard Load
         private void Dashboard_Load(object sender, EventArgs e)
         {
             OpenChildForm(new Profile(fullName, birthday, gender, email));
             lb_profile.Checked = true;
             EnableDrag(pnTitleBar);
         }
+        #endregion
+
         #region Move form
         private void EnableDrag(Control dragArea)
         {
@@ -122,9 +132,12 @@ namespace NT106_BT2
         }
         #endregion
 
+        #region Teams
         private void btnTeams_Click(object sender, EventArgs e)
         {
             OpenChildForm(new TeamsForm(this));
+            Text = "Teams";
         }
+        #endregion
     }
 }

@@ -12,6 +12,7 @@ namespace NT106_BT2
 {
     public partial class JoinClassForm : Form
     {
+        public string ClassCode => tbClasscode.Text.Trim();
         public JoinClassForm()
         {
             InitializeComponent();
@@ -19,8 +20,7 @@ namespace NT106_BT2
             this.CancelButton = btnCancel;
         }
 
-        public string ClassCode => tbClasscode.Text.Trim();
-
+        #region Join Button
         private void btnJoin_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(ClassCode))
@@ -32,11 +32,14 @@ namespace NT106_BT2
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
+        #endregion
 
+        #region Cancel Button
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
+        #endregion
     }
 }

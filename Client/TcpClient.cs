@@ -20,20 +20,16 @@ namespace NT106_BT2
         private static CancellationTokenSource cts;
         private static bool listening = false;
 
-        private static readonly string Host =
-            ConfigurationManager.AppSettings["ServerHost"] ?? "127.0.0.1";
+        private static readonly string Host = ConfigurationManager.AppSettings["ServerHost"] ?? "127.0.0.1";
 
-        private static readonly int Port =
-            int.TryParse(ConfigurationManager.AppSettings["ServerPort"], out int p) ? p : 8080;
+        private static readonly int Port = int.TryParse(ConfigurationManager.AppSettings["ServerPort"], out int p) ? p : 8080;
 
         public static event Action<string> OnMessageReceived;
         public static event Action<string> OnError;
 
         public static bool IsConnected => cli?.Connected ?? false;
 
-        //===========================================================
-        // CONNECT
-        //===========================================================
+        #region CONNECT
         public static async Task ConnectAsync()
         {
             try
@@ -74,10 +70,9 @@ namespace NT106_BT2
             rd = new StreamReader(ns, new UTF8Encoding(false));
             wr = new StreamWriter(ns, new UTF8Encoding(false)) { AutoFlush = true };
         }
+        #endregion
 
-        //===========================================================
-        // LISTEN LOOP
-        //===========================================================
+        #region LISTEN LOOP
         private static void StartListen()
         {
             if (listening) return;
@@ -139,10 +134,9 @@ namespace NT106_BT2
                 System.Diagnostics.Debug.WriteLine("[TCP] ListenLoop ended");
             }
         }
+        #endregion
 
-        //===========================================================
-        // SEND
-        //===========================================================
+        #region SEND
         public static async Task SendLineAsync(string line)
         {
             try
@@ -191,10 +185,9 @@ namespace NT106_BT2
             string json = JsonConvert.SerializeObject(req);
             return SendLineAsync(json);
         }
+        #endregion
 
-        //===========================================================
-        // DISCONNECT
-        //===========================================================
+        #region DISCONNECT
         public static void Disconnect()
         {
             try
@@ -217,5 +210,6 @@ namespace NT106_BT2
                 OnError?.Invoke("Disconnect error: " + ex.Message);
             }
         }
+        #endregion
     }
 }

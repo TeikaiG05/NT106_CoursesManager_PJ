@@ -7,9 +7,9 @@ namespace NT106_BT2
 {
     internal static class DbClient
     {
-        private static string ConnStr
-            => ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+        private static string ConnStr => ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
+        #region InsertClass
         public static int InsertClass(string name, string code, string ownerEmail)
         {
             using (var cn = new SqlConnection(ConnStr))
@@ -34,8 +34,10 @@ namespace NT106_BT2
 
                 return classId;
             }
-        }  
+        }
+        #endregion
 
+        #region GetClassByCode
         public static DataTable GetClassesByUser(string email)
         {
             var table = new DataTable();
@@ -53,7 +55,9 @@ namespace NT106_BT2
 
             return table;
         }
+        #endregion
 
+        #region JoinClassByCode
         public static (string Name, string Code)? JoinClassByCode(string code, string email, string role = "Student")
         {
             using (var cn = new SqlConnection(ConnStr))
@@ -88,5 +92,47 @@ namespace NT106_BT2
                 return (name, realCode);
             }
         }
+        #endregion
+
+        #region InsertRoomFile
+        public static void InsertRoomFile(string roomCode, string fileName, string filePath, long fileSizeBytes, string uploadedBy)
+        {
+            using (var cn = new SqlConnection(ConnStr))
+            using (var cmd = new SqlCommand(
+                @"INSERT INTO dbo.RoomFiles(RoomCode, FileName, FilePath, FileSizeBytes, UploadedAt, UploadedBy)
+          VALUES (@room, @name, @path, @size, SYSDATETIME(), @user)", cn))
+            {
+                cmd.Parameters.AddWithValue("@room", roomCode);
+                cmd.Parameters.AddWithValue("@name", fileName);
+                cmd.Parameters.AddWithValue("@path", filePath);
+                cmd.Parameters.AddWithValue("@size", fileSizeBytes);
+                cmd.Parameters.AddWithValue("@user", uploadedBy ?? (object)DBNull.Value);
+
+                cn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+        #endregion
+
+        #region GetFilesByRoom
+        public static DataTable GetFilesByRoom(string roomCode)
+        {
+            var table = new DataTable();
+
+            using (var cn = new SqlConnection(ConnStr))
+            using (var cmd = new SqlCommand(
+                @"SELECT FileName, FilePath, FileSizeBytes, UploadedBy FROM dbo.RoomFiles WHERE RoomCode = @room ORDER BY UploadedAt", cn))
+            {
+                cmd.Parameters.AddWithValue("@room", roomCode);
+                cn.Open();
+                using (var rd = cmd.ExecuteReader())
+                {
+                    table.Load(rd);
+                }
+            }
+
+            return table;
+        }
+        #endregion
     }
 }
