@@ -136,6 +136,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session.cs" />
+    <Compile Include="SettingRole.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingRole.Designer.cs">
+      <DependentUpon>SettingRole.cs</DependentUpon>
+    </Compile>
     <Compile Include="TcpClient.cs" />
     <Compile Include="TeamsCard.cs">
       <SubType>UserControl</SubType>
@@ -186,6 +192,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SettingRole.resx">
+      <DependentUpon>SettingRole.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TeamsCard.resx">
       <DependentUpon>TeamsCard.cs</DependentUpon>
     </EmbeddedResource>

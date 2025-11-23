@@ -88,5 +88,32 @@ namespace NT106_BT2
                 return (name, realCode);
             }
         }
+
+        public static DataTable GetAllUsers()
+        {
+            var table = new DataTable();
+            using (var cn = new SqlConnection(ConnStr))
+            using (var cmd = new SqlCommand(@"SELECT Email, ISNULL(Role, 'Student') AS Role FROM dbo.Users ORDER BY Email", cn))
+            {
+                cn.Open();
+                using (var rd = cmd.ExecuteReader())
+                {
+                    table.Load(rd);
+                }
+            }
+            return table;
+        }
+
+        public static void UpdateUserRole(string email, string role)
+        {
+            using (var cn = new SqlConnection(ConnStr))
+            using (var cmd = new SqlCommand(@"UPDATE dbo.Users SET Role = @role WHERE Email = @email", cn))
+            {
+                cmd.Parameters.AddWithValue("@role", role);
+                cmd.Parameters.AddWithValue("@email", email);
+                cn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }

@@ -107,6 +107,15 @@ namespace NT106_BT2
             OpenChildForm(new Profile(fullName, birthday, gender, email));
             lb_profile.Checked = true;
             EnableDrag(pnTitleBar);
+            // Chỉ hiện nút Setting cho admin
+            if (Session.Email == "admin@localhost")
+            {
+                btnSetting.Visible = true;
+            }
+            else
+            {
+                btnSetting.Visible = false;
+            }
         }
         #region Move form
         private void EnableDrag(Control dragArea)
@@ -125,6 +134,12 @@ namespace NT106_BT2
         private void btnTeams_Click(object sender, EventArgs e)
         {
             OpenChildForm(new TeamsForm(this));
+        }
+
+        private void btnSetting_Click(object sender, EventArgs e)
+        {
+            SettingRole form = new SettingRole();
+            form.Show(); // mở không chặn form chính
         }
     }
 }

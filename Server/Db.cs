@@ -138,6 +138,26 @@ namespace Server
             return list;
         }
 
+        public static DataTable GetAllUsers()
+        {
+            var dt = new DataTable();
+
+            using (var cn = new SqlConnection(ConnStr))
+            using (var cmd = new SqlCommand(
+                @"SELECT Firstname, Surname, Email, Role FROM dbo.Users ORDER BY Email", cn))
+            {
+                cn.Open();
+                using (var ad = new SqlDataAdapter(cmd))
+                {
+                    ad.Fill(dt);
+                }
+            }
+
+            return dt;
+        }
+
+
     }
+
 }
 
