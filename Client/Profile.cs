@@ -31,5 +31,11 @@ namespace NT106_BT2
                 tbRole.Text = "Student";
             #endregion
         }
+
+        private void gunaxacminhmail_Click(object sender, EventArgs e)
+        {
+            EmailVerification form = new EmailVerification();
+            form.Show();
+        }
     }
 }

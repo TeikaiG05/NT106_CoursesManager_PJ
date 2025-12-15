@@ -64,8 +64,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(1245, 792);
-            this.splitContainer1.SplitterDistance = 52;
+            this.splitContainer1.Size = new System.Drawing.Size(1245, 788);
+            this.splitContainer1.SplitterDistance = 51;
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -79,7 +79,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1245, 52);
+            this.panel1.Size = new System.Drawing.Size(1245, 51);
             this.panel1.TabIndex = 0;
             // 
             // label1
@@ -185,8 +185,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.flpParticipants);
-            this.splitContainer2.Size = new System.Drawing.Size(1245, 739);
-            this.splitContainer2.SplitterDistance = 639;
+            this.splitContainer2.Size = new System.Drawing.Size(1245, 736);
+            this.splitContainer2.SplitterDistance = 636;
             this.splitContainer2.SplitterWidth = 1;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -195,7 +195,7 @@
             this.pnlShare.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlShare.Location = new System.Drawing.Point(0, 0);
             this.pnlShare.Name = "pnlShare";
-            this.pnlShare.Size = new System.Drawing.Size(1245, 639);
+            this.pnlShare.Size = new System.Drawing.Size(1245, 636);
             this.pnlShare.TabIndex = 0;
             // 
             // flpParticipants
@@ -215,7 +215,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1245, 792);
+            this.ClientSize = new System.Drawing.Size(1245, 788);
             this.Controls.Add(this.splitContainer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "LobbyForm";

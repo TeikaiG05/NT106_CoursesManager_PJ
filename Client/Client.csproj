@@ -96,6 +96,12 @@
       <DependentUpon>Dashboard.cs</DependentUpon>
     </Compile>
     <Compile Include="DbClient.cs" />
+    <Compile Include="EmailVerification.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EmailVerification.Designer.cs">
+      <DependentUpon>EmailVerification.cs</DependentUpon>
+    </Compile>
     <Compile Include="FilePage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -184,6 +190,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dashboard.resx">
       <DependentUpon>Dashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmailVerification.resx">
+      <DependentUpon>EmailVerification.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FilePage.resx">
       <DependentUpon>FilePage.cs</DependentUpon>
