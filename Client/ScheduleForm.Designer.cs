@@ -81,9 +81,9 @@
             // lblMonthYear
             // 
             this.lblMonthYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.lblMonthYear.Location = new System.Drawing.Point(341, 9);
+            this.lblMonthYear.Location = new System.Drawing.Point(87, 9);
             this.lblMonthYear.Name = "lblMonthYear";
-            this.lblMonthYear.Size = new System.Drawing.Size(320, 52);
+            this.lblMonthYear.Size = new System.Drawing.Size(815, 52);
             this.lblMonthYear.TabIndex = 12;
             this.lblMonthYear.Text = "MONTH YEAR";
             this.lblMonthYear.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
