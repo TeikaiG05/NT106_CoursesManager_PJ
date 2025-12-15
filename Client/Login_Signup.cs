@@ -38,6 +38,7 @@ namespace NT106_BT2
             Guna2Transistion1 = new Guna2Transition();
             pn_login.Visible = true;
             pn_regis.Visible = false;
+            Text = "Đăng nhập";
             SubscribeTcpOnce();
             this.Shown += async (_, __) =>
             {
@@ -46,12 +47,15 @@ namespace NT106_BT2
             };
         }
 
+        #region OnFormClosed
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
             UnsubscribeTcp();
             base.OnFormClosed(e);
         }
+        #endregion
 
+        #region TCP Subscription
         private void SubscribeTcpOnce()
         {
             if (tcpSubscribed) return;
@@ -61,7 +65,9 @@ namespace NT106_BT2
 
             tcpSubscribed = true;
         }
+        #endregion
 
+        #region TCP Unsubscription
         private void UnsubscribeTcp()
         {
             if (!tcpSubscribed) return;
@@ -71,14 +77,17 @@ namespace NT106_BT2
 
             tcpSubscribed = false;
         }
+        #endregion
 
+        #region TCP Error
         private void Tcp_OnError(string msg)
         {
             if (IsDisposed) return;
-            BeginInvoke(new Action(() =>
-                MessageBox.Show("TCP ERROR: " + msg)));
+            BeginInvoke(new Action(() => MessageBox.Show("TCP ERROR: " + msg)));
         }
+        #endregion
 
+        #region Handle server messages
         private void HandleServerMessage(string msg)
         {
             try
@@ -90,7 +99,7 @@ namespace NT106_BT2
             }
             catch
             {
-                return; // không parse được json thì bỏ
+                return;
             }
 
             try
@@ -110,7 +119,7 @@ namespace NT106_BT2
                                 {
                                     var u = ok.user ?? new Common.UserDto();
 
-                                    // Lưu session
+                                    // Luu session
                                     Session.Email = u.email;
                                     Session.Token = ok.token;
                                     Session.Expire = ok.expires;
@@ -162,17 +171,20 @@ namespace NT106_BT2
                 Console.WriteLine("HandleServerMessage error: " + ex.Message);
             }
         }
+        #endregion
 
         #region UI: switch 2 panel
         private void cToLogin_Click(object sender, EventArgs e)
         {
             pn_regis.Visible = false;
+            Text = "Đăng nhập";
             Guna2Transistion1.ShowSync(pn_login);
         }
 
         private void cSignup_Click(object sender, EventArgs e)
         {
             pn_regis.Visible = true;
+            Text = "Đăng ký";
             Guna2Transistion1.ShowSync(pn_regis);
         }
         #endregion
@@ -456,6 +468,8 @@ namespace NT106_BT2
             };
         }
         #endregion
+
+        #region IRC
         private void nw_password_IRC(object sender, EventArgs e)
         {
             nw_password.UseSystemPasswordChar = !nw_password.UseSystemPasswordChar;
@@ -473,5 +487,6 @@ namespace NT106_BT2
             cPassword.UseSystemPasswordChar = !cPassword.UseSystemPasswordChar;
             cPassword.IconRight = cPassword.UseSystemPasswordChar ? Properties.Resources.icons8_eye_close_50 : Properties.Resources.icons8_eye_open_50;
         }
+        #endregion
     }
 }

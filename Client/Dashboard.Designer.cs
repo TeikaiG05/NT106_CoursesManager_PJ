@@ -61,7 +61,7 @@
             this.guna2ControlBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2ControlBox1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.guna2ControlBox1.IconColor = System.Drawing.Color.Black;
-            this.guna2ControlBox1.Location = new System.Drawing.Point(1092, 6);
+            this.guna2ControlBox1.Location = new System.Drawing.Point(1090, 4);
             this.guna2ControlBox1.Name = "guna2ControlBox1";
             this.guna2ControlBox1.Size = new System.Drawing.Size(45, 29);
             this.guna2ControlBox1.TabIndex = 2;
@@ -72,23 +72,25 @@
             this.guna2ControlBox2.ControlBoxType = Guna.UI2.WinForms.Enums.ControlBoxType.MinimizeBox;
             this.guna2ControlBox2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.guna2ControlBox2.IconColor = System.Drawing.Color.Black;
-            this.guna2ControlBox2.Location = new System.Drawing.Point(1041, 6);
+            this.guna2ControlBox2.Location = new System.Drawing.Point(1039, 4);
             this.guna2ControlBox2.Name = "guna2ControlBox2";
             this.guna2ControlBox2.Size = new System.Drawing.Size(45, 29);
             this.guna2ControlBox2.TabIndex = 3;
             // 
             // guna2ContainerControl1
             // 
+            this.guna2ContainerControl1.BorderColor = System.Drawing.Color.White;
             this.guna2ContainerControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.guna2ContainerControl1.Location = new System.Drawing.Point(0, 0);
+            this.guna2ContainerControl1.Margin = new System.Windows.Forms.Padding(0);
             this.guna2ContainerControl1.Name = "guna2ContainerControl1";
             this.guna2ContainerControl1.Size = new System.Drawing.Size(1148, 751);
+            this.guna2ContainerControl1.Size = new System.Drawing.Size(1146, 753);
             this.guna2ContainerControl1.TabIndex = 11;
             this.guna2ContainerControl1.Text = "guna2ContainerControl1";
             // 
             // panel1
             // 
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.btnLogout);
             this.panel1.Controls.Add(this.lb_profile);
             this.panel1.Controls.Add(this.btnSetting);
@@ -99,8 +101,10 @@
             this.panel1.Controls.Add(this.guna2Button2);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(96, 788);
+            this.panel1.Size = new System.Drawing.Size(94, 790);
             this.panel1.TabIndex = 8;
             // 
             // btnLogout
@@ -172,7 +176,7 @@
             this.btnChat.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnChat.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnChat.FillColor = System.Drawing.Color.Bisque;
-            this.btnChat.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnChat.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnChat.ForeColor = System.Drawing.Color.Black;
             this.btnChat.Image = ((System.Drawing.Image)(resources.GetObject("btnChat.Image")));
             this.btnChat.Location = new System.Drawing.Point(7, 125);
@@ -193,7 +197,7 @@
             this.cMeet.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.cMeet.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.cMeet.FillColor = System.Drawing.Color.Bisque;
-            this.cMeet.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.cMeet.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cMeet.ForeColor = System.Drawing.Color.Black;
             this.cMeet.Image = ((System.Drawing.Image)(resources.GetObject("cMeet.Image")));
             this.cMeet.Location = new System.Drawing.Point(7, 191);
@@ -213,7 +217,7 @@
             this.guna2Button1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.guna2Button1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.guna2Button1.FillColor = System.Drawing.Color.Bisque;
-            this.guna2Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.guna2Button1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.guna2Button1.ForeColor = System.Drawing.Color.Black;
             this.guna2Button1.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button1.Image")));
             this.guna2Button1.Location = new System.Drawing.Point(7, 332);
@@ -233,7 +237,7 @@
             this.btnTeams.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.btnTeams.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.btnTeams.FillColor = System.Drawing.Color.Bisque;
-            this.btnTeams.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnTeams.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnTeams.ForeColor = System.Drawing.Color.Black;
             this.btnTeams.Image = ((System.Drawing.Image)(resources.GetObject("btnTeams.Image")));
             this.btnTeams.Location = new System.Drawing.Point(7, 257);
@@ -254,7 +258,7 @@
             this.guna2Button2.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.guna2Button2.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.guna2Button2.FillColor = System.Drawing.Color.Bisque;
-            this.guna2Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.guna2Button2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.guna2Button2.ForeColor = System.Drawing.Color.Black;
             this.guna2Button2.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button2.Image")));
             this.guna2Button2.Location = new System.Drawing.Point(7, 407);
@@ -275,11 +279,25 @@
             this.pnTitleBar.Size = new System.Drawing.Size(1148, 36);
             this.pnTitleBar.TabIndex = 4;
             // 
+            // pnTitleBar
+            // 
+            this.pnTitleBar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnTitleBar.Controls.Add(this.guna2ControlBox2);
+            this.pnTitleBar.Controls.Add(this.guna2ControlBox1);
+            this.pnTitleBar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnTitleBar.Location = new System.Drawing.Point(0, 0);
+            this.pnTitleBar.Margin = new System.Windows.Forms.Padding(0);
+            this.pnTitleBar.Name = "pnTitleBar";
+            this.pnTitleBar.Size = new System.Drawing.Size(1146, 36);
+            this.pnTitleBar.TabIndex = 4;
+            // 
             // splitContainer1
             // 
+            this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(0);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -299,6 +317,7 @@
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer2.IsSplitterFixed = true;
             this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Margin = new System.Windows.Forms.Padding(0);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -311,6 +330,8 @@
             this.splitContainer2.Panel2.Controls.Add(this.guna2ContainerControl1);
             this.splitContainer2.Size = new System.Drawing.Size(1148, 788);
             this.splitContainer2.SplitterDistance = 36;
+            this.splitContainer2.Size = new System.Drawing.Size(1146, 790);
+            this.splitContainer2.SplitterDistance = 36;
             this.splitContainer2.SplitterWidth = 1;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -321,8 +342,9 @@
             this.ClientSize = new System.Drawing.Size(1245, 788);
             this.Controls.Add(this.splitContainer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Dashboard";
-            this.Text = " ";
+            this.Text = " Dashboard";
             this.Load += new System.EventHandler(this.Dashboard_Load);
             this.panel1.ResumeLayout(false);
             this.pnTitleBar.ResumeLayout(false);

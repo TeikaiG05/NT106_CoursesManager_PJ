@@ -108,11 +108,23 @@
     <Compile Include="GroupChatForm.Designer.cs">
       <DependentUpon>GroupChatForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImagePreviewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImagePreviewForm.Designer.cs">
+      <DependentUpon>ImagePreviewForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="JoinClassForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="JoinClassForm.Designer.cs">
       <DependentUpon>JoinClassForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LobbyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LobbyForm.Designer.cs">
+      <DependentUpon>LobbyForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Login_Signup.cs">
       <SubType>Form</SubType>
@@ -126,6 +138,12 @@
     </Compile>
     <Compile Include="Notifications\ToastNotification.Designer.cs">
       <DependentUpon>ToastNotification.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ParticipantTile.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ParticipantTile.Designer.cs">
+      <DependentUpon>ParticipantTile.cs</DependentUpon>
     </Compile>
     <Compile Include="Profile.cs">
       <SubType>Form</SubType>
@@ -173,11 +191,20 @@
     <EmbeddedResource Include="GroupChatForm.resx">
       <DependentUpon>GroupChatForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ImagePreviewForm.resx">
+      <DependentUpon>ImagePreviewForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="JoinClassForm.resx">
       <DependentUpon>JoinClassForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="LobbyForm.resx">
+      <DependentUpon>LobbyForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Login_Signup.resx">
       <DependentUpon>Login_Signup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ParticipantTile.resx">
+      <DependentUpon>ParticipantTile.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Profile.resx">
       <DependentUpon>Profile.cs</DependentUpon>
@@ -304,6 +331,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\icons8-comedy-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-dot-30.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-end-call-30.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-present-to-all-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-mic-48.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

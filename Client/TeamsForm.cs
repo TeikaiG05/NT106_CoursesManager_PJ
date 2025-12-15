@@ -21,10 +21,14 @@ namespace NT106_BT2
             this.Load += TeamsForm_Load;
         }
 
+        #region Form Load
         private void TeamsForm_Load(object sender, EventArgs e)
         {
             LoadTeamsFromDb();
         }
+        #endregion
+
+        #region Helper Methods
         private void LoadTeamsFromDb()
         {
             flowTeams.Controls.Clear();
@@ -41,13 +45,18 @@ namespace NT106_BT2
                 AddCourseCard(mon, lop);
             }
         }
+        #endregion
+
+        #region Constructor with Parent
         public TeamsForm(Dashboard Dparent) : this()
         {
             parent = Dparent;
             bool canCreate = Session.Email == "admin@localhost" || string.Equals(Session.Role, "Owner", StringComparison.OrdinalIgnoreCase);
             tsmiCreateTeam.Visible = canCreate;
-        }   
+        }
+        #endregion
 
+        #region Event Handlers
         private void btnJoinOrCreate_Click(object sender, EventArgs e)
         {
             var p = new Point(0, btnJoinOrCreate.Height);
@@ -81,7 +90,9 @@ namespace NT106_BT2
                 }
             }
         }
+        #endregion
 
+        #region Private Methods
         private void AddCourseCard(string mon, string lop)
         {
             var card = new TeamsCard();
@@ -90,7 +101,8 @@ namespace NT106_BT2
             card.Margin = new Padding(5);
             card.Click += (s, e) =>
             {
-                parent.OpenChildForm(new GroupChatForm(mon, lop, parent));
+                var avatar = card.AvatarImage;
+                parent.OpenChildForm(new GroupChatForm(mon, lop, avatar, parent));
             };
             flowTeams.Controls.Add(card);
         }
@@ -123,5 +135,6 @@ namespace NT106_BT2
                 }
             }
         }
+        #endregion
     }
 }

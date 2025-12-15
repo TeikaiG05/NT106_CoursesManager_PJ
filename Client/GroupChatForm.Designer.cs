@@ -30,11 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GroupChatForm));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnFile = new Guna.UI2.WinForms.Guna2Button();
             this.label2 = new System.Windows.Forms.Label();
             this.lbClasscode = new System.Windows.Forms.Label();
             this.lbClassname = new System.Windows.Forms.Label();
             this.picAvatar = new Guna.UI2.WinForms.Guna2PictureBox();
-            this.btnFile = new Guna.UI2.WinForms.Guna2Button();
             this.btnChat = new Guna.UI2.WinForms.Guna2Button();
             this.btnBack = new Guna.UI2.WinForms.Guna2Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -50,19 +50,39 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.btnFile);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.lbClasscode);
             this.panel1.Controls.Add(this.lbClassname);
             this.panel1.Controls.Add(this.picAvatar);
-            this.panel1.Controls.Add(this.btnFile);
             this.panel1.Controls.Add(this.btnChat);
             this.panel1.Controls.Add(this.btnBack);
-            this.panel1.Cursor = System.Windows.Forms.Cursors.No;
+            this.panel1.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(221, 755);
             this.panel1.TabIndex = 0;
+            // 
+            // btnFile
+            // 
+            this.btnFile.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
+            this.btnFile.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnFile.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnFile.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnFile.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnFile.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.btnFile.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.btnFile.ForeColor = System.Drawing.Color.Black;
+            this.btnFile.Image = ((System.Drawing.Image)(resources.GetObject("btnFile.Image")));
+            this.btnFile.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnFile.Location = new System.Drawing.Point(-1, 345);
+            this.btnFile.Name = "btnFile";
+            this.btnFile.Size = new System.Drawing.Size(221, 45);
+            this.btnFile.TabIndex = 2;
+            this.btnFile.Text = "File";
+            this.btnFile.Click += new System.EventHandler(this.btnFile_Click);
             // 
             // label2
             // 
@@ -77,7 +97,7 @@
             // 
             this.lbClasscode.AutoSize = true;
             this.lbClasscode.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbClasscode.Location = new System.Drawing.Point(12, 201);
+            this.lbClasscode.Location = new System.Drawing.Point(12, 210);
             this.lbClasscode.Name = "lbClasscode";
             this.lbClasscode.Size = new System.Drawing.Size(67, 16);
             this.lbClasscode.TabIndex = 5;
@@ -88,6 +108,7 @@
             this.lbClassname.AutoSize = true;
             this.lbClassname.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbClassname.Location = new System.Drawing.Point(12, 175);
+            this.lbClassname.MaximumSize = new System.Drawing.Size(150, 0);
             this.lbClassname.Name = "lbClassname";
             this.lbClassname.Size = new System.Drawing.Size(72, 16);
             this.lbClassname.TabIndex = 4;
@@ -102,25 +123,6 @@
             this.picAvatar.TabIndex = 3;
             this.picAvatar.TabStop = false;
             // 
-            // btnFile
-            // 
-            this.btnFile.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
-            this.btnFile.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnFile.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnFile.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnFile.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnFile.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.btnFile.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.btnFile.ForeColor = System.Drawing.Color.Black;
-            this.btnFile.Image = ((System.Drawing.Image)(resources.GetObject("btnFile.Image")));
-            this.btnFile.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.btnFile.Location = new System.Drawing.Point(3, 345);
-            this.btnFile.Name = "btnFile";
-            this.btnFile.Size = new System.Drawing.Size(221, 45);
-            this.btnFile.TabIndex = 2;
-            this.btnFile.Text = "File";
-            this.btnFile.Click += new System.EventHandler(this.btnFile_Click);
-            // 
             // btnChat
             // 
             this.btnChat.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
@@ -134,7 +136,7 @@
             this.btnChat.ForeColor = System.Drawing.Color.Black;
             this.btnChat.Image = ((System.Drawing.Image)(resources.GetObject("btnChat.Image")));
             this.btnChat.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.btnChat.Location = new System.Drawing.Point(3, 298);
+            this.btnChat.Location = new System.Drawing.Point(0, 298);
             this.btnChat.Name = "btnChat";
             this.btnChat.Size = new System.Drawing.Size(221, 45);
             this.btnChat.TabIndex = 1;
@@ -153,7 +155,7 @@
             this.btnBack.ForeColor = System.Drawing.Color.Gray;
             this.btnBack.Image = ((System.Drawing.Image)(resources.GetObject("btnBack.Image")));
             this.btnBack.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.btnBack.Location = new System.Drawing.Point(7, 12);
+            this.btnBack.Location = new System.Drawing.Point(4, 12);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(212, 33);
             this.btnBack.TabIndex = 0;
@@ -165,6 +167,7 @@
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(0);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -184,6 +187,7 @@
             this.pnlGroupContainer.BackColor = System.Drawing.SystemColors.Control;
             this.pnlGroupContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlGroupContainer.Location = new System.Drawing.Point(0, 0);
+            this.pnlGroupContainer.Margin = new System.Windows.Forms.Padding(0);
             this.pnlGroupContainer.Name = "pnlGroupContainer";
             this.pnlGroupContainer.Size = new System.Drawing.Size(926, 755);
             this.pnlGroupContainer.TabIndex = 0;
@@ -215,10 +219,10 @@
         private System.Windows.Forms.Label lbClasscode;
         private System.Windows.Forms.Label lbClassname;
         private Guna.UI2.WinForms.Guna2PictureBox picAvatar;
-        private Guna.UI2.WinForms.Guna2Button btnFile;
         private Guna.UI2.WinForms.Guna2Button btnChat;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Label label2;
         private Guna.UI2.WinForms.Guna2Panel pnlGroupContainer;
+        private Guna.UI2.WinForms.Guna2Button btnFile;
     }
 }

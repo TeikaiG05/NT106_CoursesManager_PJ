@@ -94,10 +94,7 @@ namespace Server
                     break;
                 }
 
-                var ep = cli.Client.RemoteEndPoint != null
-                    ? cli.Client.RemoteEndPoint.ToString()
-                    : "client";
-
+                var ep = cli.Client.RemoteEndPoint != null ? cli.Client.RemoteEndPoint.ToString() : "client";
                 Log("Accept", ep);
                 _ = Task.Run(() => Handle(cli, ep));
             }

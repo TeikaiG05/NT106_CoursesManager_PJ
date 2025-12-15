@@ -121,8 +121,11 @@
   <data name="Password" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Password.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icons8-bell-48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8-bell-48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icons8-file-24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icons8-file-24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icons8-calendar-50" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icons8-calendar-50.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icons8-setting-50" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-setting-50.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -136,17 +139,17 @@
   <data name="icons8-email-50" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-email-50.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icons8-file-24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8-file-24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icons8-eye-close-50" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icons8-eye-close-50.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icons8-video-call-30" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-video-call-30.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icons8-date-of-birth-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8-date-of-birth-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icons8-bell-48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icons8-bell-48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icons8-eye-close-50" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8-eye-close-50.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icons8-dot-30" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icons8-dot-30.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icons8-join-58" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-join-58.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -163,6 +166,9 @@
   <data name="icons8-profile-50" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-profile-50.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="icons8-date-of-birth-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icons8-date-of-birth-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="icons8-camera-24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-camera-24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -177,6 +183,9 @@
   </data>
   <data name="icons8-logout-481" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-logout-481.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icons8-present-to-all-48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icons8-present-to-all-48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icons8-logout-48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-logout-48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -193,14 +202,17 @@
   <data name="icons8-call-24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-call-24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icons8-calendar-50" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8-calendar-50.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icons8-comedy-24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icons8-comedy-24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icons8-end-call-30" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icons8-end-call-30.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="people" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\people.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icons8-comedy-24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8-comedy-24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icons8-mic-48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icons8-mic-48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icons8-find-50" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-find-50.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

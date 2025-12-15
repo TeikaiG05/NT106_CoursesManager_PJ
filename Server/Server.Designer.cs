@@ -35,6 +35,7 @@
             // 
             // btnStart
             // 
+            this.btnStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnStart.Location = new System.Drawing.Point(12, 43);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(128, 65);
@@ -45,6 +46,7 @@
             // 
             // btnStop
             // 
+            this.btnStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnStop.Location = new System.Drawing.Point(12, 114);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(128, 65);
@@ -55,6 +57,7 @@
             // 
             // lvLog
             // 
+            this.lvLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lvLog.HideSelection = false;
             this.lvLog.Location = new System.Drawing.Point(188, 29);
             this.lvLog.Name = "lvLog";
@@ -71,7 +74,7 @@
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnStart);
             this.Name = "Server";
-            this.Text = "Form1";
+            this.Text = "ServerLog";
             this.ResumeLayout(false);
 
         }
