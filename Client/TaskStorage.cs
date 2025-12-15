@@ -51,14 +51,17 @@ namespace NT106_BT2
         public static void LoadFromFile()
         {
             if (!File.Exists(FilePath))
+            {
+                File.WriteAllText(FilePath, "{}");
                 return;
+            }
 
             string json = File.ReadAllText(FilePath);
-
             var data = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(json);
 
-            _tasks.Clear();
+            if (data == null) return;
 
+            _tasks.Clear();
             foreach (var kv in data)
             {
                 DateTime date = DateTime.Parse(kv.Key);

@@ -26,12 +26,15 @@ namespace NT106_BT2
         public ScheduleForm()
         {
             InitializeComponent();
+
+            currentMonth = DateTime.Today;
+            selectedDate = DateTime.Today;
+
+            TaskStorage.LoadFromFile();   
+
             SetupListView();
             DrawCalendar();
             LoadTasks();
-            currentMonth = DateTime.Today;
-            selectedDate = DateTime.Today;
-            TaskStorage.LoadFromFile();
         }
         private void DrawCalendar()
         {
