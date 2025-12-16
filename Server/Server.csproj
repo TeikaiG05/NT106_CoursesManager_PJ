@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Db.cs" />
+    <Compile Include="PasswordResetManager.cs" />
     <Compile Include="Server.cs">
       <SubType>Form</SubType>
     </Compile>

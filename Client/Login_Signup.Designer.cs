@@ -38,7 +38,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.guna2ControlBox1 = new Guna.UI2.WinForms.Guna2ControlBox();
             this.guna2ControlBox2 = new Guna.UI2.WinForms.Guna2ControlBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.pn_login = new Guna.UI2.WinForms.Guna2ShadowPanel();
             this.cSignup = new Guna.UI2.WinForms.Guna2Button();
             this.cPassword = new Guna.UI2.WinForms.Guna2TextBox();
@@ -62,6 +61,7 @@
             this.cFirstname = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2PictureBox1 = new Guna.UI2.WinForms.Guna2PictureBox();
             this.pnTitleBar = new Guna.UI2.WinForms.Guna2Panel();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.pn_login.SuspendLayout();
             this.pn_regis.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
@@ -153,22 +153,11 @@
             this.guna2ControlBox2.Size = new System.Drawing.Size(45, 29);
             this.guna2ControlBox2.TabIndex = 9;
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Tai Le", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label3.Location = new System.Drawing.Point(98, 305);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(128, 14);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "Forgot Your Password?";
-            // 
             // pn_login
             // 
             this.pn_login.BackColor = System.Drawing.Color.Transparent;
+            this.pn_login.Controls.Add(this.linkLabel1);
             this.pn_login.Controls.Add(this.cSignup);
-            this.pn_login.Controls.Add(this.label3);
             this.pn_login.Controls.Add(this.label2);
             this.pn_login.Controls.Add(this.bt_login);
             this.pn_login.Controls.Add(this.label1);
@@ -268,7 +257,7 @@
             this.pn_regis.Controls.Add(this.nw_password);
             this.pn_regis.Controls.Add(this.cFirstname);
             this.pn_regis.FillColor = System.Drawing.Color.White;
-            this.pn_regis.Location = new System.Drawing.Point(515, 47);
+            this.pn_regis.Location = new System.Drawing.Point(515, 41);
             this.pn_regis.Name = "pn_regis";
             this.pn_regis.ShadowColor = System.Drawing.Color.BlueViolet;
             this.pn_regis.Size = new System.Drawing.Size(345, 446);
@@ -574,6 +563,17 @@
             this.pnTitleBar.Size = new System.Drawing.Size(872, 41);
             this.pnTitleBar.TabIndex = 15;
             // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(100, 315);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(117, 13);
+            this.linkLabel1.TabIndex = 13;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Forgot Your Password?";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
             // Login_Signup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -613,7 +613,6 @@
         private Guna.UI2.WinForms.Guna2GradientButton bt_login;
         private Guna.UI2.WinForms.Guna2ControlBox guna2ControlBox2;
         private Guna.UI2.WinForms.Guna2ControlBox guna2ControlBox1;
-        private System.Windows.Forms.Label label3;
         private Guna.UI2.WinForms.Guna2Button cSignup;
         private Guna.UI2.WinForms.Guna2ShadowPanel pn_login;
         private Guna.UI2.WinForms.Guna2ShadowPanel pn_regis;
@@ -634,6 +633,7 @@
         private System.Windows.Forms.Label label7;
         private Guna.UI2.WinForms.Guna2RadioButton cOther;
         private Guna.UI2.WinForms.Guna2Panel pnTitleBar;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }
 

@@ -32,6 +32,8 @@
             this.gunabutguima = new Guna.UI2.WinForms.Guna2Button();
             this.gunabutxacminh = new Guna.UI2.WinForms.Guna2Button();
             this.gunatextotp = new Guna.UI2.WinForms.Guna2TextBox();
+            this.gunatextmatkhaumoi = new Guna.UI2.WinForms.Guna2TextBox();
+            this.gunatextxacnhanmatkhau = new Guna.UI2.WinForms.Guna2TextBox();
             this.SuspendLayout();
             // 
             // gunatextmailxacminh
@@ -47,7 +49,7 @@
             this.gunatextmailxacminh.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.gunatextmailxacminh.Location = new System.Drawing.Point(41, 71);
             this.gunatextmailxacminh.Name = "gunatextmailxacminh";
-            this.gunatextmailxacminh.PlaceholderText = "";
+            this.gunatextmailxacminh.PlaceholderText = "Nhập email ....";
             this.gunatextmailxacminh.SelectedText = "";
             this.gunatextmailxacminh.Size = new System.Drawing.Size(215, 36);
             this.gunatextmailxacminh.TabIndex = 0;
@@ -75,7 +77,7 @@
             this.gunabutxacminh.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.gunabutxacminh.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.gunabutxacminh.ForeColor = System.Drawing.Color.White;
-            this.gunabutxacminh.Location = new System.Drawing.Point(262, 113);
+            this.gunabutxacminh.Location = new System.Drawing.Point(262, 196);
             this.gunabutxacminh.Name = "gunabutxacminh";
             this.gunabutxacminh.Size = new System.Drawing.Size(163, 36);
             this.gunabutxacminh.TabIndex = 2;
@@ -95,16 +97,54 @@
             this.gunatextotp.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.gunatextotp.Location = new System.Drawing.Point(41, 113);
             this.gunatextotp.Name = "gunatextotp";
-            this.gunatextotp.PlaceholderText = "";
+            this.gunatextotp.PlaceholderText = "Nhập mã OTP mới gửi";
             this.gunatextotp.SelectedText = "";
             this.gunatextotp.Size = new System.Drawing.Size(215, 36);
             this.gunatextotp.TabIndex = 3;
+            // 
+            // gunatextmatkhaumoi
+            // 
+            this.gunatextmatkhaumoi.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.gunatextmatkhaumoi.DefaultText = "";
+            this.gunatextmatkhaumoi.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.gunatextmatkhaumoi.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.gunatextmatkhaumoi.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.gunatextmatkhaumoi.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.gunatextmatkhaumoi.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.gunatextmatkhaumoi.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.gunatextmatkhaumoi.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.gunatextmatkhaumoi.Location = new System.Drawing.Point(41, 155);
+            this.gunatextmatkhaumoi.Name = "gunatextmatkhaumoi";
+            this.gunatextmatkhaumoi.PlaceholderText = "Mật khẩu mới";
+            this.gunatextmatkhaumoi.SelectedText = "";
+            this.gunatextmatkhaumoi.Size = new System.Drawing.Size(215, 36);
+            this.gunatextmatkhaumoi.TabIndex = 4;
+            // 
+            // gunatextxacnhanmatkhau
+            // 
+            this.gunatextxacnhanmatkhau.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.gunatextxacnhanmatkhau.DefaultText = "";
+            this.gunatextxacnhanmatkhau.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.gunatextxacnhanmatkhau.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.gunatextxacnhanmatkhau.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.gunatextxacnhanmatkhau.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.gunatextxacnhanmatkhau.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.gunatextxacnhanmatkhau.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.gunatextxacnhanmatkhau.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.gunatextxacnhanmatkhau.Location = new System.Drawing.Point(41, 197);
+            this.gunatextxacnhanmatkhau.Name = "gunatextxacnhanmatkhau";
+            this.gunatextxacnhanmatkhau.PlaceholderText = "Xác nhận mật khẩu";
+            this.gunatextxacnhanmatkhau.SelectedText = "";
+            this.gunatextxacnhanmatkhau.Size = new System.Drawing.Size(215, 36);
+            this.gunatextxacnhanmatkhau.TabIndex = 5;
             // 
             // EmailVerification
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(481, 244);
+            this.Controls.Add(this.gunatextxacnhanmatkhau);
+            this.Controls.Add(this.gunatextmatkhaumoi);
             this.Controls.Add(this.gunatextotp);
             this.Controls.Add(this.gunabutxacminh);
             this.Controls.Add(this.gunabutguima);
@@ -121,5 +161,7 @@
         private Guna.UI2.WinForms.Guna2Button gunabutguima;
         private Guna.UI2.WinForms.Guna2Button gunabutxacminh;
         private Guna.UI2.WinForms.Guna2TextBox gunatextotp;
+        private Guna.UI2.WinForms.Guna2TextBox gunatextmatkhaumoi;
+        private Guna.UI2.WinForms.Guna2TextBox gunatextxacnhanmatkhau;
     }
 }

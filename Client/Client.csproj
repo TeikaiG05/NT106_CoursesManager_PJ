@@ -108,6 +108,7 @@
     <Compile Include="FilePage.Designer.cs">
       <DependentUpon>FilePage.cs</DependentUpon>
     </Compile>
+    <Compile Include="ForgotPasswordForm.cs" />
     <Compile Include="GroupChatForm.cs">
       <SubType>Form</SubType>
     </Compile>

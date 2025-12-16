@@ -16,6 +16,9 @@ namespace Common
         public const string CALL_JOIN = "CALL_JOIN";
         public const string CALL_LEAVE = "CALL_LEAVE";
         public const string CALL_STATE = "CALL_STATE";
+
+        public const string RESET_REQUEST = "RESET_REQUEST";
+        public const string RESET_CONFIRM = "RESET_CONFIRM";
     }
 
     public class TokenLoginReq
@@ -135,5 +138,22 @@ namespace Common
         public string type { get; set; } = MsgType.CALL_STATE;
         public string roomCode { get; set; }
         public System.Collections.Generic.List<CallMemberDto> members { get; set; }
+    }
+
+
+    public static partial class MsgTypeExtensions { } // no-op (keeps file layout)
+    
+    public class ResetRequest
+    {
+        public string type { get; set; } = MsgType.RESET_REQUEST;
+        public string email { get; set; }
+    }
+
+    public class ResetConfirmReq
+    {
+        public string type { get; set; } = MsgType.RESET_CONFIRM;
+        public string email { get; set; }
+        public string otp { get; set; }
+        public string passwordHash { get; set; }
     }
 }

@@ -172,6 +172,17 @@ namespace Server
             return dt;
         }
 
+        public static void UpdateUserPassword(string email, string passwordHex)
+        {
+            using (var cn = new SqlConnection(ConnStr))
+            using (var cmd = new SqlCommand(@"UPDATE dbo.Users SET PasswordEncrypted = @ph WHERE Email = @em", cn))
+            {
+                cmd.Parameters.AddWithValue("@ph", passwordHex);
+                cmd.Parameters.AddWithValue("@em", email);
+                cn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
 
     }
 

@@ -456,6 +456,66 @@ namespace Server
 
                     #endregion
 
+                    #region PASSWORD RESET (NEW)
+
+                    if (type == MsgType.RESET_REQUEST)
+                    {
+                        ResetRequest rreq = null;
+                        try { rreq = JsonConvert.DeserializeObject<ResetRequest>(line); }
+                        catch { await SendErr(wr, "RESET_REQUEST: dữ liệu không hợp lệ"); continue; }
+
+                        if (string.IsNullOrWhiteSpace(rreq.email) || !Db.UsernameExists(rreq.email))
+                        {
+                            await SendErr(wr, "Không tìm thấy email.");
+                        }
+                        else
+                        {
+                            string otp = PasswordResetManager.GenerateOtpFor(rreq.email, 5);
+                            try
+                            {
+                                PasswordResetManager.SendOtpEmail(rreq.email, otp);
+                                await SendOk(wr, MsgType.RESET_REQUEST, "OTP đã được gửi tới email.", null);
+                            }
+                            catch (Exception ex)
+                            {
+                                await SendErr(wr, "Không gửi được email: " + ex.Message);
+                            }
+                        }
+                        continue;
+                    }
+
+                    if (type == MsgType.RESET_CONFIRM)
+                    {
+                        ResetConfirmReq creq = null;
+                        try { creq = JsonConvert.DeserializeObject<ResetConfirmReq>(line); }
+                        catch { await SendErr(wr, "RESET_CONFIRM: dữ liệu không hợp lệ"); continue; }
+
+                        if (string.IsNullOrWhiteSpace(creq.email) || string.IsNullOrWhiteSpace(creq.otp) || string.IsNullOrWhiteSpace(creq.passwordHash))
+                        {
+                            await SendErr(wr, "Dữ liệu không hợp lệ.");
+                            continue;
+                        }
+
+                        if (!PasswordResetManager.ValidateOtp(creq.email, creq.otp))
+                        {
+                            await SendErr(wr, "OTP không hợp lệ hoặc đã hết hạn.");
+                            continue;
+                        }
+
+                        try
+                        {
+                            Db.UpdateUserPassword(creq.email, creq.passwordHash);
+                            await SendOk(wr, MsgType.RESET_CONFIRM, "Mật khẩu đã được cập nhật.", null);
+                        }
+                        catch (Exception ex)
+                        {
+                            await SendErr(wr, "Lỗi khi cập nhật mật khẩu: " + ex.Message);
+                        }
+                        continue;
+                    }
+
+                    #endregion
+
                     await SendErr(wr, "Yêu cầu không hợp lệ");
                     Log(ep, "send: ERROR unknown type");
                 }

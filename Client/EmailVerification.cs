@@ -1,98 +1,68 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Net;
+﻿using Common;
+using Newtonsoft.Json;
+using System;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net;
 using System.Windows.Forms;
 
 namespace NT106_BT2
 {
     public partial class EmailVerification : Form
     {
-        private string otp_xacminh;
-        private DateTime otp_hethan;
-
-        private const string Myemail = "dat23520258@gmail.com";
-        private const string Apppassword = "qbwp mrof bhub zeyh";
         public EmailVerification()
         {
             InitializeComponent();
         }
 
-        private void gunabutguima_Click(object sender, EventArgs e)
+        // Gửi yêu cầu server tạo & gửi OTP
+        private async void gunabutguima_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(gunatextmailxacminh.Text))
-            {
-                MessageBox.Show("Vui lòng nhập email!");
-                return;
-            }
-
-
             try
             {
-                // 1. Sinh OTP
-                otp_xacminh = GenerateOtp();
-                otp_hethan = DateTime.Now.AddMinutes(5);
+                string email = gunatextmailxacminh.Text.Trim();
+                if (string.IsNullOrWhiteSpace(email)) { MessageBox.Show("Nhập email"); return; }
 
-
-                // 2. Gửi email
-                SendOtpEmail(gunatextmailxacminh.Text.Trim(), otp_xacminh);
-
-
-                MessageBox.Show("Đã gửi mã xác minh tới email!");
+                var req = new { type = MsgType.RESET_REQUEST, email };
+                await TcpHelper.SendLineAsync(Newtonsoft.Json.JsonConvert.SerializeObject(req));
+                MessageBox.Show("Yêu cầu đã gửi. Nếu email tồn tại, bạn sẽ nhận được OTP.");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi gửi email: " + ex.Message);
+                MessageBox.Show("Lỗi gửi yêu cầu: " + ex.Message);
             }
         }
 
-        private void gunabutxacminh_Click(object sender, EventArgs e)
+        // Gửi OTP + mật khẩu mới tới server (server xác thực OTP rồi cập nhật DB)
+        private async void gunabutxacminh_Click(object sender, EventArgs e)
         {
-            if (DateTime.Now > otp_hethan)
+            try
             {
-                MessageBox.Show("Mã đã hết hạn!");
-                return;
-            }
+                string email = gunatextmailxacminh.Text.Trim();
+                string otp = gunatextotp.Text.Trim();
+                string pass = gunatextmatkhaumoi.Text;
+                string pass2 = gunatextxacnhanmatkhau.Text;
 
+                if (pass != pass2) { MessageBox.Show("Mật khẩu nhập lại không khớp."); return; }
+                if (string.IsNullOrWhiteSpace(otp)) { MessageBox.Show("Nhập OTP."); return; }
+                if (!Login_Signup.IsStrongPassword(pass)) { MessageBox.Show("Mật khẩu yếu."); return; }
 
-            if (gunatextotp.Text.Trim() == otp_xacminh)
-            {
-                MessageBox.Show("Xác minh email thành công ");
+                var req = new
+                {
+                    type = MsgType.RESET_CONFIRM,
+                    email,
+                    otp,
+                    passwordHash = PasswordHasher.Sha256Hex(pass)
+                };
+
+                await TcpHelper.SendLineAsync(Newtonsoft.Json.JsonConvert.SerializeObject(req));
+                MessageBox.Show("Yêu cầu đổi mật khẩu đã gửi. Kiểm tra thông báo từ server.");
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Mã xác minh không đúng!");
+                MessageBox.Show("Lỗi gửi yêu cầu: " + ex.Message);
             }
         }
 
-        // ===== HÀM SINH OTP =====
-        private string GenerateOtp()
-        {
-            Random rnd = new Random();
-            return rnd.Next(100000, 999999).ToString(); // 6 số
-        }
-
-
-        // ===== HÀM GỬI EMAIL =====
-        private void SendOtpEmail(string toEmail, string otp)
-        {
-            MailMessage mail = new MailMessage();
-            mail.From = new MailAddress(Myemail);
-            mail.To.Add(toEmail);
-            mail.Subject = "Xác minh email";
-            mail.Body = $"Mã xác minh của bạn là: {otp}\nMã có hiệu lực trong 5 phút.";
-
-
-            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
-            smtp.Credentials = new NetworkCredential(Myemail, Apppassword);
-            smtp.EnableSsl = true;
-            smtp.Send(mail);
-        }
+        // Lưu ý: hàm SendOtpEmail / GenerateOtp trong client không cần nếu server gửi mail.
     }
 }

@@ -232,7 +232,7 @@ namespace NT106_BT2
             catch { return false; }
         }
 
-        private static bool IsStrongPassword(string password)
+        public static bool IsStrongPassword(string password)
         {
             if (string.IsNullOrEmpty(password) || password.Length < 8) return false;
             bool up = password.Any(char.IsUpper);
@@ -488,5 +488,13 @@ namespace NT106_BT2
             cPassword.IconRight = cPassword.UseSystemPasswordChar ? Properties.Resources.icons8_eye_close_50 : Properties.Resources.icons8_eye_open_50;
         }
         #endregion
+
+        
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            EmailVerification form = new EmailVerification();
+            form.Show();
+        }
     }
 }
