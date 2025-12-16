@@ -54,10 +54,10 @@ namespace Server
         #endregion
 
         #region GetByEmail
-        public static (string Firstname, string Surname, DateTime? Birthday, string Gender, string Email)? GetByEmail(string email)
+        public static (string Firstname, string Surname, DateTime? Birthday, string Gender, string Email, string Role)? GetByEmail(string email)
         {
             using (var cn = new SqlConnection(ConnStr))
-            using (var cmd = new SqlCommand("SELECT TOP 1 Firstname,Surname,Birthday,Gender,Email FROM dbo.Users WHERE Email=@e", cn))
+            using (var cmd = new SqlCommand("SELECT TOP 1 Firstname,Surname,Birthday,Gender,Email, Role FROM dbo.Users WHERE Email=@e", cn))
             {
                 cmd.Parameters.AddWithValue("@e", email);
                 cn.Open();
@@ -69,7 +69,8 @@ namespace Server
                         rd["Surname"].ToString(),
                         rd["Birthday"] == DBNull.Value ? (DateTime?)null : (DateTime)rd["Birthday"],
                         rd["Gender"].ToString(),
-                        rd["Email"].ToString()
+                        rd["Email"].ToString(),
+                        rd["Role"] == DBNull.Value ? "Student" : rd["Role"].ToString()
                     );
                 }
             }

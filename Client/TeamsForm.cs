@@ -51,7 +51,7 @@ namespace NT106_BT2
         public TeamsForm(Dashboard Dparent) : this()
         {
             parent = Dparent;
-            bool canCreate = Session.Email == "admin@localhost" || string.Equals(Session.Role, "Owner", StringComparison.OrdinalIgnoreCase);
+            bool canCreate = Session.Email == "admin@localhost" || string.Equals(Session.Role, "Teacher", StringComparison.OrdinalIgnoreCase);
             tsmiCreateTeam.Visible = canCreate;
         }
         #endregion
@@ -65,7 +65,7 @@ namespace NT106_BT2
 
         private void tsmiCreateTeam_Click(object sender, EventArgs e)
         {
-            bool canCreate = Session.Email == "admin@localhost" || string.Equals(Session.Role, "Owner", StringComparison.OrdinalIgnoreCase);
+            bool canCreate = Session.Email == "admin@localhost" || string.Equals(Session.Role, "Teacher", StringComparison.OrdinalIgnoreCase);
             if (!canCreate)
             {
                 MessageBox.Show("Chỉ Admin và Teacher mới có quyền tạo nhóm.", "Không đủ quyền", MessageBoxButtons.OK, MessageBoxIcon.Warning);

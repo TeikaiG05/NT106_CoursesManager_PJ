@@ -6,7 +6,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace NT106_BT2
 {
@@ -14,6 +16,13 @@ namespace NT106_BT2
     {
         private readonly string roomCode;
         private readonly string roomName;
+        [DllImport("user32.dll", EntryPoint = "ReleaseCapture")]
+        private extern static void ReleaseCapture();
+
+        [DllImport("user32.dll", EntryPoint = "SendMessage")]
+        private extern static void SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
+        private const int WM_NCLBUTTONDOWN = 0xA1;
+        private const int HTCAPTION = 0x2;
 
         private bool cameraOn = true;
         private bool micOn = true;
@@ -41,6 +50,7 @@ namespace NT106_BT2
             splitContainer2.FixedPanel = FixedPanel.Panel2;
             splitContainer2.SplitterWidth = 4;
             splitContainer2.IsSplitterFixed = false;
+            EnableDrag(pnlTop);
 
             pnlShare.BackColor = Color.Black;
 
@@ -65,6 +75,20 @@ namespace NT106_BT2
             UpdateMicButtonUI();
             UpdateShareButtonUI();
         }
+
+        #region Move form
+        private void EnableDrag(Control dragArea)
+        {
+            dragArea.MouseDown += (sender, e) =>
+            {
+                if (e.Button == MouseButtons.Left)
+                {
+                    ReleaseCapture();
+                    SendMessage(this.Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+                }
+            };
+        }
+        #endregion
 
         #region Public API – ChatPage gọi sang
 

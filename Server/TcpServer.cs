@@ -163,6 +163,8 @@ namespace Server
                             var issued = TokenManager.Issue(login.username);
                             await SendOk(wr, MsgType.LOGIN, "OK", user, issued.token, issued.exp);
                             Log(ep, "send: OK login (token)");
+                            Log("LOGIN", $"User {v.Email} role from DB = {v.Role}");
+
 
                             if (myInfo == null)
                             {
@@ -296,7 +298,8 @@ namespace Server
                                     fullName = (v.Firstname + " " + v.Surname).Trim(),
                                     email = v.Email,
                                     birthday = v.Birthday.HasValue ? v.Birthday.Value.ToString("yyyy-MM-dd") : null,
-                                    gender = v.Gender
+                                    gender = v.Gender,
+                                    role = v.Role
                                 };
 
                                 var issued = TokenManager.Issue(treq.username);

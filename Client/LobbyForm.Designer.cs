@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.pnlTop = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.btnLeave = new Guna.UI2.WinForms.Guna2Button();
             this.btnShare = new Guna.UI2.WinForms.Guna2Button();
@@ -42,7 +42,7 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.pnlTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -59,7 +59,7 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.panel1);
+            this.splitContainer1.Panel1.Controls.Add(this.pnlTop);
             // 
             // splitContainer1.Panel2
             // 
@@ -69,18 +69,18 @@
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 0;
             // 
-            // panel1
+            // pnlTop
             // 
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.btnLeave);
-            this.panel1.Controls.Add(this.btnShare);
-            this.panel1.Controls.Add(this.btnMic);
-            this.panel1.Controls.Add(this.btnVideo);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1245, 52);
-            this.panel1.TabIndex = 0;
+            this.pnlTop.Controls.Add(this.label1);
+            this.pnlTop.Controls.Add(this.btnLeave);
+            this.pnlTop.Controls.Add(this.btnShare);
+            this.pnlTop.Controls.Add(this.btnMic);
+            this.pnlTop.Controls.Add(this.btnVideo);
+            this.pnlTop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlTop.Location = new System.Drawing.Point(0, 0);
+            this.pnlTop.Name = "pnlTop";
+            this.pnlTop.Size = new System.Drawing.Size(1245, 52);
+            this.pnlTop.TabIndex = 0;
             // 
             // label1
             // 
@@ -224,8 +224,8 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.pnlTop.ResumeLayout(false);
+            this.pnlTop.PerformLayout();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             this.splitContainer2.Panel2.PerformLayout();
@@ -238,7 +238,7 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel pnlTop;
         private Guna.UI2.WinForms.Guna2Button btnLeave;
         private Guna.UI2.WinForms.Guna2Button btnShare;
         private Guna.UI2.WinForms.Guna2Button btnMic;
