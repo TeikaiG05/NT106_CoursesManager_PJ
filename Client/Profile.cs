@@ -25,7 +25,7 @@ namespace NT106_BT2
             #region Set Role Text
             if (Session.Email == "admin@localhost")
                 tbRole.Text = "Admin";
-            else if (string.Equals(Session.Role, "Owner", StringComparison.OrdinalIgnoreCase))
+            else if (string.Equals(Session.Role, "Teacher", StringComparison.OrdinalIgnoreCase))
                 tbRole.Text = "Teacher";
             else
                 tbRole.Text = "Student";

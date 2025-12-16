@@ -51,7 +51,7 @@ namespace NT106_BT2
         public TeamsForm(Dashboard Dparent) : this()
         {
             parent = Dparent;
-            bool canCreate = Session.Email == "admin@localhost" || string.Equals(Session.Role, "Owner", StringComparison.OrdinalIgnoreCase);
+            bool canCreate = Session.Email == "admin@localhost" || string.Equals(Session.Role, "Teacher", StringComparison.OrdinalIgnoreCase);
             tsmiCreateTeam.Visible = canCreate;
         }
         #endregion
