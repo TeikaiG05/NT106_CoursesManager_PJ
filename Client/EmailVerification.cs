@@ -17,8 +17,8 @@ namespace NT106_BT2
         private string otp_xacminh;
         private DateTime otp_hethan;
 
-        private const string Myemail = "yourmail@gmail.com";
-        private const string Apppassword = "yourapppassword";
+        private const string Myemail = "dat23520258@gmail.com";
+        private const string Apppassword = "qbwp mrof bhub zeyh";
         public EmailVerification()
         {
             InitializeComponent();
