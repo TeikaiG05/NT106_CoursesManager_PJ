@@ -29,13 +29,16 @@
         private void InitializeComponent()
         {
             this.pnlAvatar = new System.Windows.Forms.Panel();
+            this.picAvatar = new System.Windows.Forms.PictureBox();
             this.lblInitials = new System.Windows.Forms.Label();
             this.lblName = new System.Windows.Forms.Label();
             this.pnlAvatar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picAvatar)).BeginInit();
             this.SuspendLayout();
             // 
             // pnlAvatar
             // 
+            this.pnlAvatar.Controls.Add(this.picAvatar);
             this.pnlAvatar.Controls.Add(this.lblInitials);
             this.pnlAvatar.Location = new System.Drawing.Point(0, 0);
             this.pnlAvatar.Margin = new System.Windows.Forms.Padding(0);
@@ -43,16 +46,29 @@
             this.pnlAvatar.Size = new System.Drawing.Size(83, 41);
             this.pnlAvatar.TabIndex = 0;
             // 
+            // picAvatar
+            // 
+            this.picAvatar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picAvatar.Location = new System.Drawing.Point(0, 0);
+            this.picAvatar.Margin = new System.Windows.Forms.Padding(0);
+            this.picAvatar.Name = "picAvatar";
+            this.picAvatar.Size = new System.Drawing.Size(83, 41);
+            this.picAvatar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picAvatar.TabIndex = 2;
+            this.picAvatar.TabStop = false;
+            // 
             // lblInitials
             // 
             this.lblInitials.AutoSize = true;
+            this.lblInitials.BackColor = System.Drawing.Color.Transparent;
             this.lblInitials.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblInitials.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.lblInitials.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
             this.lblInitials.Location = new System.Drawing.Point(0, 0);
             this.lblInitials.Name = "lblInitials";
             this.lblInitials.Size = new System.Drawing.Size(35, 13);
             this.lblInitials.TabIndex = 0;
-            this.lblInitials.Text = "label1";
+            this.lblInitials.Text = "NA";
+            this.lblInitials.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblName
             // 
@@ -62,7 +78,7 @@
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(83, 13);
             this.lblName.TabIndex = 1;
-            this.lblName.Text = "label1";
+            this.lblName.Text = "Name";
             this.lblName.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // ParticipantTile
@@ -75,6 +91,7 @@
             this.Size = new System.Drawing.Size(83, 63);
             this.pnlAvatar.ResumeLayout(false);
             this.pnlAvatar.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picAvatar)).EndInit();
             this.ResumeLayout(false);
 
         }

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Common;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using NAudio.Wave;
@@ -96,7 +97,7 @@ namespace NT106_BT2
             if (micOn) audioSender.Start();
 
             flpParticipants.AutoScroll = true;
-            flpParticipants.WrapContents = true;
+            flpParticipants.WrapContents = false; // keep a single row, horizontal scroll if overflow
             flpParticipants.FlowDirection = FlowDirection.LeftToRight;
 
             string me = Session.FullName ?? Session.Email;
@@ -142,10 +143,13 @@ namespace NT106_BT2
 
                     var tile = new ParticipantTile
                     {
-                        Width = 140,
-                        Height = 180,
-                        Margin = new Padding(10),
-                        DisplayName = name
+                        Width = 120,
+                        Height = 120,
+                        Margin = new Padding(8),
+                        DisplayName = name,
+                        AvatarUrl = string.Equals(name?.Trim(), (Session.FullName ?? Session.Email)?.Trim(), StringComparison.OrdinalIgnoreCase)
+                            ? (Session.Avatar ?? Defaults.DefaultAvatarUrl)
+                            : Defaults.DefaultAvatarUrl
                     };
 
                     flpParticipants.Controls.Add(tile);

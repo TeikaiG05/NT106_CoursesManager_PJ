@@ -8,6 +8,7 @@ namespace NT106_BT2
     public partial class ParticipantTile : UserControl
     {
         private string displayName;
+        private string avatarUrl;
 
         public ParticipantTile()
         {
@@ -23,6 +24,34 @@ namespace NT106_BT2
                 displayName = value;
                 lblName.Text = displayName;
                 lblInitials.Text = GetInitialsFromName(displayName);
+            }
+        }
+
+        public string AvatarUrl
+        {
+            get => avatarUrl;
+            set
+            {
+                avatarUrl = value;
+                if (!string.IsNullOrWhiteSpace(avatarUrl))
+                {
+                    try
+                    {
+                        picAvatar.ImageLocation = avatarUrl;
+                        picAvatar.Visible = true;
+                        lblInitials.Visible = false;
+                    }
+                    catch
+                    {
+                        picAvatar.Visible = false;
+                        lblInitials.Visible = true;
+                    }
+                }
+                else
+                {
+                    picAvatar.Visible = false;
+                    lblInitials.Visible = true;
+                }
             }
         }
 
