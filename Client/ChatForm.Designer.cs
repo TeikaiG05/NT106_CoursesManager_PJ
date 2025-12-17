@@ -38,7 +38,7 @@
             this.nutEmoji = new System.Windows.Forms.Button();
             this.labelChatTitle = new System.Windows.Forms.Label();
             this.panelRight = new System.Windows.Forms.Panel();
-            this.tieuDeChat = new System.Windows.Forms.Label();
+
             this.panelLeft.SuspendLayout();
             this.panelCenter.SuspendLayout();
             this.panelInput.SuspendLayout();

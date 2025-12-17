@@ -48,11 +48,11 @@ namespace NT106_BT2
             luongChatItems.Controls.Clear();
             luongChatItems.Controls.Add(labelChatTitle);
 
-            tieuDeChat.Text = "";
+
             // ví dụ tạm trong ChatForm_Load
             TcpHelper.OnMessageReceived += (line) => { System.Diagnostics.Debug.WriteLine("[ALL MSG] " + line); };
 
-            await TcpHelper.ConnectAsync();
+
             oTimKiem.Text = "Search by email";
             labelChatTitle.Text = "Chat";
             ReloadFriendBanners();
