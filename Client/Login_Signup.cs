@@ -125,6 +125,7 @@ namespace NT106_BT2
                                     Session.Expire = ok.expires;
                                     Session.Role = u.role;
                                     Session.FullName = u.fullName;
+                                    Session.AvatarUrl = u.avatar;
 
                                     if (tsRemember.Checked)
                                     {
@@ -382,6 +383,7 @@ namespace NT106_BT2
                 await Task.Delay(1000);
                 Session.Email = "admin@localhost";
                 Session.Role = "Admin";
+                Session.AvatarUrl = null;
                 ShowDashboardModal("Admin", "User", DateTime.Now.ToString("yyyy-MM-dd"), "Other", "admin@localhost");
                 return;
             }

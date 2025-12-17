@@ -13,6 +13,7 @@ namespace NT106_BT2
         public static string Expire { get; set; }
         public static string Role { get; set; }
         public static string FullName { get; set; }
+        public static string AvatarUrl { get; set; }
 
         public static bool IsLoggingOut = false;
         public static bool IsLoggedIn
@@ -25,6 +26,7 @@ namespace NT106_BT2
             Expire = null;
             Role = null;
             FullName = null;
+            AvatarUrl = null;
         }
     }
 }

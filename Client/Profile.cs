@@ -30,6 +30,24 @@ namespace NT106_BT2
             else
                 tbRole.Text = "Student";
             #endregion
+
+            SetAvatar(Session.AvatarUrl);
+        }
+
+        private void SetAvatar(string url)
+        {
+            if (string.IsNullOrWhiteSpace(url))
+                return;
+
+            try
+            {
+                guna2CirclePictureBox1.ImageLocation = url;
+                guna2CirclePictureBox1.LoadAsync();
+            }
+            catch
+            {
+                // keep default embedded image on failure
+            }
         }
     }
 }

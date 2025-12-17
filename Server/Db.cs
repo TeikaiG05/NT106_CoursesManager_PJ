@@ -54,10 +54,10 @@ namespace Server
         #endregion
 
         #region GetByEmail
-        public static (string Firstname, string Surname, DateTime? Birthday, string Gender, string Email, string Role)? GetByEmail(string email)
+        public static (string Firstname, string Surname, DateTime? Birthday, string Gender, string Email, string Role, string Avatar)? GetByEmail(string email)
         {
             using (var cn = new SqlConnection(ConnStr))
-            using (var cmd = new SqlCommand("SELECT TOP 1 Firstname,Surname,Birthday,Gender,Email, Role FROM dbo.Users WHERE Email=@e", cn))
+            using (var cmd = new SqlCommand("SELECT TOP 1 Firstname,Surname,Birthday,Gender,Email, Role, Avatar FROM dbo.Users WHERE Email=@e", cn))
             {
                 cmd.Parameters.AddWithValue("@e", email);
                 cn.Open();
@@ -70,7 +70,8 @@ namespace Server
                         rd["Birthday"] == DBNull.Value ? (DateTime?)null : (DateTime)rd["Birthday"],
                         rd["Gender"].ToString(),
                         rd["Email"].ToString(),
-                        rd["Role"] == DBNull.Value ? "Student" : rd["Role"].ToString()
+                        rd["Role"] == DBNull.Value ? "Student" : rd["Role"].ToString(),
+                        rd["Avatar"] == DBNull.Value ? null : rd["Avatar"].ToString()
                     );
                 }
             }
@@ -78,10 +79,10 @@ namespace Server
         #endregion
 
         #region FindByLogin
-        public static (string Firstname, string Surname, DateTime? Birthday, string Gender, string Email, string Role)? FindByLogin(string email, string passwordHex)
+        public static (string Firstname, string Surname, DateTime? Birthday, string Gender, string Email, string Role, string Avatar)? FindByLogin(string email, string passwordHex)
         {
             using (var cn = new SqlConnection(ConnStr))
-            using (var cmd = new SqlCommand(@"SELECT Firstname, Surname, Birthday, Gender, Email, Role FROM dbo.Users WHERE Email = @e AND PasswordEncrypted = @ph", cn))
+            using (var cmd = new SqlCommand(@"SELECT Firstname, Surname, Birthday, Gender, Email, Role, Avatar FROM dbo.Users WHERE Email = @e AND PasswordEncrypted = @ph", cn))
             {
                 cmd.Parameters.AddWithValue("@e", email);
                 cmd.Parameters.AddWithValue("@ph", passwordHex);
@@ -97,8 +98,9 @@ namespace Server
                     string gd = rd.IsDBNull(3) ? "" : rd.GetString(3);
                     string em = rd.IsDBNull(4) ? "" : rd.GetString(4);
                     string role = rd.IsDBNull(5) ? "Student" : rd.GetString(5);
+                    string avatar = rd.IsDBNull(6) ? null : rd.GetString(6);
 
-                    return (fn, sn, bd, gd, em, role);
+                    return (fn, sn, bd, gd, em, role, avatar);
                 }
             }
         }
@@ -157,4 +159,3 @@ namespace Server
 
     }
 }
-

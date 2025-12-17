@@ -165,7 +165,8 @@ namespace Server
                                 email = v.Email,
                                 birthday = v.Birthday.HasValue ? v.Birthday.Value.ToString("yyyy-MM-dd") : null,
                                 gender = v.Gender,
-                                role = v.Role
+                                role = v.Role,
+                                avatar = v.Avatar
                             };
 
                             var issued = TokenManager.Issue(login.username);
@@ -307,7 +308,8 @@ namespace Server
                                     email = v.Email,
                                     birthday = v.Birthday.HasValue ? v.Birthday.Value.ToString("yyyy-MM-dd") : null,
                                     gender = v.Gender,
-                                    role = v.Role
+                                    role = v.Role,
+                                    avatar = v.Avatar
                                 };
 
                                 var issued = TokenManager.Issue(treq.username);
@@ -728,4 +730,3 @@ namespace Server
         #endregion
     }
 }
-

@@ -54,6 +54,7 @@ namespace Common
         public string fullName { get; set; }
         public string birthday { get; set; }
         public string role { get; set; }
+        public string avatar { get; set; }
     }
 
     public class GroupChatMsg

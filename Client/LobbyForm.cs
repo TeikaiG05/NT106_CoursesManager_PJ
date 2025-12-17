@@ -141,16 +141,21 @@ namespace NT106_BT2
                 {
                     if (string.IsNullOrWhiteSpace(name)) continue;
 
+                    bool isMe = string.Equals(name?.Trim(), (Session.FullName ?? Session.Email)?.Trim(), StringComparison.OrdinalIgnoreCase);
+                    string avatarUrl = isMe ? Session.AvatarUrl : null;
+
                     var tile = new ParticipantTile
                     {
-                        Width = 120,
-                        Height = 120,
-                        Margin = new Padding(8),
-                        DisplayName = name,
-                        AvatarUrl = string.Equals(name?.Trim(), (Session.FullName ?? Session.Email)?.Trim(), StringComparison.OrdinalIgnoreCase)
-                            ? (Session.Avatar ?? Defaults.DefaultAvatarUrl)
-                            : Defaults.DefaultAvatarUrl
+                        Width = 60,
+                        Height = 78,
+                        Margin = new Padding(4),
+                        DisplayName = name
                     };
+
+                    if (!string.IsNullOrWhiteSpace(avatarUrl))
+                        tile.AvatarUrl = avatarUrl;
+                    else
+                        tile.AvatarImage = Properties.Resources.avatar_anh_meo_cute_3;
 
                     flpParticipants.Controls.Add(tile);
                 }
