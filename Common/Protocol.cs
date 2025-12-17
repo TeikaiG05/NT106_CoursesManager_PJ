@@ -104,7 +104,7 @@ namespace Common
 
     public class PrivateChatMsg
     {
-        public string type { get; set; }      
+        public string type = "PRIVATE_CHAT";
         public string fromEmail { get; set; }
         public string toEmail { get; set; }
         public string message { get; set; }
