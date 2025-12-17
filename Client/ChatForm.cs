@@ -49,7 +49,6 @@ namespace NT106_BT2
             luongChatItems.Controls.Add(labelChatTitle);
 
 
-            // ví dụ tạm trong ChatForm_Load
             TcpHelper.OnMessageReceived += (line) => { System.Diagnostics.Debug.WriteLine("[ALL MSG] " + line); };
 
 
