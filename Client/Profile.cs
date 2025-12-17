@@ -25,11 +25,29 @@ namespace NT106_BT2
             #region Set Role Text
             if (Session.Email == "admin@localhost")
                 tbRole.Text = "Admin";
-            else if (string.Equals(Session.Role, "Owner", StringComparison.OrdinalIgnoreCase))
+            else if (string.Equals(Session.Role, "Teacher", StringComparison.OrdinalIgnoreCase))
                 tbRole.Text = "Teacher";
             else
                 tbRole.Text = "Student";
             #endregion
+
+            SetAvatar(Session.AvatarUrl);
+        }
+
+        private void SetAvatar(string url)
+        {
+            if (string.IsNullOrWhiteSpace(url))
+                return;
+
+            try
+            {
+                guna2CirclePictureBox1.ImageLocation = url;
+                guna2CirclePictureBox1.LoadAsync();
+            }
+            catch
+            {
+                // keep default embedded image on failure
+            }
         }
 
         private void gunaxacminhmail_Click(object sender, EventArgs e)

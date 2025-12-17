@@ -18,6 +18,9 @@ namespace Common
         public const string CALL_JOIN = "CALL_JOIN";
         public const string CALL_LEAVE = "CALL_LEAVE";
         public const string CALL_STATE = "CALL_STATE";
+        public const string CALL_SHARE = "CALL_SHARE";
+        public const string CALL_FRAME = "CALL_FRAME";
+
 
         public const string RESET_REQUEST = "RESET_REQUEST";
         public const string RESET_CONFIRM = "RESET_CONFIRM";
@@ -56,6 +59,7 @@ namespace Common
         public string fullName { get; set; }
         public string birthday { get; set; }
         public string role { get; set; }
+        public string avatar { get; set; }
     }
 
     public class GroupChatMsg
@@ -117,6 +121,30 @@ namespace Common
         public string roomCode { get; set; }
         public string email { get; set; }
         public string name { get; set; }
+        public int udpPort { get; set; }
+    }
+
+    public class CallJoinRes
+    {
+        public bool ok { get; set; } = true;
+        public string type { get; set; } = MsgType.CALL_JOIN;
+        public string roomCode { get; set; }
+        public int roomId { get; set; }
+        public int userId { get; set; }
+    }
+
+    public class CallShareReq
+    {
+        public string type { get; set; } = MsgType.CALL_SHARE;
+        public string roomCode { get; set; }
+        public string sharerName { get; set; }
+    }
+
+    public class CallShareRes
+    {
+        public string type { get; set; } = MsgType.CALL_SHARE;
+        public string roomCode { get; set; }
+        public string sharerName { get; set; }
     }
 
     public class CallLeaveReq
@@ -187,5 +215,14 @@ namespace Common
         public string type { get; set; } = "GET_GROUP_MEMBERS";
         public string roomCode { get; set; }
         public string requestId { get; set; }
+    }
+
+    public class CallFrameMsg
+    {
+        public string type { get; set; } = MsgType.CALL_FRAME;
+        public string roomCode { get; set; }
+        public string fromEmail { get; set; }
+        public string fromName { get; set; }
+        public string jpgB64 { get; set; }
     }
 }

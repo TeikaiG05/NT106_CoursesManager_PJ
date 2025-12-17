@@ -88,7 +88,6 @@ namespace NT106_BT2
         }
         #endregion
 
-        // ===== Timeline mix message + file =====
         private enum TimelineKind
         {
             Text,
@@ -100,10 +99,8 @@ namespace NT106_BT2
             public TimelineKind Kind { get; set; }
             public DateTime Time { get; set; }
 
-            // nếu là tin nhắn
             public GroupChatMsgEx Message { get; set; }
 
-            // nếu là file
             public DataRow FileRow { get; set; }
         }
 
@@ -118,8 +115,7 @@ namespace NT106_BT2
 
             try
             {
-                await TcpHelper.SendGroupChatAsync(roomCode, msg, Session.Email, Session.FullName ?? Session.Email
-                    );
+                await TcpHelper.SendGroupChatAsync(roomCode, msg, Session.Email, Session.FullName ?? Session.Email);
                 System.Diagnostics.Debug.WriteLine($"[ChatPage] Sent GROUP_CHAT room={roomCode}, msg={msg}");
             }
             catch (Exception ex)
@@ -218,22 +214,22 @@ namespace NT106_BT2
                             long sizeBytes = Convert.ToInt64(item.FileRow["FileSizeBytes"]);
 
                             bool isMeFile = false;
-                            if (item.FileRow.Table.Columns.Contains("UploaderEmail"))
+                            string uploader = null;
+                            if (item.FileRow.Table.Columns.Contains("UploadedBy"))
                             {
-                                string uploader = item.FileRow["UploaderEmail"]?.ToString();
-                                isMeFile = string.Equals(
-                                    uploader?.Trim(),
-                                    Session.Email?.Trim(),
-                                    StringComparison.OrdinalIgnoreCase);
+                                uploader = item.FileRow["UploadedBy"]?.ToString();
+                                isMeFile = string.Equals(uploader?.Trim(), Session.Email?.Trim(), StringComparison.OrdinalIgnoreCase);
                             }
+
+                            string displayName = isMeFile ? "Me" : (string.IsNullOrWhiteSpace(uploader) ? "Unknown" : uploader);
 
                             if (IsImage(filePath))
                             {
-                                AddImageBubble_Me(filePath);
+                                AddImageBubble(filePath, isMeFile, displayName);
                             }
                             else
                             {
-                                AddFileBubble_Me(filePath, fileName, sizeBytes);
+                                AddFileBubble(filePath, fileName, sizeBytes, isMeFile, displayName);
                             }
                         }
                     }
@@ -299,6 +295,8 @@ namespace NT106_BT2
                     {
                         joinBubbleShown = false;
                     }
+
+                    SetCallButtonEnabled(!hasCall || !isMember);
                 }
                 catch (Exception ex)
                 {
@@ -308,6 +306,38 @@ namespace NT106_BT2
                 return;
             }
 
+            if (type.Equals(MsgType.CALL_JOIN, StringComparison.OrdinalIgnoreCase))
+            {
+                try
+                {
+                    var res = JsonConvert.DeserializeObject<CallJoinRes>(json);
+                    if (res == null) return;
+                    if (!string.Equals(res.roomCode?.Trim(), roomCode, StringComparison.OrdinalIgnoreCase))
+                        return;
+
+                    CallUdp.SetIds(res.roomId, res.userId);
+
+                    System.Diagnostics.Debug.WriteLine($"[ChatPage] CALL_JOIN RES roomId={res.roomId}, userId={res.userId}");
+                }
+                catch { }
+                return;
+            }
+
+            if (type.Equals(MsgType.CALL_SHARE, StringComparison.OrdinalIgnoreCase))
+            {
+                try
+                {
+                    var res = JsonConvert.DeserializeObject<CallShareRes>(json);
+                    if (res == null) return;
+                    if (!string.Equals(res.roomCode?.Trim(), roomCode, StringComparison.OrdinalIgnoreCase))
+                        return;
+
+                    if (lobby != null && !lobby.IsDisposed)
+                        lobby.SetSharingUser(res.sharerName);
+                }
+                catch { }
+                return;
+            }
 
             if (!type.Equals(MsgType.GROUP_CHAT, StringComparison.OrdinalIgnoreCase))
                 return;
@@ -333,42 +363,6 @@ namespace NT106_BT2
             AddBubble(displayText, false);
         }
         #endregion
-
-        private void LoadFileHistory()
-        {
-            try
-            {
-                DataTable dt = DbClient.GetFilesByRoom(roomCode);
-                System.Diagnostics.Debug.WriteLine($"[ChatPage] LoadFileHistory count={dt.Rows.Count}");
-
-                foreach (DataRow row in dt.Rows)
-                {
-                    string filePath = row["FilePath"].ToString();
-                    string fileName = row["FileName"].ToString();
-
-                    long sizeBytes = 0;
-                    long.TryParse(row["FileSizeBytes"]?.ToString(), out sizeBytes);
-
-                    string uploadedBy = dt.Columns.Contains("UploadedBy")
-                        ? row["UploadedBy"]?.ToString()
-                        : null;
-
-                    bool isMe = string.Equals(
-                        uploadedBy?.Trim(),
-                        Session.Email?.Trim(),
-                        StringComparison.OrdinalIgnoreCase);
-
-                    if (IsImage(filePath))
-                        AddImageBubble(filePath, isMe);
-                    else
-                        AddFileBubble(filePath, fileName, sizeBytes, isMe);
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine("[ChatPage] LoadFileHistory error: " + ex.Message);
-            }
-        }
 
         #region UI BUBBLE
         private void AddBubble(string text, bool isMe)
@@ -435,7 +429,7 @@ namespace NT106_BT2
                 MaximumSize = new Size(maxWidth, 0),
                 BackColor = Color.LightYellow,
                 Padding = new Padding(10),
-                Margin = new Padding(10, 5, 150, 5), // giống message "bên trái"
+                Margin = new Padding(10, 5, 150, 5),
                 Anchor = AnchorStyles.Left | AnchorStyles.Top
             };
 
@@ -535,20 +529,20 @@ namespace NT106_BT2
 
         private void AddImageBubble_Me(string filePath)
         {
-            AddImageBubble(filePath, true);
+            AddImageBubble(filePath, true, "Me");
         }
 
         private void AddFileBubble_Me(string filePath, string fileName, long sizeBytes)
         {
-            AddFileBubble(filePath, fileName, sizeBytes, true);
+            AddFileBubble(filePath, fileName, sizeBytes, true, "Me");
         }
 
-        private void AddImageBubble(string filePath, bool isMe)
+        private void AddImageBubble(string filePath, bool isMe, string senderName)
         {
             if (IsDisposed) return;
             if (InvokeRequired)
             {
-                BeginInvoke(new Action<string, bool>(AddImageBubble), filePath, isMe);
+                BeginInvoke(new Action<string, bool, string>(AddImageBubble), filePath, isMe, senderName);
                 return;
             }
 
@@ -566,6 +560,16 @@ namespace NT106_BT2
                 BackColor = Color.Transparent,
                 Anchor = isMe ? AnchorStyles.Right | AnchorStyles.Top
                               : AnchorStyles.Left | AnchorStyles.Top
+            };
+
+            var lblSender = new Label
+            {
+                AutoSize = true,
+                MaximumSize = new Size(maxWidth - 20, 0),
+                Text = string.IsNullOrWhiteSpace(senderName) ? "" : senderName + ":",
+                Font = new Font("Segoe UI", 8, FontStyle.Bold),
+                ForeColor = Color.DimGray,
+                Padding = new Padding(0, 0, 0, 2)
             };
 
             var pic = new PictureBox
@@ -589,7 +593,9 @@ namespace NT106_BT2
                 }
             };
 
+            panel.Controls.Add(lblSender);
             panel.Controls.Add(pic);
+            pic.Top = lblSender.Bottom + 2;
 
             tblMessages.RowCount++;
             tblMessages.RowStyles.Add(new RowStyle(SizeType.AutoSize));
@@ -598,13 +604,13 @@ namespace NT106_BT2
             tblMessages.ScrollControlIntoView(panel);
         }
 
-        private void AddFileBubble(string filePath, string fileName, long sizeBytes, bool isMe)
+        private void AddFileBubble(string filePath, string fileName, long sizeBytes, bool isMe, string senderName)
         {
             if (IsDisposed) return;
             if (InvokeRequired)
             {
-                BeginInvoke(new Action<string, string, long, bool>(AddFileBubble),
-                            filePath, fileName, sizeBytes, isMe);
+                BeginInvoke(new Action<string, string, long, bool, string>(AddFileBubble),
+                            filePath, fileName, sizeBytes, isMe, senderName);
                 return;
             }
 
@@ -617,9 +623,19 @@ namespace NT106_BT2
                 MaximumSize = new Size(maxWidth, 0),
                 Margin = isMe ? new Padding(150, 5, 10, 5) : new Padding(10, 5, 150, 5),
                 BackColor = Color.WhiteSmoke,
-                Anchor = isMe ? AnchorStyles.Right | AnchorStyles.Top
-                              : AnchorStyles.Left | AnchorStyles.Top,
+                Anchor = isMe ? AnchorStyles.Right | AnchorStyles.Top : AnchorStyles.Left | AnchorStyles.Top,
                 Padding = new Padding(10, 8, 10, 8)
+            };
+
+            var lblSender = new Label
+            {
+                Left = 0,
+                Top = 0,
+                AutoSize = true,
+                MaximumSize = new Size(maxWidth - 20, 0),
+                Text = string.IsNullOrWhiteSpace(senderName) ? "" : senderName + ":",
+                Font = new Font("Segoe UI", 8, FontStyle.Bold),
+                ForeColor = Color.DimGray
             };
 
             var icon = new PictureBox
@@ -627,7 +643,7 @@ namespace NT106_BT2
                 Width = 32,
                 Height = 32,
                 Left = 0,
-                Top = 4,
+                Top = lblSender.Bottom + 6,
                 SizeMode = PictureBoxSizeMode.Zoom,
                 Image = SystemIcons.Application.ToBitmap()
             };
@@ -635,7 +651,7 @@ namespace NT106_BT2
             var lblName = new Label
             {
                 Left = 40,
-                Top = 0,
+                Top = lblSender.Bottom,
                 AutoSize = true,
                 MaximumSize = new Size(maxWidth - 60, 0),
                 Text = fileName,
@@ -652,9 +668,24 @@ namespace NT106_BT2
                 ForeColor = Color.Gray
             };
 
-            row.Cursor = Cursors.Hand;
-            row.Click += (s, e) => System.Diagnostics.Process.Start(filePath);
+            Action<object, EventArgs> openHandler = (s, e) => TryOpenFile(filePath);
 
+            row.Cursor = Cursors.Hand;
+            row.Click += new EventHandler(openHandler);
+
+            lblSender.Cursor = Cursors.Hand;
+            lblSender.Click += new EventHandler(openHandler);
+
+            icon.Cursor = Cursors.Hand;
+            icon.Click += new EventHandler(openHandler);
+
+            lblName.Cursor = Cursors.Hand;
+            lblName.Click += new EventHandler(openHandler);
+
+            lblSize.Cursor = Cursors.Hand;
+            lblSize.Click += new EventHandler(openHandler);
+
+            row.Controls.Add(lblSender);
             row.Controls.Add(icon);
             row.Controls.Add(lblName);
             row.Controls.Add(lblSize);
@@ -666,6 +697,29 @@ namespace NT106_BT2
             tblMessages.ScrollControlIntoView(row);
         }
 
+        private void TryOpenFile(string filePath)
+        {
+            try
+            {
+                if (!File.Exists(filePath))
+                {
+                    MessageBox.Show("File không tồn tại: " + filePath, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var psi = new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = filePath,
+                    UseShellExecute = true
+                };
+                System.Diagnostics.Process.Start(psi);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Không mở được file: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private string FormatSize(long bytes)
         {
             double kb = bytes / 1024.0;
@@ -674,12 +728,26 @@ namespace NT106_BT2
             return $"{mb:0.#} MB";
         }
 
+        private void SetCallButtonEnabled(bool enabled)
+        {
+            if (IsDisposed) return;
+
+            if (InvokeRequired)
+            {
+                BeginInvoke(new Action<bool>(SetCallButtonEnabled), enabled);
+                return;
+            }
+
+            btnCall.Enabled = enabled;
+        }
+
         private void OpenLobbyForm()
         {
             if (lobby == null || lobby.IsDisposed)
             {
                 string displayName = roomCode;
                 lobby = new LobbyForm(roomCode, displayName);
+                lobby.FormClosed += (s, e) => SetCallButtonEnabled(true);
             }
 
             lobby.Show();
@@ -688,9 +756,25 @@ namespace NT106_BT2
 
         private async void btnCall_Click(object sender, EventArgs e)
         {
+            SetCallButtonEnabled(false);
+
+            string inviterName = Session.FullName ?? Session.Email ?? "Someone";
+            string inviteMsg = $"{inviterName} da mo phong call. Bam 'Tham gia cuoc goi' de vao.";
+
+            AddBubble($"Me: {inviteMsg}", true);
             OpenLobbyForm();
 
-            await TcpHelper.SendCallJoinAsync(roomCode);
+            try
+            {
+                await TcpHelper.SendGroupChatAsync(roomCode, inviteMsg, Session.Email, inviterName);
+                await TcpHelper.SendCallJoinAsync(roomCode);
+            }
+            catch (Exception ex)
+            {
+                SetCallButtonEnabled(true);
+                MessageBox.Show("Khong the bat dau cuoc goi: " + ex.Message,
+                    "Loi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

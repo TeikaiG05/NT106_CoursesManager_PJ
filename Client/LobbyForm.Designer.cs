@@ -29,12 +29,11 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.pnlTop = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.btnLeave = new Guna.UI2.WinForms.Guna2Button();
             this.btnShare = new Guna.UI2.WinForms.Guna2Button();
             this.btnMic = new Guna.UI2.WinForms.Guna2Button();
-            this.btnVideo = new Guna.UI2.WinForms.Guna2Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.pnlShare = new System.Windows.Forms.Panel();
             this.flpParticipants = new System.Windows.Forms.FlowLayoutPanel();
@@ -42,7 +41,7 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.pnlTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -59,7 +58,7 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.panel1);
+            this.splitContainer1.Panel1.Controls.Add(this.pnlTop);
             // 
             // splitContainer1.Panel2
             // 
@@ -69,8 +68,17 @@
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 0;
             // 
-            // panel1
+            // pnlTop
             // 
+            this.pnlTop.Controls.Add(this.label1);
+            this.pnlTop.Controls.Add(this.btnLeave);
+            this.pnlTop.Controls.Add(this.btnShare);
+            this.pnlTop.Controls.Add(this.btnMic);
+            this.pnlTop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlTop.Location = new System.Drawing.Point(0, 0);
+            this.pnlTop.Name = "pnlTop";
+            this.pnlTop.Size = new System.Drawing.Size(1245, 52);
+            this.pnlTop.TabIndex = 0;
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.btnLeave);
             this.panel1.Controls.Add(this.btnShare);
@@ -151,25 +159,6 @@
             this.btnMic.Text = "Mic";
             this.btnMic.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // btnVideo
-            // 
-            this.btnVideo.BorderRadius = 10;
-            this.btnVideo.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnVideo.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnVideo.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnVideo.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnVideo.FillColor = System.Drawing.Color.Violet;
-            this.btnVideo.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.btnVideo.ForeColor = System.Drawing.Color.Black;
-            this.btnVideo.Image = global::NT106_BT2.Properties.Resources.icons8_video_call_30;
-            this.btnVideo.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.btnVideo.Location = new System.Drawing.Point(759, 10);
-            this.btnVideo.Name = "btnVideo";
-            this.btnVideo.Size = new System.Drawing.Size(98, 33);
-            this.btnVideo.TabIndex = 0;
-            this.btnVideo.Text = "Video";
-            this.btnVideo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -224,8 +213,8 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.pnlTop.ResumeLayout(false);
+            this.pnlTop.PerformLayout();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             this.splitContainer2.Panel2.PerformLayout();
@@ -238,11 +227,10 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel pnlTop;
         private Guna.UI2.WinForms.Guna2Button btnLeave;
         private Guna.UI2.WinForms.Guna2Button btnShare;
         private Guna.UI2.WinForms.Guna2Button btnMic;
-        private Guna.UI2.WinForms.Guna2Button btnVideo;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.FlowLayoutPanel flpParticipants;

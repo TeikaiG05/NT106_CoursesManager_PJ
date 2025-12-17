@@ -183,21 +183,46 @@ namespace NT106_BT2
         }
         #endregion
 
+        #region CALL METHODS
         public static Task SendCallJoinAsync(string roomCode)
         {
             if (string.IsNullOrWhiteSpace(roomCode))
                 throw new ArgumentException("roomCode is required", nameof(roomCode));
 
+            CallUdp.EnsureStarted();
+
             var req = new CallJoinReq
             {
                 roomCode = roomCode,
                 email = Session.Email,
-                name = Session.FullName ?? Session.Email
+                name = Session.FullName ?? Session.Email,
+                udpPort = CallUdp.LocalPort
             };
 
             string json = JsonConvert.SerializeObject(req);
             return SendLineAsync(json);
         }
+
+        public static Task SendCallShareAsync(string roomCode, string sharerNameOrEmpty)
+        {
+            var req = new CallShareReq
+            {
+                roomCode = roomCode,
+                sharerName = sharerNameOrEmpty ?? ""
+            };
+            return SendLineAsync(JsonConvert.SerializeObject(req));
+        }
+
+        public static Task SendCallLeaveAsync(string roomCode)
+        {
+            var req = new CallLeaveReq
+            {
+                roomCode = roomCode,
+                email = Session.Email
+            };
+            return SendLineAsync(JsonConvert.SerializeObject(req));
+        }
+        #endregion
 
         #region DISCONNECT
         public static void Disconnect()
