@@ -38,7 +38,6 @@
             this.nutEmoji = new System.Windows.Forms.Button();
             this.labelChatTitle = new System.Windows.Forms.Label();
             this.panelRight = new System.Windows.Forms.Panel();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.panelLeft.SuspendLayout();
             this.panelCenter.SuspendLayout();
             this.panelInput.SuspendLayout();
@@ -80,14 +79,13 @@
             // panelCenter
             // 
             this.panelCenter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(249)))), ((int)(((byte)(250)))));
-            this.panelCenter.Controls.Add(this.flowLayoutPanel1);
             this.panelCenter.Controls.Add(this.khungTinNhan);
             this.panelCenter.Controls.Add(this.panelInput);
             this.panelCenter.Controls.Add(this.labelChatTitle);
             this.panelCenter.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelCenter.Location = new System.Drawing.Point(257, 0);
             this.panelCenter.Name = "panelCenter";
-            this.panelCenter.Size = new System.Drawing.Size(772, 607);
+            this.panelCenter.Size = new System.Drawing.Size(549, 607);
             this.panelCenter.TabIndex = 0;
             // 
             // khungTinNhan
@@ -99,7 +97,7 @@
             this.khungTinNhan.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.khungTinNhan.Location = new System.Drawing.Point(0, 43);
             this.khungTinNhan.Name = "khungTinNhan";
-            this.khungTinNhan.Size = new System.Drawing.Size(772, 503);
+            this.khungTinNhan.Size = new System.Drawing.Size(549, 503);
             this.khungTinNhan.TabIndex = 0;
             this.khungTinNhan.WrapContents = false;
             // 
@@ -114,7 +112,7 @@
             this.panelInput.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelInput.Location = new System.Drawing.Point(0, 546);
             this.panelInput.Name = "panelInput";
-            this.panelInput.Size = new System.Drawing.Size(772, 61);
+            this.panelInput.Size = new System.Drawing.Size(549, 61);
             this.panelInput.TabIndex = 1;
             // 
             // oNhapTin
@@ -161,7 +159,7 @@
             this.labelChatTitle.Location = new System.Drawing.Point(0, 0);
             this.labelChatTitle.Name = "labelChatTitle";
             this.labelChatTitle.Padding = new System.Windows.Forms.Padding(13, 0, 0, 0);
-            this.labelChatTitle.Size = new System.Drawing.Size(772, 43);
+            this.labelChatTitle.Size = new System.Drawing.Size(549, 43);
             this.labelChatTitle.TabIndex = 2;
             this.labelChatTitle.Text = "Chat";
             this.labelChatTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -175,24 +173,13 @@
             this.panelRight.Size = new System.Drawing.Size(223, 607);
             this.panelRight.TabIndex = 1;
             // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.AutoScroll = true;
-            this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 43);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(772, 503);
-            this.flowLayoutPanel1.TabIndex = 3;
-            this.flowLayoutPanel1.WrapContents = false;
-            // 
             // ChatForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1029, 607);
             this.Controls.Add(this.panelCenter);
+            this.Controls.Add(this.panelRight);
             this.Controls.Add(this.panelLeft);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "ChatForm";
@@ -209,6 +196,5 @@
 
         private System.Windows.Forms.Panel panelInput;
         private System.Windows.Forms.Panel panelRight;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
     }
 }

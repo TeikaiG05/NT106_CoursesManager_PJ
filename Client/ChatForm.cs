@@ -45,13 +45,6 @@ namespace NT106_BT2
 
         private void ChatForm_Load(object sender, EventArgs e)
         {
-            luongChatItems.Controls.Clear();
-            luongChatItems.Controls.Add(labelChatTitle);
-
-
-            TcpHelper.OnMessageReceived += (line) => { System.Diagnostics.Debug.WriteLine("[ALL MSG] " + line); };
-
-
             oTimKiem.Text = "Search by email";
             labelChatTitle.Text = "Chat";
             ReloadFriendBanners();
