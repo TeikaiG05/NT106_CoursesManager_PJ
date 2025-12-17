@@ -84,5 +84,11 @@ namespace NT106_BT2
             child.Show();
         }
         #endregion
+
+        private void butMember_Click(object sender, EventArgs e)
+        {
+            string roomCode = lbClasscode.Text;
+            ShowChild(new MembersForm(roomCode) );
+        }
     }
 }

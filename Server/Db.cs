@@ -183,6 +183,43 @@ namespace Server
                 cmd.ExecuteNonQuery();
             }
         }
+        
+
+        #region GetGroupMembers
+        public static List<GroupMemberDto> GetGroupMembers(string roomCode)
+        {
+            var list = new List<GroupMemberDto>();
+
+            using (var cn = new SqlConnection(ConnStr))
+            using (var cmd = new SqlCommand(
+                @"SELECT DISTINCT cm.Email, 
+                         ISNULL(u.Firstname + ' ' + u.Surname, cm.Email) AS FullName, 
+                         cm.Role
+                  FROM dbo.ClassMembers cm
+                  INNER JOIN dbo.Classes c ON cm.ClassId = c.Id
+                  LEFT JOIN dbo.Users u ON cm.Email = u.Email
+                  WHERE c.Code = @roomCode
+                  ORDER BY cm.Role DESC, cm.Email", cn))
+            {
+                cmd.Parameters.AddWithValue("@roomCode", roomCode);
+                cn.Open();
+                using (var rd = cmd.ExecuteReader())
+                {
+                    while (rd.Read())
+                    {
+                        list.Add(new GroupMemberDto
+                        {
+                            email = rd.IsDBNull(0) ? null : rd.GetString(0),
+                            fullName = rd.IsDBNull(1) ? null : rd.GetString(1),
+                            role = rd.IsDBNull(2) ? null : rd.GetString(2)
+                        });
+                    }
+                }
+            }
+
+            return list;
+        }
+        #endregion
 
     }
 

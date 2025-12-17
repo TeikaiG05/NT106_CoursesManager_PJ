@@ -563,7 +563,57 @@ namespace Server
 
                     #endregion
 
+                    #region GET_GROUP_MEMBERS (MỚI)
 
+                    if (type == MsgType.GET_GROUP_MEMBERS)
+                    {
+                        GetGroupMembersReq greq = null;
+                        try
+                        {
+                            greq = JsonConvert.DeserializeObject<GetGroupMembersReq>(line);
+                        }
+                        catch
+                        {
+                            await SendErr(wr, "GET_GROUP_MEMBERS: dữ liệu không hợp lệ");
+                            Log(ep, "send: ERROR get_group_members json");
+                            continue;
+                        }
+
+                        if (myInfo == null)
+                        {
+                            await SendErr(wr, "Bạn cần đăng nhập trước");
+                            Log(ep, "send: ERROR not logged in");
+                            continue;
+                        }
+
+                        if (string.IsNullOrWhiteSpace(greq.roomCode))
+                        {
+                            await SendErr(wr, "roomCode không được để trống");
+                            Log(ep, "send: ERROR empty roomCode");
+                            continue;
+                        }
+
+                        var members = Db.GetGroupMembers(greq.roomCode);
+
+                        var mres = new GroupMembersRes
+                        {
+                            type = MsgType.GROUP_MEMBERS,
+                            roomCode = greq.roomCode,
+                            members = members,
+                            requestId = greq.requestId
+                        };
+
+                        string outJson = JsonConvert.SerializeObject(mres);
+                        await wr.WriteLineAsync(outJson);
+                        await wr.FlushAsync();
+
+                        Log(ep, $"send: GROUP_MEMBERS for room {greq.roomCode} with {members?.Count ?? 0} members");
+                        continue;
+                    }
+
+                    #endregion
+
+                    // Dòng cũ (để lại)
                     await SendErr(wr, "Yêu cầu không hợp lệ");
                     Log(ep, "send: ERROR unknown type");
                 }

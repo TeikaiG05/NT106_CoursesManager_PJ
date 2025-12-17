@@ -12,6 +12,8 @@ namespace Common
         public const string GROUP_CHAT = "GROUP_CHAT";
         public const string GROUP_CHAT_HISTORY_REQ = "GROUP_CHAT_HISTORY_REQ";
         public const string GROUP_CHAT_HISTORY_RES = "GROUP_CHAT_HISTORY_RES";
+        public const string GET_GROUP_MEMBERS = "GET_GROUP_MEMBERS";        
+        public const string GROUP_MEMBERS = "GROUP_MEMBERS";                
 
         public const string CALL_JOIN = "CALL_JOIN";
         public const string CALL_LEAVE = "CALL_LEAVE";
@@ -141,7 +143,7 @@ namespace Common
     }
 
 
-    public static partial class MsgTypeExtensions { } // no-op (keeps file layout)
+    public static partial class MsgTypeExtensions { } // no-op
     
     public class ResetRequest
     {
@@ -163,5 +165,27 @@ namespace Common
         public string fromEmail { get; set; }
         public string toEmail { get; set; }
         public string message { get; set; }
+    }
+
+    public class GroupMemberDto
+    {
+        public string email { get; set; }
+        public string fullName { get; set; }
+        public string role { get; set; }
+    }
+
+    public class GroupMembersRes
+    {
+        public string type { get; set; } = "GROUP_MEMBERS";
+        public string roomCode { get; set; }
+        public List<GroupMemberDto> members { get; set; }
+        public string requestId { get; set; }
+    }
+
+    public class GetGroupMembersReq
+    {
+        public string type { get; set; } = "GET_GROUP_MEMBERS";
+        public string roomCode { get; set; }
+        public string requestId { get; set; }
     }
 }

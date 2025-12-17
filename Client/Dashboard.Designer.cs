@@ -61,7 +61,7 @@
             this.guna2ControlBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.guna2ControlBox1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.guna2ControlBox1.IconColor = System.Drawing.Color.Black;
-            this.guna2ControlBox1.Location = new System.Drawing.Point(1354, 5);
+            this.guna2ControlBox1.Location = new System.Drawing.Point(1393, 5);
             this.guna2ControlBox1.Name = "guna2ControlBox1";
             this.guna2ControlBox1.Size = new System.Drawing.Size(45, 29);
             this.guna2ControlBox1.TabIndex = 2;
@@ -72,7 +72,7 @@
             this.guna2ControlBox2.ControlBoxType = Guna.UI2.WinForms.Enums.ControlBoxType.MinimizeBox;
             this.guna2ControlBox2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.guna2ControlBox2.IconColor = System.Drawing.Color.Black;
-            this.guna2ControlBox2.Location = new System.Drawing.Point(1316, 5);
+            this.guna2ControlBox2.Location = new System.Drawing.Point(1355, 5);
             this.guna2ControlBox2.Name = "guna2ControlBox2";
             this.guna2ControlBox2.Size = new System.Drawing.Size(45, 29);
             this.guna2ControlBox2.TabIndex = 3;
@@ -84,7 +84,7 @@
             this.guna2ContainerControl1.Location = new System.Drawing.Point(0, 0);
             this.guna2ContainerControl1.Margin = new System.Windows.Forms.Padding(0);
             this.guna2ContainerControl1.Name = "guna2ContainerControl1";
-            this.guna2ContainerControl1.Size = new System.Drawing.Size(1238, 750);
+            this.guna2ContainerControl1.Size = new System.Drawing.Size(1277, 750);
             this.guna2ContainerControl1.TabIndex = 11;
             this.guna2ContainerControl1.Text = "guna2ContainerControl1";
             // 
@@ -102,7 +102,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(101, 786);
+            this.panel1.Size = new System.Drawing.Size(104, 786);
             this.panel1.TabIndex = 8;
             // 
             // btnLogout
@@ -276,7 +276,7 @@
             this.pnTitleBar.Location = new System.Drawing.Point(0, 0);
             this.pnTitleBar.Margin = new System.Windows.Forms.Padding(0);
             this.pnTitleBar.Name = "pnTitleBar";
-            this.pnTitleBar.Size = new System.Drawing.Size(1238, 35);
+            this.pnTitleBar.Size = new System.Drawing.Size(1277, 35);
             this.pnTitleBar.TabIndex = 4;
             // 
             // splitContainer1
@@ -295,8 +295,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(1344, 788);
-            this.splitContainer1.SplitterDistance = 103;
+            this.splitContainer1.Size = new System.Drawing.Size(1386, 788);
+            this.splitContainer1.SplitterDistance = 106;
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 12;
             // 
@@ -316,7 +316,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.guna2ContainerControl1);
-            this.splitContainer2.Size = new System.Drawing.Size(1238, 786);
+            this.splitContainer2.Size = new System.Drawing.Size(1277, 786);
             this.splitContainer2.SplitterDistance = 35;
             this.splitContainer2.SplitterWidth = 1;
             this.splitContainer2.TabIndex = 0;
@@ -325,7 +325,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1344, 788);
+            this.ClientSize = new System.Drawing.Size(1386, 788);
             this.Controls.Add(this.splitContainer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

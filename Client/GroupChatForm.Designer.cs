@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GroupChatForm));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.butMember = new Guna.UI2.WinForms.Guna2Button();
             this.btnFile = new Guna.UI2.WinForms.Guna2Button();
             this.label2 = new System.Windows.Forms.Label();
             this.lbClasscode = new System.Windows.Forms.Label();
@@ -50,6 +51,7 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.butMember);
             this.panel1.Controls.Add(this.btnFile);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.lbClasscode);
@@ -64,6 +66,24 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(221, 755);
             this.panel1.TabIndex = 0;
+            // 
+            // butMember
+            // 
+            this.butMember.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.butMember.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.butMember.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.butMember.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.butMember.FillColor = System.Drawing.Color.Transparent;
+            this.butMember.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.butMember.ForeColor = System.Drawing.Color.Black;
+            this.butMember.Image = global::NT106_BT2.Properties.Resources.icons8_people_50__1_;
+            this.butMember.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.butMember.Location = new System.Drawing.Point(0, 396);
+            this.butMember.Name = "butMember";
+            this.butMember.Size = new System.Drawing.Size(217, 45);
+            this.butMember.TabIndex = 8;
+            this.butMember.Text = "Member";
+            this.butMember.Click += new System.EventHandler(this.butMember_Click);
             // 
             // btnFile
             // 
@@ -224,5 +244,6 @@
         private System.Windows.Forms.Label label2;
         private Guna.UI2.WinForms.Guna2Panel pnlGroupContainer;
         private Guna.UI2.WinForms.Guna2Button btnFile;
+        private Guna.UI2.WinForms.Guna2Button butMember;
     }
 }

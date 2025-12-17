@@ -66,7 +66,8 @@ namespace NT106_BT2
             luongChatItems.Controls.Add(labelChatTitle);
 
             tieuDeChat.Text = "";
-            tieuDeChiTiet.Text = "People (0)";
+            // ví dụ tạm trong ChatForm_Load
+            TcpHelper.OnMessageReceived += (line) => { System.Diagnostics.Debug.WriteLine("[ALL MSG] " + line); };
 
             await TcpHelper.ConnectAsync();
         }
@@ -109,7 +110,7 @@ namespace NT106_BT2
             var f = friends[email];
 
             tieuDeChat.Text = f.Name;
-            tieuDeChiTiet.Text = "People (1)";
+
 
             LoadChatHistory(email);
             HighlightSelectedFriend(email);

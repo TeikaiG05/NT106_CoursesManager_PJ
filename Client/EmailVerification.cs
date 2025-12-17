@@ -63,6 +63,6 @@ namespace NT106_BT2
             }
         }
 
-        // Lưu ý: hàm SendOtpEmail / GenerateOtp trong client không cần nếu server gửi mail.
+       
     }
 }
