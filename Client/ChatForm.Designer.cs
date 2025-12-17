@@ -2,495 +2,327 @@
 {
     partial class ChatForm
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        private System.Windows.Forms.Panel panelLeft;
+        private System.Windows.Forms.Panel panelCenter;
+        private System.Windows.Forms.Panel panelRight;
+
+        private System.Windows.Forms.FlowLayoutPanel luongChatItems;
+        private System.Windows.Forms.Label labelChatTitle;
+        private System.Windows.Forms.Panel panelSearchContainer;
+        private System.Windows.Forms.TextBox oTimKiem;
+
+        private System.Windows.Forms.Label tieuDeChat;
+        private System.Windows.Forms.FlowLayoutPanel khungTinNhan;
+        private System.Windows.Forms.Panel panelInputBar;
+        private System.Windows.Forms.TextBox oNhapTin;
+        private System.Windows.Forms.Button nutGui;
+
+        private System.Windows.Forms.Label tieuDeChiTiet;
+        private System.Windows.Forms.Label labelOptions;
+        private System.Windows.Forms.Label labelMute;
+        private System.Windows.Forms.Label labelCopyLink;
+        private System.Windows.Forms.Label labelManageApps;
+        private System.Windows.Forms.Label labelLeave;
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
-            {
                 components.Dispose();
-            }
             base.Dispose(disposing);
         }
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            this.bangChinh = new System.Windows.Forms.TableLayoutPanel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.chiaChinh = new System.Windows.Forms.SplitContainer();
+            this.panelLeft = new System.Windows.Forms.Panel();
             this.luongChatItems = new System.Windows.Forms.FlowLayoutPanel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
-            this.khungChatHienTai = new System.Windows.Forms.Panel();
-            this.khungNhapTin = new System.Windows.Forms.Panel();
-            this.nutEmoji = new Guna.UI2.WinForms.Guna2Button();
-            this.nutDinhKem = new Guna.UI2.WinForms.Guna2Button();
-            this.nutGui = new Guna.UI2.WinForms.Guna2Button();
-            this.oNhapTin = new Guna.UI2.WinForms.Guna2TextBox();
+            this.panelSearchContainer = new System.Windows.Forms.Panel();
+            this.oTimKiem = new System.Windows.Forms.TextBox();
+            this.labelChatTitle = new System.Windows.Forms.Label();
+            this.panelCenter = new System.Windows.Forms.Panel();
             this.khungTinNhan = new System.Windows.Forms.FlowLayoutPanel();
-            this.duongKe1 = new Guna.UI2.WinForms.Guna2Separator();
+            this.panelInputBar = new System.Windows.Forms.Panel();
+            this.inputBackground = new System.Windows.Forms.Panel();
+            this.oNhapTin = new System.Windows.Forms.TextBox();
+            this.nutGui = new System.Windows.Forms.Button();
             this.tieuDeChat = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.nutRoiChat = new Guna.UI2.WinForms.Guna2Button();
-            this.nutQuanLyApp = new Guna.UI2.WinForms.Guna2Button();
-            this.nutCopyLink = new Guna.UI2.WinForms.Guna2Button();
-            this.nutTatTieng = new Guna.UI2.WinForms.Guna2Button();
-            this.tieuDeTuyChon = new System.Windows.Forms.Label();
-            this.luongThanhVien = new System.Windows.Forms.FlowLayoutPanel();
+            this.panelRight = new System.Windows.Forms.Panel();
+            this.labelLeave = new System.Windows.Forms.Label();
+            this.labelManageApps = new System.Windows.Forms.Label();
+            this.labelCopyLink = new System.Windows.Forms.Label();
+            this.labelMute = new System.Windows.Forms.Label();
+            this.labelOptions = new System.Windows.Forms.Label();
             this.tieuDeChiTiet = new System.Windows.Forms.Label();
-            this.khungDanhSachChat = new System.Windows.Forms.Panel();
-            this.oTimKiem = new Guna.UI2.WinForms.Guna2TextBox();
-            this.bangChinh.SuspendLayout();
-            this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chiaChinh)).BeginInit();
-            this.chiaChinh.Panel1.SuspendLayout();
-            this.chiaChinh.Panel2.SuspendLayout();
-            this.chiaChinh.SuspendLayout();
-            this.luongChatItems.SuspendLayout();
-            this.khungChatHienTai.SuspendLayout();
-            this.khungNhapTin.SuspendLayout();
-            this.panel3.SuspendLayout();
-            this.khungDanhSachChat.SuspendLayout();
+            this.panelLeft.SuspendLayout();
+            this.panelSearchContainer.SuspendLayout();
+            this.panelCenter.SuspendLayout();
+            this.panelInputBar.SuspendLayout();
+            this.inputBackground.SuspendLayout();
+            this.panelRight.SuspendLayout();
             this.SuspendLayout();
             // 
-            // bangChinh
+            // panelLeft
             // 
-            this.bangChinh.ColumnCount = 3;
-            this.bangChinh.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 38F));
-            this.bangChinh.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.bangChinh.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 188F));
-            this.bangChinh.Controls.Add(this.panel2, 1, 0);
-            this.bangChinh.Controls.Add(this.panel3, 2, 0);
-            this.bangChinh.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.bangChinh.Location = new System.Drawing.Point(0, 0);
-            this.bangChinh.Margin = new System.Windows.Forms.Padding(2);
-            this.bangChinh.Name = "bangChinh";
-            this.bangChinh.RowCount = 1;
-            this.bangChinh.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.bangChinh.Size = new System.Drawing.Size(1201, 748);
-            this.bangChinh.TabIndex = 0;
-            // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.White;
-            this.panel2.Controls.Add(this.chiaChinh);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(38, 0);
-            this.panel2.Margin = new System.Windows.Forms.Padding(0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(975, 748);
-            this.panel2.TabIndex = 1;
-            // 
-            // chiaChinh
-            // 
-            this.chiaChinh.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chiaChinh.Location = new System.Drawing.Point(0, 0);
-            this.chiaChinh.Margin = new System.Windows.Forms.Padding(2);
-            this.chiaChinh.Name = "chiaChinh";
-            // 
-            // chiaChinh.Panel1
-            // 
-            this.chiaChinh.Panel1.Controls.Add(this.khungDanhSachChat);
-            // 
-            // chiaChinh.Panel2
-            // 
-            this.chiaChinh.Panel2.Controls.Add(this.khungChatHienTai);
-            this.chiaChinh.Size = new System.Drawing.Size(975, 748);
-            this.chiaChinh.SplitterDistance = 315;
-            this.chiaChinh.SplitterWidth = 3;
-            this.chiaChinh.TabIndex = 0;
+            this.panelLeft.BackColor = System.Drawing.Color.White;
+            this.panelLeft.Controls.Add(this.luongChatItems);
+            this.panelLeft.Controls.Add(this.panelSearchContainer);
+            this.panelLeft.Controls.Add(this.labelChatTitle);
+            this.panelLeft.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panelLeft.Location = new System.Drawing.Point(0, 0);
+            this.panelLeft.Name = "panelLeft";
+            this.panelLeft.Size = new System.Drawing.Size(260, 622);
+            this.panelLeft.TabIndex = 2;
             // 
             // luongChatItems
             // 
             this.luongChatItems.AutoScroll = true;
-            this.luongChatItems.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.luongChatItems.Controls.Add(this.label1);
-            this.luongChatItems.Controls.Add(this.guna2Separator1);
+            this.luongChatItems.BackColor = System.Drawing.Color.White;
+            this.luongChatItems.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.luongChatItems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.luongChatItems.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.luongChatItems.Location = new System.Drawing.Point(0, 0);
-            this.luongChatItems.Margin = new System.Windows.Forms.Padding(2);
+            this.luongChatItems.Location = new System.Drawing.Point(0, 84);
             this.luongChatItems.Name = "luongChatItems";
-            this.luongChatItems.Padding = new System.Windows.Forms.Padding(8);
-            this.luongChatItems.Size = new System.Drawing.Size(324, 748);
-            this.luongChatItems.TabIndex = 1;
+            this.luongChatItems.Padding = new System.Windows.Forms.Padding(12, 4, 12, 8);
+            this.luongChatItems.Size = new System.Drawing.Size(260, 538);
+            this.luongChatItems.TabIndex = 0;
             this.luongChatItems.WrapContents = false;
             // 
-            // label1
+            // panelSearchContainer
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(11, 8);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(52, 24);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Chat";
+            this.panelSearchContainer.Controls.Add(this.oTimKiem);
+            this.panelSearchContainer.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelSearchContainer.Location = new System.Drawing.Point(0, 40);
+            this.panelSearchContainer.Name = "panelSearchContainer";
+            this.panelSearchContainer.Padding = new System.Windows.Forms.Padding(12, 8, 12, 8);
+            this.panelSearchContainer.Size = new System.Drawing.Size(260, 44);
+            this.panelSearchContainer.TabIndex = 1;
             // 
-            // guna2Separator1
+            // oTimKiem
             // 
-            this.guna2Separator1.Location = new System.Drawing.Point(10, 34);
-            this.guna2Separator1.Margin = new System.Windows.Forms.Padding(2);
-            this.guna2Separator1.Name = "guna2Separator1";
-            this.guna2Separator1.Size = new System.Drawing.Size(210, 10);
-            this.guna2Separator1.TabIndex = 2;
+            this.oTimKiem.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.oTimKiem.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.oTimKiem.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.oTimKiem.ForeColor = System.Drawing.Color.Silver;
+            this.oTimKiem.Location = new System.Drawing.Point(12, 8);
+            this.oTimKiem.Name = "oTimKiem";
+            this.oTimKiem.Size = new System.Drawing.Size(236, 24);
+            this.oTimKiem.TabIndex = 0;
+            this.oTimKiem.Text = "Search by email";
             // 
-            // khungChatHienTai
+            // labelChatTitle
             // 
-            this.khungChatHienTai.Controls.Add(this.khungNhapTin);
-            this.khungChatHienTai.Controls.Add(this.khungTinNhan);
-            this.khungChatHienTai.Controls.Add(this.duongKe1);
-            this.khungChatHienTai.Controls.Add(this.tieuDeChat);
-            this.khungChatHienTai.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.khungChatHienTai.Location = new System.Drawing.Point(0, 0);
-            this.khungChatHienTai.Margin = new System.Windows.Forms.Padding(2);
-            this.khungChatHienTai.Name = "khungChatHienTai";
-            this.khungChatHienTai.Size = new System.Drawing.Size(657, 748);
-            this.khungChatHienTai.TabIndex = 0;
+            this.labelChatTitle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelChatTitle.Dock = System.Windows.Forms.DockStyle.Top;
+            this.labelChatTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.labelChatTitle.ForeColor = System.Drawing.Color.Black;
+            this.labelChatTitle.Location = new System.Drawing.Point(0, 0);
+            this.labelChatTitle.Name = "labelChatTitle";
+            this.labelChatTitle.Padding = new System.Windows.Forms.Padding(14, 0, 0, 0);
+            this.labelChatTitle.Size = new System.Drawing.Size(260, 40);
+            this.labelChatTitle.TabIndex = 2;
+            this.labelChatTitle.Text = "Chat";
+            this.labelChatTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // khungNhapTin
+            // panelCenter
             // 
-            this.khungNhapTin.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.khungNhapTin.Controls.Add(this.nutEmoji);
-            this.khungNhapTin.Controls.Add(this.nutDinhKem);
-            this.khungNhapTin.Controls.Add(this.nutGui);
-            this.khungNhapTin.Controls.Add(this.oNhapTin);
-            this.khungNhapTin.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.khungNhapTin.Location = new System.Drawing.Point(0, 667);
-            this.khungNhapTin.Margin = new System.Windows.Forms.Padding(2);
-            this.khungNhapTin.Name = "khungNhapTin";
-            this.khungNhapTin.Size = new System.Drawing.Size(657, 81);
-            this.khungNhapTin.TabIndex = 3;
-            // 
-            // nutEmoji
-            // 
-            this.nutEmoji.BorderRadius = 10;
-            this.nutEmoji.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.nutEmoji.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.nutEmoji.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.nutEmoji.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.nutEmoji.FillColor = System.Drawing.Color.Transparent;
-            this.nutEmoji.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.nutEmoji.ForeColor = System.Drawing.Color.Black;
-            this.nutEmoji.Location = new System.Drawing.Point(38, 53);
-            this.nutEmoji.Margin = new System.Windows.Forms.Padding(2);
-            this.nutEmoji.Name = "nutEmoji";
-            this.nutEmoji.Size = new System.Drawing.Size(22, 24);
-            this.nutEmoji.TabIndex = 3;
-            // 
-            // nutDinhKem
-            // 
-            this.nutDinhKem.BorderRadius = 10;
-            this.nutDinhKem.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.nutDinhKem.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.nutDinhKem.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.nutDinhKem.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.nutDinhKem.FillColor = System.Drawing.Color.Transparent;
-            this.nutDinhKem.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.nutDinhKem.ForeColor = System.Drawing.Color.Black;
-            this.nutDinhKem.Location = new System.Drawing.Point(8, 53);
-            this.nutDinhKem.Margin = new System.Windows.Forms.Padding(2);
-            this.nutDinhKem.Name = "nutDinhKem";
-            this.nutDinhKem.Size = new System.Drawing.Size(22, 24);
-            this.nutDinhKem.TabIndex = 2;
-            // 
-            // nutGui
-            // 
-            this.nutGui.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.nutGui.BorderRadius = 15;
-            this.nutGui.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.nutGui.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.nutGui.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.nutGui.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.nutGui.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.nutGui.ForeColor = System.Drawing.Color.White;
-            this.nutGui.Location = new System.Drawing.Point(587, 8);
-            this.nutGui.Margin = new System.Windows.Forms.Padding(2);
-            this.nutGui.Name = "nutGui";
-            this.nutGui.Size = new System.Drawing.Size(45, 41);
-            this.nutGui.TabIndex = 1;
-            this.nutGui.Click += new System.EventHandler(this.nutGui_Click);
-            // 
-            // oNhapTin
-            // 
-            this.oNhapTin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.oNhapTin.BorderRadius = 15;
-            this.oNhapTin.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.oNhapTin.DefaultText = "";
-            this.oNhapTin.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.oNhapTin.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.oNhapTin.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.oNhapTin.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.oNhapTin.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.oNhapTin.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.oNhapTin.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.oNhapTin.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.oNhapTin.Location = new System.Drawing.Point(8, 8);
-            this.oNhapTin.Margin = new System.Windows.Forms.Padding(2);
-            this.oNhapTin.Multiline = true;
-            this.oNhapTin.Name = "oNhapTin";
-            this.oNhapTin.PlaceholderText = "Type a new message";
-            this.oNhapTin.SelectedText = "";
-            this.oNhapTin.Size = new System.Drawing.Size(572, 41);
-            this.oNhapTin.TabIndex = 0;
+            this.panelCenter.BackColor = System.Drawing.Color.White;
+            this.panelCenter.Controls.Add(this.khungTinNhan);
+            this.panelCenter.Controls.Add(this.panelInputBar);
+            this.panelCenter.Controls.Add(this.tieuDeChat);
+            this.panelCenter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelCenter.Location = new System.Drawing.Point(260, 0);
+            this.panelCenter.Name = "panelCenter";
+            this.panelCenter.Size = new System.Drawing.Size(885, 622);
+            this.panelCenter.TabIndex = 0;
             // 
             // khungTinNhan
             // 
             this.khungTinNhan.AutoScroll = true;
-            this.khungTinNhan.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.khungTinNhan.BackColor = System.Drawing.Color.White;
+            this.khungTinNhan.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.khungTinNhan.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.khungTinNhan.FlowDirection = System.Windows.Forms.FlowDirection.BottomUp;
+            this.khungTinNhan.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.khungTinNhan.Location = new System.Drawing.Point(0, 40);
-            this.khungTinNhan.Margin = new System.Windows.Forms.Padding(2);
             this.khungTinNhan.Name = "khungTinNhan";
-            this.khungTinNhan.Padding = new System.Windows.Forms.Padding(8);
-            this.khungTinNhan.Size = new System.Drawing.Size(657, 708);
-            this.khungTinNhan.TabIndex = 2;
+            this.khungTinNhan.Padding = new System.Windows.Forms.Padding(16, 10, 16, 10);
+            this.khungTinNhan.Size = new System.Drawing.Size(885, 512);
+            this.khungTinNhan.TabIndex = 0;
             this.khungTinNhan.WrapContents = false;
             // 
-            // duongKe1
+            // panelInputBar
             // 
-            this.duongKe1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.duongKe1.Location = new System.Drawing.Point(0, 32);
-            this.duongKe1.Margin = new System.Windows.Forms.Padding(2);
-            this.duongKe1.Name = "duongKe1";
-            this.duongKe1.Size = new System.Drawing.Size(657, 8);
-            this.duongKe1.TabIndex = 1;
+            this.panelInputBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
+            this.panelInputBar.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panelInputBar.Controls.Add(this.inputBackground);
+            this.panelInputBar.Controls.Add(this.nutGui);
+            this.panelInputBar.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelInputBar.Location = new System.Drawing.Point(0, 552);
+            this.panelInputBar.Name = "panelInputBar";
+            this.panelInputBar.Padding = new System.Windows.Forms.Padding(16, 10, 16, 10);
+            this.panelInputBar.Size = new System.Drawing.Size(885, 70);
+            this.panelInputBar.TabIndex = 1;
+            // 
+            // inputBackground
+            // 
+            this.inputBackground.BackColor = System.Drawing.Color.White;
+            this.inputBackground.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.inputBackground.Controls.Add(this.oNhapTin);
+            this.inputBackground.Location = new System.Drawing.Point(0, 10);
+            this.inputBackground.Name = "inputBackground";
+            this.inputBackground.Padding = new System.Windows.Forms.Padding(10);
+            this.inputBackground.Size = new System.Drawing.Size(734, 40);
+            this.inputBackground.TabIndex = 0;
+            // 
+            // oNhapTin
+            // 
+            this.oNhapTin.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.oNhapTin.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.oNhapTin.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.oNhapTin.ForeColor = System.Drawing.Color.Black;
+            this.oNhapTin.Location = new System.Drawing.Point(10, 10);
+            this.oNhapTin.Multiline = true;
+            this.oNhapTin.Name = "oNhapTin";
+            this.oNhapTin.Size = new System.Drawing.Size(712, 18);
+            this.oNhapTin.TabIndex = 0;
+            // 
+            // nutGui
+            // 
+            this.nutGui.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(133)))), ((int)(((byte)(244)))));
+            this.nutGui.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.nutGui.FlatAppearance.BorderSize = 0;
+            this.nutGui.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.nutGui.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.nutGui.ForeColor = System.Drawing.Color.White;
+            this.nutGui.Location = new System.Drawing.Point(755, 13);
+            this.nutGui.Name = "nutGui";
+            this.nutGui.Size = new System.Drawing.Size(44, 40);
+            this.nutGui.TabIndex = 1;
+            this.nutGui.Text = "➤";
+            this.nutGui.UseVisualStyleBackColor = false;
             // 
             // tieuDeChat
             // 
-            this.tieuDeChat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tieuDeChat.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.tieuDeChat.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tieuDeChat.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tieuDeChat.Font = new System.Drawing.Font("Segoe UI", 10.5F, System.Drawing.FontStyle.Bold);
+            this.tieuDeChat.ForeColor = System.Drawing.Color.Black;
             this.tieuDeChat.Location = new System.Drawing.Point(0, 0);
-            this.tieuDeChat.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.tieuDeChat.Name = "tieuDeChat";
-            this.tieuDeChat.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.tieuDeChat.Size = new System.Drawing.Size(657, 32);
-            this.tieuDeChat.TabIndex = 0;
-            this.tieuDeChat.Text = "Weekend escape";
+            this.tieuDeChat.Padding = new System.Windows.Forms.Padding(14, 0, 0, 0);
+            this.tieuDeChat.Size = new System.Drawing.Size(885, 40);
+            this.tieuDeChat.TabIndex = 2;
             this.tieuDeChat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // panel3
+            // panelRight
             // 
-            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel3.Controls.Add(this.nutRoiChat);
-            this.panel3.Controls.Add(this.nutQuanLyApp);
-            this.panel3.Controls.Add(this.nutCopyLink);
-            this.panel3.Controls.Add(this.nutTatTieng);
-            this.panel3.Controls.Add(this.tieuDeTuyChon);
-            this.panel3.Controls.Add(this.luongThanhVien);
-            this.panel3.Controls.Add(this.tieuDeChiTiet);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(1013, 0);
-            this.panel3.Margin = new System.Windows.Forms.Padding(0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(188, 748);
-            this.panel3.TabIndex = 2;
+            this.panelRight.BackColor = System.Drawing.Color.White;
+            this.panelRight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelRight.Controls.Add(this.labelLeave);
+            this.panelRight.Controls.Add(this.labelManageApps);
+            this.panelRight.Controls.Add(this.labelCopyLink);
+            this.panelRight.Controls.Add(this.labelMute);
+            this.panelRight.Controls.Add(this.labelOptions);
+            this.panelRight.Controls.Add(this.tieuDeChiTiet);
+            this.panelRight.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panelRight.Location = new System.Drawing.Point(1145, 0);
+            this.panelRight.Name = "panelRight";
+            this.panelRight.Size = new System.Drawing.Size(256, 622);
+            this.panelRight.TabIndex = 1;
             // 
-            // nutRoiChat
+            // labelLeave
             // 
-            this.nutRoiChat.Dock = System.Windows.Forms.DockStyle.Top;
-            this.nutRoiChat.FillColor = System.Drawing.Color.Transparent;
-            this.nutRoiChat.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.nutRoiChat.ForeColor = System.Drawing.Color.Black;
-            this.nutRoiChat.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.nutRoiChat.ImageOffset = new System.Drawing.Point(10, 0);
-            this.nutRoiChat.Location = new System.Drawing.Point(0, 270);
-            this.nutRoiChat.Margin = new System.Windows.Forms.Padding(2);
-            this.nutRoiChat.Name = "nutRoiChat";
-            this.nutRoiChat.Size = new System.Drawing.Size(186, 28);
-            this.nutRoiChat.TabIndex = 6;
-            this.nutRoiChat.Text = "Leave";
-            this.nutRoiChat.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.nutRoiChat.TextOffset = new System.Drawing.Point(15, 0);
+            this.labelLeave.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.labelLeave.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(219)))), ((int)(((byte)(68)))), ((int)(((byte)(55)))));
+            this.labelLeave.Location = new System.Drawing.Point(24, 185);
+            this.labelLeave.Name = "labelLeave";
+            this.labelLeave.Size = new System.Drawing.Size(180, 20);
+            this.labelLeave.TabIndex = 0;
+            this.labelLeave.Text = "Leave";
             // 
-            // nutQuanLyApp
+            // labelManageApps
             // 
-            this.nutQuanLyApp.Dock = System.Windows.Forms.DockStyle.Top;
-            this.nutQuanLyApp.FillColor = System.Drawing.Color.Transparent;
-            this.nutQuanLyApp.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.nutQuanLyApp.ForeColor = System.Drawing.Color.Black;
-            this.nutQuanLyApp.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.nutQuanLyApp.ImageOffset = new System.Drawing.Point(10, 0);
-            this.nutQuanLyApp.Location = new System.Drawing.Point(0, 242);
-            this.nutQuanLyApp.Margin = new System.Windows.Forms.Padding(2);
-            this.nutQuanLyApp.Name = "nutQuanLyApp";
-            this.nutQuanLyApp.Size = new System.Drawing.Size(186, 28);
-            this.nutQuanLyApp.TabIndex = 5;
-            this.nutQuanLyApp.Text = "Manage apps";
-            this.nutQuanLyApp.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.nutQuanLyApp.TextOffset = new System.Drawing.Point(15, 0);
+            this.labelManageApps.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.labelManageApps.ForeColor = System.Drawing.Color.Black;
+            this.labelManageApps.Location = new System.Drawing.Point(24, 160);
+            this.labelManageApps.Name = "labelManageApps";
+            this.labelManageApps.Size = new System.Drawing.Size(180, 20);
+            this.labelManageApps.TabIndex = 1;
+            this.labelManageApps.Text = "Manage apps";
             // 
-            // nutCopyLink
+            // labelCopyLink
             // 
-            this.nutCopyLink.Dock = System.Windows.Forms.DockStyle.Top;
-            this.nutCopyLink.FillColor = System.Drawing.Color.Transparent;
-            this.nutCopyLink.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.nutCopyLink.ForeColor = System.Drawing.Color.Black;
-            this.nutCopyLink.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.nutCopyLink.ImageOffset = new System.Drawing.Point(10, 0);
-            this.nutCopyLink.Location = new System.Drawing.Point(0, 214);
-            this.nutCopyLink.Margin = new System.Windows.Forms.Padding(2);
-            this.nutCopyLink.Name = "nutCopyLink";
-            this.nutCopyLink.Size = new System.Drawing.Size(186, 28);
-            this.nutCopyLink.TabIndex = 4;
-            this.nutCopyLink.Text = "Copy link to chat";
-            this.nutCopyLink.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.nutCopyLink.TextOffset = new System.Drawing.Point(15, 0);
+            this.labelCopyLink.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.labelCopyLink.ForeColor = System.Drawing.Color.Black;
+            this.labelCopyLink.Location = new System.Drawing.Point(24, 135);
+            this.labelCopyLink.Name = "labelCopyLink";
+            this.labelCopyLink.Size = new System.Drawing.Size(180, 20);
+            this.labelCopyLink.TabIndex = 2;
+            this.labelCopyLink.Text = "Copy link to chat";
             // 
-            // nutTatTieng
+            // labelMute
             // 
-            this.nutTatTieng.Dock = System.Windows.Forms.DockStyle.Top;
-            this.nutTatTieng.FillColor = System.Drawing.Color.Transparent;
-            this.nutTatTieng.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.nutTatTieng.ForeColor = System.Drawing.Color.Black;
-            this.nutTatTieng.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.nutTatTieng.ImageOffset = new System.Drawing.Point(10, 0);
-            this.nutTatTieng.Location = new System.Drawing.Point(0, 186);
-            this.nutTatTieng.Margin = new System.Windows.Forms.Padding(2);
-            this.nutTatTieng.Name = "nutTatTieng";
-            this.nutTatTieng.Size = new System.Drawing.Size(186, 28);
-            this.nutTatTieng.TabIndex = 3;
-            this.nutTatTieng.Text = "Mute";
-            this.nutTatTieng.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.nutTatTieng.TextOffset = new System.Drawing.Point(15, 0);
+            this.labelMute.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.labelMute.ForeColor = System.Drawing.Color.Black;
+            this.labelMute.Location = new System.Drawing.Point(24, 110);
+            this.labelMute.Name = "labelMute";
+            this.labelMute.Size = new System.Drawing.Size(180, 20);
+            this.labelMute.TabIndex = 3;
+            this.labelMute.Text = "Mute";
             // 
-            // tieuDeTuyChon
+            // labelOptions
             // 
-            this.tieuDeTuyChon.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tieuDeTuyChon.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tieuDeTuyChon.Location = new System.Drawing.Point(0, 154);
-            this.tieuDeTuyChon.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.tieuDeTuyChon.Name = "tieuDeTuyChon";
-            this.tieuDeTuyChon.Padding = new System.Windows.Forms.Padding(8, 8, 0, 0);
-            this.tieuDeTuyChon.Size = new System.Drawing.Size(186, 32);
-            this.tieuDeTuyChon.TabIndex = 2;
-            this.tieuDeTuyChon.Text = "Options";
-            // 
-            // luongThanhVien
-            // 
-            this.luongThanhVien.AutoScroll = true;
-            this.luongThanhVien.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.luongThanhVien.Dock = System.Windows.Forms.DockStyle.Top;
-            this.luongThanhVien.Location = new System.Drawing.Point(0, 32);
-            this.luongThanhVien.Margin = new System.Windows.Forms.Padding(2);
-            this.luongThanhVien.Name = "luongThanhVien";
-            this.luongThanhVien.Padding = new System.Windows.Forms.Padding(8);
-            this.luongThanhVien.Size = new System.Drawing.Size(186, 122);
-            this.luongThanhVien.TabIndex = 1;
+            this.labelOptions.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            this.labelOptions.ForeColor = System.Drawing.Color.Black;
+            this.labelOptions.Location = new System.Drawing.Point(14, 80);
+            this.labelOptions.Name = "labelOptions";
+            this.labelOptions.Size = new System.Drawing.Size(200, 24);
+            this.labelOptions.TabIndex = 4;
+            this.labelOptions.Text = "Options";
             // 
             // tieuDeChiTiet
             // 
+            this.tieuDeChiTiet.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tieuDeChiTiet.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tieuDeChiTiet.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tieuDeChiTiet.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            this.tieuDeChiTiet.ForeColor = System.Drawing.Color.Black;
             this.tieuDeChiTiet.Location = new System.Drawing.Point(0, 0);
-            this.tieuDeChiTiet.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.tieuDeChiTiet.Name = "tieuDeChiTiet";
-            this.tieuDeChiTiet.Padding = new System.Windows.Forms.Padding(8, 8, 0, 0);
-            this.tieuDeChiTiet.Size = new System.Drawing.Size(186, 32);
-            this.tieuDeChiTiet.TabIndex = 0;
-            this.tieuDeChiTiet.Text = "People (0)";
-            // 
-            // khungDanhSachChat
-            // 
-            this.khungDanhSachChat.Controls.Add(this.luongChatItems);
-            this.khungDanhSachChat.Controls.Add(this.oTimKiem);
-            this.khungDanhSachChat.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.khungDanhSachChat.Location = new System.Drawing.Point(0, 0);
-            this.khungDanhSachChat.Margin = new System.Windows.Forms.Padding(2);
-            this.khungDanhSachChat.Name = "khungDanhSachChat";
-            this.khungDanhSachChat.Size = new System.Drawing.Size(315, 748);
-            this.khungDanhSachChat.TabIndex = 0;
-            // 
-            // oTimKiem
-            // 
-            this.oTimKiem.BorderRadius = 15;
-            this.oTimKiem.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.oTimKiem.DefaultText = "";
-            this.oTimKiem.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.oTimKiem.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.oTimKiem.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.oTimKiem.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.oTimKiem.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.oTimKiem.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.oTimKiem.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.oTimKiem.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.oTimKiem.Location = new System.Drawing.Point(8, 8);
-            this.oTimKiem.Margin = new System.Windows.Forms.Padding(2);
-            this.oTimKiem.Name = "oTimKiem";
-            this.oTimKiem.PlaceholderText = "Search";
-            this.oTimKiem.SelectedText = "";
-            this.oTimKiem.Size = new System.Drawing.Size(210, 29);
-            this.oTimKiem.TabIndex = 0;
+            this.tieuDeChiTiet.Padding = new System.Windows.Forms.Padding(14, 0, 0, 0);
+            this.tieuDeChiTiet.Size = new System.Drawing.Size(254, 40);
+            this.tieuDeChiTiet.TabIndex = 5;
+            this.tieuDeChiTiet.Text = "People ";
+            this.tieuDeChiTiet.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // ChatForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1201, 748);
-            this.Controls.Add(this.bangChinh);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
+            this.ClientSize = new System.Drawing.Size(1401, 622);
+            this.Controls.Add(this.panelCenter);
+            this.Controls.Add(this.panelRight);
+            this.Controls.Add(this.panelLeft);
+            this.MinimumSize = new System.Drawing.Size(900, 500);
             this.Name = "ChatForm";
-            this.Text = "ChatForm";
-            this.bangChinh.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.chiaChinh.Panel1.ResumeLayout(false);
-            this.chiaChinh.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chiaChinh)).EndInit();
-            this.chiaChinh.ResumeLayout(false);
-            this.luongChatItems.ResumeLayout(false);
-            this.luongChatItems.PerformLayout();
-            this.khungChatHienTai.ResumeLayout(false);
-            this.khungNhapTin.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
-            this.khungDanhSachChat.ResumeLayout(false);
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Messenger";
+            this.panelLeft.ResumeLayout(false);
+            this.panelSearchContainer.ResumeLayout(false);
+            this.panelSearchContainer.PerformLayout();
+            this.panelCenter.ResumeLayout(false);
+            this.panelInputBar.ResumeLayout(false);
+            this.inputBackground.ResumeLayout(false);
+            this.inputBackground.PerformLayout();
+            this.panelRight.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel bangChinh;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Panel panel3;
-        // Cột giữa
-        private System.Windows.Forms.SplitContainer chiaChinh;
-        private System.Windows.Forms.FlowLayoutPanel luongChatItems;
-        private System.Windows.Forms.Panel khungChatHienTai;
-        private System.Windows.Forms.Panel khungNhapTin;
-        private Guna.UI2.WinForms.Guna2TextBox oNhapTin;
-        private Guna.UI2.WinForms.Guna2Button nutGui;
-        private Guna.UI2.WinForms.Guna2Button nutDinhKem;
-        private Guna.UI2.WinForms.Guna2Button nutEmoji;
-        private System.Windows.Forms.FlowLayoutPanel khungTinNhan;
-        private System.Windows.Forms.Label tieuDeChat;
-        private Guna.UI2.WinForms.Guna2Separator duongKe1;
-        // Cột phải
-        private System.Windows.Forms.Label tieuDeChiTiet;
-        private System.Windows.Forms.FlowLayoutPanel luongThanhVien;
-        private System.Windows.Forms.Label tieuDeTuyChon;
-        private Guna.UI2.WinForms.Guna2Button nutTatTieng;
-        private Guna.UI2.WinForms.Guna2Button nutCopyLink;
-        private Guna.UI2.WinForms.Guna2Button nutQuanLyApp;
-        private Guna.UI2.WinForms.Guna2Button nutRoiChat;
-        private System.Windows.Forms.Label label1;
-        private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
-        private System.Windows.Forms.Panel khungDanhSachChat;
-        private Guna.UI2.WinForms.Guna2TextBox oTimKiem;
+        private System.Windows.Forms.Panel inputBackground;
     }
 }

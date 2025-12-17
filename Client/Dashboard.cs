@@ -55,16 +55,18 @@ namespace NT106_BT2
         }
         #endregion
 
+
+        // Ở Dashboard
+        private ChatForm chatForm;
+
         private void btnChat_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new ChatForm());
-            //ChatForm chatWindow = new ChatForm();
-            //chatWindow.StartPosition = FormStartPosition.Manual;
-            //int x = this.Location.X + (this.Width - chatWindow.Width) / 2;
-            //int y = this.Location.Y + (this.Height - chatWindow.Height) / 2;
-            //chatWindow.Location = new Point(x, y);
-            //chatWindow.Show();
+            if (chatForm == null || chatForm.IsDisposed)
+                chatForm = new ChatForm(Session.Email, Session.FullName); 
+
+            OpenChildForm(chatForm);
         }
+
         private async void Dashboard_FormClosing(object sender, FormClosingEventArgs e)
         {
             try
@@ -87,8 +89,16 @@ namespace NT106_BT2
         }
         public void OpenChildForm(Form childForm)
         {
-            if (currentFormChild != null)
-                currentFormChild.Close();
+            if (currentFormChild == childForm)
+            {
+                childForm.BringToFront();
+                return;
+            }
+
+            if (currentFormChild != null && currentFormChild != childForm)
+            {
+                currentFormChild.Hide();
+            }
 
             currentFormChild = childForm;
             childForm.TopLevel = false;
@@ -101,6 +111,7 @@ namespace NT106_BT2
             childForm.BringToFront();
             childForm.Show();
         }
+
 
         private void Dashboard_Load(object sender, EventArgs e)
         {

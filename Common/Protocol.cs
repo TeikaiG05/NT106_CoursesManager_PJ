@@ -101,4 +101,12 @@ namespace Common
     {
         public DateTime sentAt { get; set; }
     }
+
+    public class PrivateChatMsg
+    {
+        public string type { get; set; }      
+        public string fromEmail { get; set; }
+        public string toEmail { get; set; }
+        public string message { get; set; }
+    }
 }
