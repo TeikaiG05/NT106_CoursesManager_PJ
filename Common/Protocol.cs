@@ -156,4 +156,12 @@ namespace Common
         public string otp { get; set; }
         public string passwordHash { get; set; }
     }
+
+    public class PrivateChatMsg
+    {
+        public string type { get; set; }      
+        public string fromEmail { get; set; }
+        public string toEmail { get; set; }
+        public string message { get; set; }
+    }
 }

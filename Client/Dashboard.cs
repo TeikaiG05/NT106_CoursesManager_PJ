@@ -62,9 +62,16 @@ namespace NT106_BT2
         #endregion
 
         #region btn Chat
+
+        // Ở Dashboard
+        private ChatForm chatForm;
+
         private void btnChat_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new ChatForm());
+            if (chatForm == null || chatForm.IsDisposed)
+                chatForm = new ChatForm(Session.Email, Session.FullName); 
+
+            OpenChildForm(chatForm);
         }
         #endregion
 
@@ -93,8 +100,16 @@ namespace NT106_BT2
         #region Child Form
         public void OpenChildForm(Form childForm)
         {
-            if (currentFormChild != null)
-                currentFormChild.Close();
+            if (currentFormChild == childForm)
+            {
+                childForm.BringToFront();
+                return;
+            }
+
+            if (currentFormChild != null && currentFormChild != childForm)
+            {
+                currentFormChild.Hide();
+            }
 
             currentFormChild = childForm;
             childForm.TopLevel = false;

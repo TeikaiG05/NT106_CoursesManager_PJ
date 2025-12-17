@@ -516,6 +516,54 @@ namespace Server
 
                     #endregion
 
+                    #region PRIVATE_CHAT
+
+                    if (type == "PRIVATE_CHAT")
+                    {
+                        PrivateChatMsg chat = null;
+                        try
+                        {
+                            chat = JsonConvert.DeserializeObject<PrivateChatMsg>(line);
+                        }
+                        catch
+                        {
+                            await SendErr(wr, "PRIVATE_CHAT: dữ liệu không hợp lệ");
+                            Log(ep, "send: ERROR private_chat json");
+                            continue;
+                        }
+
+                        if (myInfo == null)
+                        {
+                            await SendErr(wr, "Bạn cần đăng nhập trước khi chat");
+                            Log(ep, "send: ERROR not logged in (private)");
+                            continue;
+                        }
+
+                        ClientInfo target;
+                        lock (clientsLock)
+                        {
+                            target = clients.FirstOrDefault(c =>
+                                string.Equals(c.Email, chat.toEmail, StringComparison.OrdinalIgnoreCase));
+                        }
+
+                        if (target == null)
+                        {
+                            await SendErr(wr, "Người nhận không online");
+                            Log(ep, $"send: ERROR target not found {chat.toEmail}");
+                            continue;
+                        }
+
+                        string json = JsonConvert.SerializeObject(chat);
+                        await target.Writer.WriteLineAsync(json);
+                        await target.Writer.FlushAsync();
+
+                        Log(ep, $"private: {chat.fromEmail} -> {chat.toEmail}: {chat.message}");
+                        continue;
+                    }
+
+                    #endregion
+
+
                     await SendErr(wr, "Yêu cầu không hợp lệ");
                     Log(ep, "send: ERROR unknown type");
                 }
@@ -587,5 +635,6 @@ namespace Server
         }
 
         #endregion
+
     }
 }
