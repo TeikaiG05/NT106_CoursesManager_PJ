@@ -21,6 +21,11 @@ namespace Server
             public StreamWriter Writer;
             public string Email;
             public string FullName;
+
+            public string RoomCode;
+            public int RoomId;
+            public int UserId;
+            public IPEndPoint UdpEndPoint;
         }
 
         private sealed class Envelope
@@ -37,6 +42,9 @@ namespace Server
 
         private static readonly List<ClientInfo> clients = new List<ClientInfo>();
         private static readonly object clientsLock = new object();
+
+        private readonly RoomManager rooms = new RoomManager();
+        public RoomManager Rooms => rooms;
 
         #endregion
 
@@ -341,6 +349,78 @@ namespace Server
 
                     #endregion
 
+                    #region CALL_JOIN
+                    if (type == MsgType.CALL_JOIN)
+                    {
+                        CallJoinReq req;
+                        try { req = JsonConvert.DeserializeObject<CallJoinReq>(line); }
+                        catch { await SendErr(wr, "CALL_JOIN: dữ liệu không hợp lệ"); continue; }
+
+                        if (myInfo == null) { await SendErr(wr, "Bạn cần đăng nhập trước"); continue; }
+                        if (string.IsNullOrWhiteSpace(req.roomCode)) { await SendErr(wr, "roomCode rỗng"); continue; }
+                        if (req.udpPort <= 0) { await SendErr(wr, "CALL_JOIN thiếu udpPort"); continue; }
+
+                        var remoteIp = ((IPEndPoint)cli.Client.RemoteEndPoint).Address;
+                        var udpEp = new IPEndPoint(remoteIp, req.udpPort);
+
+                        var (room, userId) = rooms.JoinOrCreate(req.roomCode, myInfo.FullName, cli, udpEp);
+
+                        myInfo.RoomCode = req.roomCode;
+                        myInfo.RoomId = room.RoomId;
+                        myInfo.UserId = userId;
+                        myInfo.UdpEndPoint = udpEp;
+
+                        var res = new CallJoinRes
+                        {
+                            roomCode = req.roomCode,
+                            roomId = room.RoomId,
+                            userId = userId
+                        };
+                        await wr.WriteLineAsync(JsonConvert.SerializeObject(res));
+                        await wr.FlushAsync();
+
+                        await BroadcastCallState(room.RoomId);
+                        await BroadcastCallShare(room.RoomId);
+
+                        continue;
+                    }
+                    #endregion
+
+                    #region CALL_SHARE
+                    if (type == MsgType.CALL_SHARE)
+                    {
+                        CallShareReq req;
+                        try { req = JsonConvert.DeserializeObject<CallShareReq>(line); }
+                        catch { await SendErr(wr, "CALL_SHARE: dữ liệu không hợp lệ"); continue; }
+
+                        if (myInfo == null) { await SendErr(wr, "Bạn cần đăng nhập trước"); continue; }
+                        if (myInfo.RoomId <= 0) { await SendErr(wr, "Bạn chưa CALL_JOIN"); continue; }
+
+                        rooms.UpdateSharing(myInfo.RoomId, req.sharerName ?? "");
+                        await BroadcastCallShare(myInfo.RoomId);
+
+                        continue;
+                    }
+                    #endregion
+
+                    #region CALL_LEAVE
+                    if (type == MsgType.CALL_LEAVE)
+                    {
+                        int roomIdToUpdate = myInfo?.RoomId ?? 0;
+
+                        rooms.Leave(cli);
+
+                        rooms.Leave(cli);
+
+                        if (roomIdToUpdate > 0)
+                        {
+                            await BroadcastCallState(roomIdToUpdate);
+                            await BroadcastCallShare(roomIdToUpdate);
+                        }
+                        continue;
+                    }
+                    #endregion
+
                     #region GROUP_CHAT_HISTORY_REQ  (NEW)
 
                     if (type == MsgType.GROUP_CHAT_HISTORY_REQ)
@@ -459,18 +539,48 @@ namespace Server
 
                     #endregion
 
+                    #region CALL_FRAME
+                    if (type == MsgType.CALL_FRAME)
+                    {
+                        CallFrameMsg f;
+                        try { f = JsonConvert.DeserializeObject<CallFrameMsg>(line); }
+                        catch { await SendErr(wr, "CALL_FRAME: invalid"); continue; }
+
+                        if (myInfo == null)
+                        {
+                            await SendErr(wr, "Bạn cần đăng nhập trước");
+                            continue;
+                        }
+
+                        if (myInfo.RoomId <= 0)
+                        {
+                            await SendErr(wr, "Bạn chưa JOIN lobby");
+                            continue;
+                        }
+
+                        await BroadcastCallFrame(myInfo.RoomId, line, exceptClient: cli);
+                        continue;
+                    }
+
+                    #endregion
+
                     await SendErr(wr, "Yêu cầu không hợp lệ");
                     Log(ep, "send: ERROR unknown type");
                 }
 
                 Log(ep, "disconnected");
+                int affectedRoomId = myInfo?.RoomId ?? 0;
+                rooms.Leave(cli);
 
                 if (myInfo != null)
                 {
-                    lock (clientsLock)
-                    {
-                        clients.Remove(myInfo);
-                    }
+                    lock (clientsLock) { clients.Remove(myInfo); }
+                }
+
+                if (affectedRoomId > 0)
+                {
+                    await BroadcastCallState(affectedRoomId);
+                    await BroadcastCallShare(affectedRoomId);
                 }
             }
             catch (Exception ex)
@@ -530,5 +640,92 @@ namespace Server
         }
 
         #endregion
+
+        #region Broadcast helpers
+        private async Task BroadcastCallState(int roomId)
+        {
+            var room = rooms.GetRoomById(roomId);
+            if (room == null) return;
+
+            List<ClientInfo> snapshot;
+            lock (clientsLock) snapshot = clients.ToList();
+
+            var members = room.Clients.Select(cs =>
+            {
+                var info = snapshot.FirstOrDefault(x => x.Client == cs.Tcp);
+                return new CallMemberDto
+                {
+                    email = info?.Email ?? "",
+                    name = cs.DisplayName ?? info?.FullName ?? "",
+                    cameraOn = true,
+                    micOn = true
+                };
+            }).ToList();
+
+            var res = new CallStateRes
+            {
+                roomCode = room.RoomCode,
+                members = members
+            };
+
+            string json = JsonConvert.SerializeObject(res);
+
+            foreach (var cs in room.Clients.ToList())
+            {
+                var info = snapshot.FirstOrDefault(x => x.Client == cs.Tcp);
+                if (info?.Writer == null) continue;
+                try { await info.Writer.WriteLineAsync(json); await info.Writer.FlushAsync(); } catch { }
+            }
+        }
+
+        private async Task BroadcastCallShare(int roomId)
+        {
+            var room = rooms.GetRoomById(roomId);
+            if (room == null) return;
+
+            var res = new CallShareRes
+            {
+                roomCode = room.RoomCode,
+                sharerName = room.SharingUser ?? ""
+            };
+
+            string json = JsonConvert.SerializeObject(res);
+
+            List<ClientInfo> snapshot;
+            lock (clientsLock) snapshot = clients.ToList();
+
+            foreach (var cs in room.Clients.ToList())
+            {
+                var info = snapshot.FirstOrDefault(x => x.Client == cs.Tcp);
+                if (info?.Writer == null) continue;
+                try { await info.Writer.WriteLineAsync(json); await info.Writer.FlushAsync(); } catch { }
+            }
+        }
+
+        private async Task BroadcastCallFrame(int roomId, string json, TcpClient exceptClient)
+        {
+            var room = rooms.GetRoomById(roomId);
+            if (room == null) return;
+            foreach (var cs in room.Clients.ToList())
+            {
+                if (cs.Tcp == exceptClient) continue;
+
+                ClientInfo info;
+                lock (clientsLock)
+                    info = clients.FirstOrDefault(x => x.Client == cs.Tcp);
+
+                if (info?.Writer == null) continue;
+
+                try
+                {
+                    await info.Writer.WriteLineAsync(json);
+                    await info.Writer.FlushAsync();
+                }
+                catch { }
+            }
+        }
+
+        #endregion
     }
 }
+

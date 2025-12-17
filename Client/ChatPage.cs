@@ -306,6 +306,38 @@ namespace NT106_BT2
                 return;
             }
 
+            if (type.Equals(MsgType.CALL_JOIN, StringComparison.OrdinalIgnoreCase))
+            {
+                try
+                {
+                    var res = JsonConvert.DeserializeObject<CallJoinRes>(json);
+                    if (res == null) return;
+                    if (!string.Equals(res.roomCode?.Trim(), roomCode, StringComparison.OrdinalIgnoreCase))
+                        return;
+
+                    CallUdp.SetIds(res.roomId, res.userId);
+
+                    System.Diagnostics.Debug.WriteLine($"[ChatPage] CALL_JOIN RES roomId={res.roomId}, userId={res.userId}");
+                }
+                catch { }
+                return;
+            }
+
+            if (type.Equals(MsgType.CALL_SHARE, StringComparison.OrdinalIgnoreCase))
+            {
+                try
+                {
+                    var res = JsonConvert.DeserializeObject<CallShareRes>(json);
+                    if (res == null) return;
+                    if (!string.Equals(res.roomCode?.Trim(), roomCode, StringComparison.OrdinalIgnoreCase))
+                        return;
+
+                    if (lobby != null && !lobby.IsDisposed)
+                        lobby.SetSharingUser(res.sharerName);
+                }
+                catch { }
+                return;
+            }
 
             if (!type.Equals(MsgType.GROUP_CHAT, StringComparison.OrdinalIgnoreCase))
                 return;

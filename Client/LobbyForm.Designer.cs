@@ -34,7 +34,6 @@
             this.btnLeave = new Guna.UI2.WinForms.Guna2Button();
             this.btnShare = new Guna.UI2.WinForms.Guna2Button();
             this.btnMic = new Guna.UI2.WinForms.Guna2Button();
-            this.btnVideo = new Guna.UI2.WinForms.Guna2Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.pnlShare = new System.Windows.Forms.Panel();
             this.flpParticipants = new System.Windows.Forms.FlowLayoutPanel();
@@ -75,7 +74,6 @@
             this.pnlTop.Controls.Add(this.btnLeave);
             this.pnlTop.Controls.Add(this.btnShare);
             this.pnlTop.Controls.Add(this.btnMic);
-            this.pnlTop.Controls.Add(this.btnVideo);
             this.pnlTop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlTop.Location = new System.Drawing.Point(0, 0);
             this.pnlTop.Name = "pnlTop";
@@ -151,25 +149,6 @@
             this.btnMic.Text = "Mic";
             this.btnMic.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // btnVideo
-            // 
-            this.btnVideo.BorderRadius = 10;
-            this.btnVideo.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnVideo.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnVideo.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnVideo.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnVideo.FillColor = System.Drawing.Color.Violet;
-            this.btnVideo.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.btnVideo.ForeColor = System.Drawing.Color.Black;
-            this.btnVideo.Image = global::NT106_BT2.Properties.Resources.icons8_video_call_30;
-            this.btnVideo.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.btnVideo.Location = new System.Drawing.Point(759, 10);
-            this.btnVideo.Name = "btnVideo";
-            this.btnVideo.Size = new System.Drawing.Size(98, 33);
-            this.btnVideo.TabIndex = 0;
-            this.btnVideo.Text = "Video";
-            this.btnVideo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -242,7 +221,6 @@
         private Guna.UI2.WinForms.Guna2Button btnLeave;
         private Guna.UI2.WinForms.Guna2Button btnShare;
         private Guna.UI2.WinForms.Guna2Button btnMic;
-        private Guna.UI2.WinForms.Guna2Button btnVideo;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.FlowLayoutPanel flpParticipants;

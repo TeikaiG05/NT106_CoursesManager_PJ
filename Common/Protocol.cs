@@ -16,6 +16,9 @@ namespace Common
         public const string CALL_JOIN = "CALL_JOIN";
         public const string CALL_LEAVE = "CALL_LEAVE";
         public const string CALL_STATE = "CALL_STATE";
+        public const string CALL_SHARE = "CALL_SHARE";
+        public const string CALL_FRAME = "CALL_FRAME";
+
     }
 
     public class TokenLoginReq
@@ -112,6 +115,30 @@ namespace Common
         public string roomCode { get; set; }
         public string email { get; set; }
         public string name { get; set; }
+        public int udpPort { get; set; }
+    }
+
+    public class CallJoinRes
+    {
+        public bool ok { get; set; } = true;
+        public string type { get; set; } = MsgType.CALL_JOIN;
+        public string roomCode { get; set; }
+        public int roomId { get; set; }
+        public int userId { get; set; }
+    }
+
+    public class CallShareReq
+    {
+        public string type { get; set; } = MsgType.CALL_SHARE;
+        public string roomCode { get; set; }
+        public string sharerName { get; set; }
+    }
+
+    public class CallShareRes
+    {
+        public string type { get; set; } = MsgType.CALL_SHARE;
+        public string roomCode { get; set; }
+        public string sharerName { get; set; }
     }
 
     public class CallLeaveReq
@@ -135,5 +162,14 @@ namespace Common
         public string type { get; set; } = MsgType.CALL_STATE;
         public string roomCode { get; set; }
         public System.Collections.Generic.List<CallMemberDto> members { get; set; }
+    }
+
+    public class CallFrameMsg
+    {
+        public string type { get; set; } = MsgType.CALL_FRAME;
+        public string roomCode { get; set; }
+        public string fromEmail { get; set; }
+        public string fromName { get; set; }
+        public string jpgB64 { get; set; }
     }
 }

@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Server
@@ -13,17 +6,29 @@ namespace Server
     public partial class Server : Form
     {
         private TcpServer server;
+        private UdpRelayServer udp;
+
+        private const int TCP_PORT = 8080;
+        private const int UDP_PORT = 9001;
+
         public Server()
         {
             InitializeComponent();
+
             lvLog.View = View.Details;
             lvLog.FullRowSelect = true;
             lvLog.GridLines = true;
             lvLog.Columns.Add("Time", 120);
             lvLog.Columns.Add("Source", 120);
             lvLog.Columns.Add("Message", 600);
+
             server = new TcpServer(Log);
+
+            udp = new UdpRelayServer(UDP_PORT, server.Rooms);
+
+            this.FormClosing += Server_FormClosing;
         }
+
         private void Log(string source, string message)
         {
             if (lvLog.IsDisposed) return;
@@ -36,6 +41,7 @@ namespace Server
                 AddRow(source, message);
             }
         }
+
         private void AddRow(string source, string message)
         {
             var it = new ListViewItem(DateTime.Now.ToString("HH:mm:ss"));
@@ -45,16 +51,25 @@ namespace Server
             it.EnsureVisible();
             if (lvLog.Items.Count > 1000) lvLog.Items.RemoveAt(0);
         }
+
         private void btnStart_Click(object sender, EventArgs e)
         {
-            server.Start(8080);
-            Log("Server", "Started on :8080");
+            server.Start(TCP_PORT);
+            udp.Start();
+            Log("Server", $"Started TCP :{TCP_PORT}, UDP :{UDP_PORT}");
         }
 
         private void btnStop_Click(object sender, EventArgs e)
         {
+            udp.Stop();
             server.Stop();
             Log("Server", "Stopped");
+        }
+
+        private void Server_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try { udp?.Stop(); } catch { }
+            try { server?.Stop(); } catch { }
         }
     }
 }
