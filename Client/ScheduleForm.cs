@@ -30,7 +30,7 @@ namespace NT106_BT2
             currentMonth = DateTime.Today;
             selectedDate = DateTime.Today;
 
-            TaskStorage.LoadFromFile();
+            TaskStorage.LoadFromFile();   
 
             SetupListView();
             DrawCalendar();

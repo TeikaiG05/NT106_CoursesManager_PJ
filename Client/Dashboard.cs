@@ -170,5 +170,10 @@ namespace NT106_BT2
             form.Show(); // mở không chặn form chính
         }
         #endregion
+
+        private void guna2Button1_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new ScheduleForm());
+        }
     }
 }
