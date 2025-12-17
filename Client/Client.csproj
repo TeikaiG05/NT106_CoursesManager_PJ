@@ -160,6 +160,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScheduleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScheduleForm.Designer.cs">
+      <DependentUpon>ScheduleForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Session.cs" />
     <Compile Include="SettingRole.cs">
       <SubType>Form</SubType>
@@ -167,6 +173,7 @@
     <Compile Include="SettingRole.Designer.cs">
       <DependentUpon>SettingRole.cs</DependentUpon>
     </Compile>
+    <Compile Include="TaskStorage.cs" />
     <Compile Include="TcpClient.cs" />
     <Compile Include="TeamsCard.cs">
       <SubType>UserControl</SubType>
@@ -229,6 +236,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="ScheduleForm.resx">
+      <DependentUpon>ScheduleForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SettingRole.resx">
       <DependentUpon>SettingRole.cs</DependentUpon>
     </EmbeddedResource>
