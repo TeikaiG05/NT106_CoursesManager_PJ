@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblTaskList = new System.Windows.Forms.Label();
             this.panelCalendar = new System.Windows.Forms.Panel();
             this.btnToday = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
@@ -39,18 +39,17 @@
             this.txtTask = new System.Windows.Forms.TextBox();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // label2
+            // lblTaskList
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.label2.Location = new System.Drawing.Point(1198, 19);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(158, 38);
-            this.label2.TabIndex = 28;
-            this.label2.Text = "Task List";
+            this.lblTaskList.AutoSize = true;
+            this.lblTaskList.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.lblTaskList.Location = new System.Drawing.Point(1198, 19);
+            this.lblTaskList.Name = "lblTaskList";
+            this.lblTaskList.Size = new System.Drawing.Size(158, 38);
+            this.lblTaskList.TabIndex = 28;
+            this.lblTaskList.Text = "Task List";
             // 
             // panelCalendar
             // 
@@ -150,27 +149,16 @@
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.label2.Location = new System.Drawing.Point(1186, 18);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(158, 38);
-            this.label2.TabIndex = 21;
-            this.label2.Text = "Task List";
-            // 
             // ScheduleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1531, 929);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lblTaskList);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtTask);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnDelete);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.panelCalendar);
             this.Controls.Add(this.btnToday);
             this.Controls.Add(this.btnNext);
@@ -187,7 +175,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblTaskList;
         private System.Windows.Forms.Panel panelCalendar;
         private System.Windows.Forms.Button btnToday;
         private System.Windows.Forms.Button btnNext;
@@ -198,6 +186,5 @@
         private System.Windows.Forms.TextBox txtTask;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.Label label2;
     }
 }
