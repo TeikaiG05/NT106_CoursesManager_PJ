@@ -28,7 +28,7 @@ namespace NT106_BT2
                 {
                     cmd.Parameters.AddWithValue("@cid", classId);
                     cmd.Parameters.AddWithValue("@em", ownerEmail);
-                    cmd.Parameters.AddWithValue("@role", "Owner");
+                    cmd.Parameters.AddWithValue("@role", "Teacher");
                     cmd.ExecuteNonQuery();
                 }
 
@@ -150,12 +150,29 @@ namespace NT106_BT2
         public static void UpdateUserRole(string email, string role)
         {
             using (var cn = new SqlConnection(ConnStr))
-            using (var cmd = new SqlCommand(@"UPDATE dbo.Users SET Role = @role WHERE Email = @email", cn))
             {
-                cmd.Parameters.AddWithValue("@role", role);
-                cmd.Parameters.AddWithValue("@email", email);
                 cn.Open();
-                cmd.ExecuteNonQuery();
+                using (var tx = cn.BeginTransaction())
+                {
+                    // Update main user role
+                    using (var cmd = new SqlCommand(@"UPDATE dbo.Users SET Role = @role WHERE Email = @email", cn, tx))
+                    {
+                        cmd.Parameters.AddWithValue("@role", role);
+                        cmd.Parameters.AddWithValue("@email", email);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    // Keep class membership roles in sync
+                    using (var cmd = new SqlCommand(
+                        @"UPDATE dbo.ClassMembers SET Role = @role WHERE Email = @email", cn, tx))
+                    {
+                        cmd.Parameters.AddWithValue("@role", role);
+                        cmd.Parameters.AddWithValue("@email", email);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    tx.Commit();
+                }
             }
         }
         #endregion
