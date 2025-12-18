@@ -45,6 +45,7 @@ namespace NT106_BT2
             using (var cn = new SqlConnection(ConnStr))
             using (var cmd = new SqlCommand(@"SELECT c.Name, c.Code FROM dbo.Classes c INNER JOIN dbo.ClassMembers m ON c.Id = m.ClassId WHERE m.Email = @em", cn))
             {
+                cmd.CommandTimeout = 5;
                 cmd.Parameters.AddWithValue("@em", email);
                 cn.Open();
                 using (var rd = cmd.ExecuteReader())
