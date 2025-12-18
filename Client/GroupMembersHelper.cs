@@ -19,19 +19,18 @@ namespace NT106_BT2
     {
         public string type { get; set; } = "GET_GROUP_MEMBERS";
         public string roomCode { get; set; }
-        public string requestId { get; set; } // optional
+        public string requestId { get; set; }
     }
 
     public class GroupMembersRes
     {
         public string type { get; set; }
         public MemberDto[] members { get; set; }
-        public string requestId { get; set; } // optional
+        public string requestId { get; set; }
     }
 
     public static class GroupMembersHelper
     {
-        // Default timeout raised to 10s
         public static async Task<IEnumerable<MemberDto>> RequestMembersAsync(string roomCode, int timeoutMs = 10000)
         {
             if (string.IsNullOrWhiteSpace(roomCode)) throw new ArgumentException(nameof(roomCode));
@@ -53,7 +52,6 @@ namespace NT106_BT2
                         return;
 
                     string respId = (string)probe.requestId;
-                    // nếu response có requestId thì phải khớp; nếu không có requestId thì chấp nhận (backward compat)
                     if (!string.IsNullOrEmpty(respId) && !string.Equals(respId, requestId, StringComparison.OrdinalIgnoreCase))
                         return;
 
@@ -78,7 +76,6 @@ namespace NT106_BT2
 
             await TcpHelper.SendLineAsync(jsonReq);
 
-            // timeout/watch
             var delayTask = Task.Delay(timeoutMs, cts.Token).ContinueWith(_ => { }, TaskScheduler.Default);
             var completed = await Task.WhenAny(tcs.Task, delayTask);
 
