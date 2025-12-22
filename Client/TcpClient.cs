@@ -10,6 +10,66 @@ using System.Threading.Tasks;
 
 namespace NT106_BT2
 {
+    /// <summary>
+    /// ============================================================================
+    /// TcpHelper.cs - Quản lý kết nối TCP giữa Client và Server
+    /// ============================================================================
+    /// 
+    /// CHỨC NĂNG CHÍNH:
+    /// Kết nối/ngắt kết nối TCP với server
+    /// Gửi tin nhắn đến server (text, group chat, cuộc gọi, v.v)
+    /// Nhận tin nhắn từ server (real-time listening)
+    /// Xử lý reconnect tự động
+    /// Quản lý stream (read/write) với Unicode encoding
+    /// 
+    /// CÔNG VIỆC CỤ THỂ:
+    /// 1. ConnectAsync()
+    ///    - Kết nối tới server (lấy từ config: ServerHost:ServerPort)
+    ///    - Khởi tạo NetworkStream và StreamReader/Writer
+    ///    - Bắt đầu lắng nghe tin nhắn từ server (ListenLoop)
+    /// 
+    /// 2. ListenLoop()
+    ///    - Chạy trong background thread (async)
+    ///    - Liên tục đọc tin nhắn từ server (ReadLineAsync)
+    ///    - Gọi event OnMessageReceived để các handler xử lý
+    ///    - Xử lý lỗi kết nối bị mất
+    /// 
+    /// 3. SendLineAsync(string line)
+    ///    - Gửi tin nhắn dạng JSON tới server
+    ///    - Kiểm tra kết nối, tự động reconnect nếu cần
+    ///    - FlushAsync() để đảm bảo dữ liệu được gửi ngay
+    /// 
+    /// 4. SendGroupChatAsync(roomCode, message, fromEmail, fromName)
+    ///    - Gửi tin nhắn nhóm (GROUP_CHAT)
+    ///    - Serialize thành JSON và gửi
+    /// 
+    /// 5. SendCallJoinAsync(roomCode)
+    ///    - Gửi yêu cầu tham gia cuộc gọi (CALL_JOIN)
+    ///    - Kèm theo UDP port của client để server biết
+    /// 
+    /// 6. SendCallLeaveAsync(roomCode) / SendCallShareAsync(roomCode, sharerName)
+    ///    - Xử lý các sự kiện liên quan cuộc gọi
+    /// 
+    /// 7. LogoutAsync(username, token)
+    ///    - Gửi yêu cầu đăng xuất tới server
+    /// 
+    /// 8. Disconnect()
+    ///    - Đóng tất cả stream và socket
+    ///    - Hủy cancel token
+    /// 
+    /// EVENTS:
+    /// - OnMessageReceived: Kích hoạt khi nhận tin từ server
+    /// - OnError: Kích hoạt khi có lỗi (mất kết nối, gửi lỗi, etc)
+    /// 
+    /// BIẾN TOÀN CỤC:
+    /// - cli: TcpClient instance
+    /// - ns: NetworkStream để gửi/nhận dữ liệu
+    /// - rd/wr: StreamReader/Writer để đọc/ghi dữ liệu
+    /// - listening: Flag để biết loop có đang chạy không
+    /// - cts: CancellationTokenSource để dừng background thread
+    /// 
+    /// ============================================================================
+    /// </summary>
     internal static class TcpHelper
     {
         private static TcpClient cli;

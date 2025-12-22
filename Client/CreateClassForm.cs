@@ -10,6 +10,54 @@ using System.Windows.Forms;
 
 namespace NT106_BT2
 {
+    /// <summary>
+    /// ============================================================================
+    /// CreateClassForm.cs - Form input để tạo lớp mới
+    /// ============================================================================
+    /// 
+    /// CHỨC NĂNG CHÍNH:
+    /// Hiển thị dialog nhập tên lớp và mã code
+    /// Validate input
+    /// Trả về tên + code hoặc cancel
+    /// 
+    /// CÔNG VIỆC CỤ THể:
+    /// 
+    /// 1. Constructor: CreateClassForm()
+    ///    - Gọi InitializeComponent()
+    ///    - Set AcceptButton = btnCreate (enter → create)
+    ///    - Set CancelButton = btnCancel (esc → cancel)
+    /// 
+    /// 2. Thuộc tính: ClassName
+    ///    - Property read-only
+    ///    - Trả về tbClassname.Text.Trim()
+    /// 
+    /// 3. Thuộc tính: ClassCode
+    ///    - Property read-only
+    ///    - Trả về tbClasscode.Text.Trim()
+    /// 
+    /// 4. btnCreate_Click(object sender, EventArgs e)
+    ///    - Validate: ClassName và ClassCode đều không trống
+    ///    - Nếu sai: MessageBox.Show("Vui lòng nhập đầy đủ...")
+    ///    - Nếu OK: DialogResult = DialogResult.OK → Close()
+    /// 
+    /// 5. btnCancel_Click(object sender, EventArgs e)
+    ///    - DialogResult = DialogResult.Cancel → Close()
+    /// 
+    /// USAGE PATTERN:
+    /// ```csharp
+    /// using (var frm = new CreateClassForm())
+    /// {
+    ///     if (frm.ShowDialog() == DialogResult.OK)
+    ///     {
+    ///         string name = frm.ClassName;
+    ///         string code = frm.ClassCode;
+    ///         // Xử lý tạo lớp
+    ///     }
+    /// }
+    /// ```
+    /// 
+    /// ============================================================================
+    /// </summary>
     public partial class CreateClassForm : Form
     {
         public string ClassName => tbClassname.Text.Trim();

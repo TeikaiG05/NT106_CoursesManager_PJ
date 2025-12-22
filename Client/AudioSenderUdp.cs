@@ -49,7 +49,7 @@ namespace NT106_BT2
             var payload = new byte[e.BytesRecorded];
             Buffer.BlockCopy(e.Buffer, 0, payload, 0, e.BytesRecorded);
 
-            // chunkCount = 0 => audio packet (handled separately)
+            // chunkCount = 0 => gói âm thanh (được xử lý riêng)
             _ = Task.Run(() => CallUdp.SendFrameChunkAsync(0, 0, 0, payload, payload.Length));
         }
 

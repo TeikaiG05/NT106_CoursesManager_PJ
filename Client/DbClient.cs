@@ -1,10 +1,79 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 
 namespace NT106_BT2
 {
+    /// <summary>
+    /// ============================================================================
+    /// DbClient.cs - Giao tiếp với SQL Server từ phía Client
+    /// ============================================================================
+    /// 
+    /// CHỨC NĂNG CHÍNH:
+    /// Quản lý lớp học (tạo, tham gia, lấy danh sách)
+    /// Quản lý file trong phòng nhóm
+    /// Lấy danh sách người dùng
+    /// Cập nhật vai trò người dùng
+    /// Lưu/tải lịch sử chat riêng
+    /// 
+    /// CÔNG VIỆC CỤ THỂ:
+    /// 
+    /// 1. InsertClass(name, code, ownerEmail) → int classId
+    ///    - Tạo lớp học mới
+    ///    - Tự động thêm owner vào ClassMembers với vai trò "Teacher"
+    ///    - Trả về classId vừa tạo
+    /// 
+    /// 2. GetClassesByUser(email) → DataTable
+    ///    - Lấy tất cả lớp mà user là thành viên
+    ///    - Trả về bảng với cột: Name, Code
+    /// 
+    /// 3. JoinClassByCode(code, email, role = "Student") → (Name, Code)?
+    ///    - Tìm lớp bằng code
+    ///    - Thêm user vào lớp nếu chưa là thành viên
+    ///    - Trả về (ClassName, ClassCode) hoặc null nếu code không tồn tại
+    /// 
+    /// 4. InsertRoomFile(roomCode, fileName, filePath, fileSizeBytes, uploadedBy)
+    ///    - Lưu thông tin file vào database
+    ///    - Ghi thời gian upload (SYSDATETIME)
+    ///    - Lưu ai upload file đó
+    /// 
+    /// 5. GetFilesByRoom(roomCode) → DataTable
+    ///    - Lấy tất cả file của 1 phòng
+    ///    - Trả về bảng: FileName, FilePath, FileSizeBytes, UploadedAt, UploadedBy
+    ///    - Sắp xếp theo UploadedAt ASC
+    /// 
+    /// 6. GetAllUsers() → DataTable
+    ///    - Lấy danh sách tất cả user
+    ///    - Trả về: Email, Role (mặc định = "Student")
+    ///    - Sắp xếp theo Email
+    /// 
+    /// 7. UpdateUserRole(email, role)
+    ///    - Cập nhật vai trò user
+    ///    - Dùng transaction để cập nhật cả Users và ClassMembers
+    ///    - Đảm bảo đồng bộ dữ liệu
+    /// 
+    /// 8. InsertPrivateMessage(fromEmail, toEmail, message)  [MỚI]
+    ///    - Lưu tin nhắn riêng vào database
+    ///    - Tự động ghi SentAt = DateTime.Now
+    /// 
+    /// 9. GetPrivateMessages(userEmail, friendEmail, take=100) → List<Tuple>  [MỚI]
+    ///    - Lấy lịch sử chat 1-1
+    ///    - Tìm tin nhắn 2 chiều (A→B hoặc B→A)
+    ///    - Sắp xếp theo SentAt ASC (tin cũ trước)
+    ///    - Trả về List<(FromEmail, ToEmail, Message, SentAt)>
+    /// 
+    /// BIẾN TOÀN CỤC:
+    /// - ConnStr: Connection string từ config file
+    /// 
+    /// SQL USAGE:
+    /// - Sử dụng parameterized queries để chống SQL injection
+    /// - Transaction cho các thao tác liên quan (UpdateUserRole)
+    /// - OUTPUT INSERTED.Id để lấy ID vừa insert
+    /// 
+    /// ============================================================================
+    /// </summary>
     internal static class DbClient
     {
         private static string ConnStr => ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
@@ -155,7 +224,7 @@ namespace NT106_BT2
                 cn.Open();
                 using (var tx = cn.BeginTransaction())
                 {
-                    // Update main user role
+                    // Cập nhật vai trò người dùng chính
                     using (var cmd = new SqlCommand(@"UPDATE dbo.Users SET Role = @role WHERE Email = @email", cn, tx))
                     {
                         cmd.Parameters.AddWithValue("@role", role);
@@ -163,7 +232,7 @@ namespace NT106_BT2
                         cmd.ExecuteNonQuery();
                     }
 
-                    // Keep class membership roles in sync
+                    // Đảm bảo vai trò thành viên lớp học được đồng bộ.
                     using (var cmd = new SqlCommand(
                         @"UPDATE dbo.ClassMembers SET Role = @role WHERE Email = @email", cn, tx))
                     {
@@ -176,6 +245,63 @@ namespace NT106_BT2
                 }
             }
         }
+        #endregion
+        // Thêm vào lớp DbClient
+
+        #region PrivateMessages
+
+        public static void InsertPrivateMessage(string fromEmail, string toEmail, string message)
+        {
+            using (var cn = new SqlConnection(ConnStr))
+            using (var cmd = new SqlCommand(
+                @"INSERT INTO dbo.PrivateMessages(FromEmail, ToEmail, Message, SentAt) 
+          VALUES (@from, @to, @msg, @sentAt)", cn))
+            {
+                cmd.Parameters.AddWithValue("@from", fromEmail);
+                cmd.Parameters.AddWithValue("@to", toEmail);
+                cmd.Parameters.AddWithValue("@msg", message);
+                cmd.Parameters.AddWithValue("@sentAt", DateTime.Now);
+
+                cn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public static List<(string FromEmail, string ToEmail, string Message, DateTime SentAt)>
+            GetPrivateMessages(string userEmail, string friendEmail, int take = 100)
+        {
+            var list = new List<(string, string, string, DateTime)>();
+
+            using (var cn = new SqlConnection(ConnStr))
+            using (var cmd = new SqlCommand(
+                @"SELECT TOP (@take) FromEmail, ToEmail, Message, SentAt 
+          FROM dbo.PrivateMessages 
+          WHERE (FromEmail = @user AND ToEmail = @friend) 
+             OR (FromEmail = @friend AND ToEmail = @user)
+          ORDER BY SentAt ASC", cn))
+            {
+                cmd.Parameters.AddWithValue("@take", take);
+                cmd.Parameters.AddWithValue("@user", userEmail);
+                cmd.Parameters.AddWithValue("@friend", friendEmail);
+
+                cn.Open();
+                using (var rd = cmd.ExecuteReader())
+                {
+                    while (rd.Read())
+                    {
+                        list.Add((
+                            rd.GetString(0),
+                            rd.GetString(1),
+                            rd.GetString(2),
+                            rd.GetDateTime(3)
+                        ));
+                    }
+                }
+            }
+
+            return list;
+        }
+
         #endregion
     }
 }

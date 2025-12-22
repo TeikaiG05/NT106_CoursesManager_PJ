@@ -8,6 +8,62 @@ using System.Diagnostics;
 
 namespace NT106_BT2
 {
+    /// <summary>
+    /// ============================================================================
+    /// GroupMembersHelper.cs - Helper class để lấy danh sách thành viên lớp
+    /// ============================================================================
+    /// 
+    /// CHỨC NĂNG CHÍNH:
+    /// Gửi yêu cầu GET_GROUP_MEMBERS tới server
+    /// Chờ response với timeout
+    /// Hiển thị dialog danh sách thành viên
+    /// 
+    /// CÔNG VIỆC CỤ THỂ:
+    /// 
+    /// 1. RequestMembersAsync(roomCode, timeoutMs = 10000) → Task<IEnumerable<MemberDto>>
+    ///    - Tạo requestId unique (GUID)
+    ///    - Tạo TaskCompletionSource để chờ response
+    ///    - Subscribe vào TcpHelper.OnMessageReceived
+    ///    - Parse JSON nhận về
+    ///    - Nếu type = "GROUP_MEMBERS" và requestId match:
+    ///      * Unsubscribe handler
+    ///      * Complete task với danh sách members
+    ///    - Timeout nếu chờ > 10 giây
+    ///    - Throw TimeoutException nếu timeout
+    /// 
+    /// 2. ShowMembersDialogAsync(roomCode, owner = null) → Task
+    ///    - Gọi RequestMembersAsync() để lấy danh sách
+    ///    - Nếu lỗi: hiển thị error MessageBox
+    ///    - Nếu OK: mở MembersForm dialog với danh sách
+    ///    - Sử dụng BeginInvoke để ensure UI thread
+    /// 
+    /// NESTED CLASSES:
+    /// MemberDto
+    ///    - email: string
+    ///    - fullName: string
+    ///    - role: string (Teacher, Student, ...)
+    /// 
+    /// GetGroupMembersReq
+    ///    - type = "GET_GROUP_MEMBERS"
+    ///    - roomCode: string
+    ///    - requestId: string (unique ID để match response)
+    /// 
+    /// GroupMembersRes
+    ///    - type: string
+    ///    - members: MemberDto[]
+    ///    - requestId: string (match request)
+    /// 
+    /// DỊCH VỤ LIÊN KẾT:
+    /// - TcpHelper: Gửi/nhận request
+    /// - MembersForm: Dialog hiển thị danh sách
+    /// 
+    /// PATTERN DÙNG:
+    /// ```csharp
+    /// await GroupMembersHelper.ShowMembersDialogAsync(roomCode);
+    /// ```
+    /// 
+    /// ============================================================================
+    /// </summary>
     public class MemberDto
     {
         public string email { get; set; }

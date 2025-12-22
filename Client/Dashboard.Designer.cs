@@ -37,15 +37,13 @@
             this.lb_profile = new Guna.UI2.WinForms.Guna2Button();
             this.btnSetting = new Guna.UI2.WinForms.Guna2Button();
             this.btnChat = new Guna.UI2.WinForms.Guna2Button();
-            this.cMeet = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.btnTeams = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2Button2 = new Guna.UI2.WinForms.Guna2Button();
             this.pnTitleBar = new System.Windows.Forms.Panel();
+            this.guna2ControlBox4 = new Guna.UI2.WinForms.Guna2ControlBox();
+            this.guna2ControlBox3 = new Guna.UI2.WinForms.Guna2ControlBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.guna2ControlBox3 = new Guna.UI2.WinForms.Guna2ControlBox();
-            this.guna2ControlBox4 = new Guna.UI2.WinForms.Guna2ControlBox();
             this.panel1.SuspendLayout();
             this.pnTitleBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -96,10 +94,8 @@
             this.panel1.Controls.Add(this.lb_profile);
             this.panel1.Controls.Add(this.btnSetting);
             this.panel1.Controls.Add(this.btnChat);
-            this.panel1.Controls.Add(this.cMeet);
             this.panel1.Controls.Add(this.guna2Button1);
             this.panel1.Controls.Add(this.btnTeams);
-            this.panel1.Controls.Add(this.guna2Button2);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
@@ -187,26 +183,6 @@
             this.btnChat.UseTransparentBackground = true;
             this.btnChat.Click += new System.EventHandler(this.btnChat_Click);
             // 
-            // cMeet
-            // 
-            this.cMeet.AutoRoundedCorners = true;
-            this.cMeet.BackColor = System.Drawing.Color.Transparent;
-            this.cMeet.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
-            this.cMeet.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.cMeet.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.cMeet.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.cMeet.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.cMeet.FillColor = System.Drawing.Color.Bisque;
-            this.cMeet.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cMeet.ForeColor = System.Drawing.Color.Black;
-            this.cMeet.Image = ((System.Drawing.Image)(resources.GetObject("cMeet.Image")));
-            this.cMeet.Location = new System.Drawing.Point(7, 191);
-            this.cMeet.Name = "cMeet";
-            this.cMeet.Size = new System.Drawing.Size(75, 47);
-            this.cMeet.TabIndex = 1;
-            this.cMeet.Text = "Meet";
-            this.cMeet.UseTransparentBackground = true;
-            // 
             // guna2Button1
             // 
             this.guna2Button1.AutoRoundedCorners = true;
@@ -220,7 +196,7 @@
             this.guna2Button1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.guna2Button1.ForeColor = System.Drawing.Color.Black;
             this.guna2Button1.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button1.Image")));
-            this.guna2Button1.Location = new System.Drawing.Point(7, 332);
+            this.guna2Button1.Location = new System.Drawing.Point(7, 240);
             this.guna2Button1.Name = "guna2Button1";
             this.guna2Button1.Size = new System.Drawing.Size(75, 56);
             this.guna2Button1.TabIndex = 3;
@@ -241,33 +217,13 @@
             this.btnTeams.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnTeams.ForeColor = System.Drawing.Color.Black;
             this.btnTeams.Image = ((System.Drawing.Image)(resources.GetObject("btnTeams.Image")));
-            this.btnTeams.Location = new System.Drawing.Point(7, 257);
+            this.btnTeams.Location = new System.Drawing.Point(7, 178);
             this.btnTeams.Name = "btnTeams";
             this.btnTeams.Size = new System.Drawing.Size(75, 56);
             this.btnTeams.TabIndex = 2;
             this.btnTeams.Text = "Teams";
             this.btnTeams.UseTransparentBackground = true;
             this.btnTeams.Click += new System.EventHandler(this.btnTeams_Click);
-            // 
-            // guna2Button2
-            // 
-            this.guna2Button2.AutoRoundedCorners = true;
-            this.guna2Button2.BackColor = System.Drawing.Color.Transparent;
-            this.guna2Button2.ButtonMode = Guna.UI2.WinForms.Enums.ButtonMode.RadioButton;
-            this.guna2Button2.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button2.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.guna2Button2.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.guna2Button2.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.guna2Button2.FillColor = System.Drawing.Color.Bisque;
-            this.guna2Button2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.guna2Button2.ForeColor = System.Drawing.Color.Black;
-            this.guna2Button2.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button2.Image")));
-            this.guna2Button2.Location = new System.Drawing.Point(7, 407);
-            this.guna2Button2.Name = "guna2Button2";
-            this.guna2Button2.Size = new System.Drawing.Size(75, 56);
-            this.guna2Button2.TabIndex = 4;
-            this.guna2Button2.Text = "Activity";
-            this.guna2Button2.UseTransparentBackground = true;
             // 
             // pnTitleBar
             // 
@@ -282,6 +238,27 @@
             this.pnTitleBar.Name = "pnTitleBar";
             this.pnTitleBar.Size = new System.Drawing.Size(1155, 35);
             this.pnTitleBar.TabIndex = 4;
+            // 
+            // guna2ControlBox4
+            // 
+            this.guna2ControlBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.guna2ControlBox4.ControlBoxType = Guna.UI2.WinForms.Enums.ControlBoxType.MinimizeBox;
+            this.guna2ControlBox4.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.guna2ControlBox4.IconColor = System.Drawing.Color.Black;
+            this.guna2ControlBox4.Location = new System.Drawing.Point(1047, 2);
+            this.guna2ControlBox4.Name = "guna2ControlBox4";
+            this.guna2ControlBox4.Size = new System.Drawing.Size(45, 29);
+            this.guna2ControlBox4.TabIndex = 4;
+            // 
+            // guna2ControlBox3
+            // 
+            this.guna2ControlBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.guna2ControlBox3.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.guna2ControlBox3.IconColor = System.Drawing.Color.Black;
+            this.guna2ControlBox3.Location = new System.Drawing.Point(1098, 2);
+            this.guna2ControlBox3.Name = "guna2ControlBox3";
+            this.guna2ControlBox3.Size = new System.Drawing.Size(45, 29);
+            this.guna2ControlBox3.TabIndex = 0;
             // 
             // splitContainer1
             // 
@@ -325,27 +302,6 @@
             this.splitContainer2.SplitterWidth = 1;
             this.splitContainer2.TabIndex = 0;
             // 
-            // guna2ControlBox3
-            // 
-            this.guna2ControlBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2ControlBox3.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.guna2ControlBox3.IconColor = System.Drawing.Color.Black;
-            this.guna2ControlBox3.Location = new System.Drawing.Point(1098, 2);
-            this.guna2ControlBox3.Name = "guna2ControlBox3";
-            this.guna2ControlBox3.Size = new System.Drawing.Size(45, 29);
-            this.guna2ControlBox3.TabIndex = 0;
-            // 
-            // guna2ControlBox4
-            // 
-            this.guna2ControlBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.guna2ControlBox4.ControlBoxType = Guna.UI2.WinForms.Enums.ControlBoxType.MinimizeBox;
-            this.guna2ControlBox4.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.guna2ControlBox4.IconColor = System.Drawing.Color.Black;
-            this.guna2ControlBox4.Location = new System.Drawing.Point(1047, 2);
-            this.guna2ControlBox4.Name = "guna2ControlBox4";
-            this.guna2ControlBox4.Size = new System.Drawing.Size(45, 29);
-            this.guna2ControlBox4.TabIndex = 4;
-            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -373,11 +329,9 @@
         }
 
         #endregion
-        private Guna.UI2.WinForms.Guna2Button cMeet;
         private Guna.UI2.WinForms.Guna2Button btnChat;
         private Guna.UI2.WinForms.Guna2Button btnTeams;
         private Guna.UI2.WinForms.Guna2Button guna2Button1;
-        private Guna.UI2.WinForms.Guna2Button guna2Button2;
         private Guna.UI2.WinForms.Guna2Button lb_profile;
         private Guna.UI2.WinForms.Guna2Button btnSetting;
         private Guna.UI2.WinForms.Guna2ControlBox guna2ControlBox1;

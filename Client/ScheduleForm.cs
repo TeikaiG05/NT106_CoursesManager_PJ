@@ -10,6 +10,106 @@ using System.Windows.Forms;
 
 namespace NT106_BT2
 {
+    /// <summary>
+    /// ============================================================================
+    /// ScheduleForm.cs - Quản lý lịch học và công việc theo ngày
+    /// ============================================================================
+    /// 
+    /// CHỨC NĂNG CHÍNH:
+    /// Hiển thị lịch tháng
+    /// Chọn ngày xem công việc
+    /// Thêm công việc cho ngày
+    /// Xóa công việc
+    /// Điều hướng tháng (prev/next)
+    /// Quay lại ngày hôm nay
+    /// Lưu/tải công việc từ file
+    /// 
+    /// CÔNG VIỆC CỤ THỂ:
+    /// 
+    /// 1. ScheduleForm() - Constructor
+    ///    - Khởi tạo: currentMonth = DateTime.Today, selectedDate = DateTime.Today
+    ///    - Load công việc từ file: TaskStorage.LoadFromFile()
+    ///    - SetupListView(): cấu hình lvTasks
+    ///    - DrawCalendar(): vẽ lịch tháng
+    ///    - LoadTasks(): tải công việc cho ngày hôm nay
+    /// 
+    /// 2. DrawCalendar()
+    ///    - Clear panelCalendar
+    ///    - Tính ngày đầu tiên của tháng
+    ///    - Tính offset (thứ bắt đầu)
+    ///    - Vẽ 42 button (6 hàng × 7 cột):
+    ///      * Nếu là hôm nay: màu xanh lá
+    ///      * Nếu là ngày được chọn: màu xanh dương
+    ///      * Nếu là tháng khác: màu xám
+    ///      * Nếu có công việc: thêm ● dấu chấm
+    ///    - Gán click handler
+    /// 
+    /// 3. Day_Click(object sender, EventArgs e)
+    ///    - Cập nhật selectedDate từ button.Tag
+    ///    - Vẽ lại lịch (để highlight ngày mới)
+    ///    - Load lại danh sách công việc
+    /// 
+    /// 4. Day_DoubleClick(object sender, EventArgs e)
+    ///    - Focus vào txtTask để nhập nhanh
+    /// 
+    /// 5. SetupListView()
+    ///    - lvTasks.View = View.Details (hiển thị chi tiết)
+    ///    - lvTasks.CheckBoxes = true (có checkbox)
+    ///    - Thêm cột "Task" (width = 250)
+    /// 
+    /// 6. LoadTasks()
+    ///    - Clear lvTasks
+    ///    - Lấy tasks từ TaskStorage.GetTasks(selectedDate)
+    ///    - Thêm từng task vào ListView
+    /// 
+    /// 7. btnAdd_Click(object sender, EventArgs e)
+    ///    - Validate: txtTask.Text không trống
+    ///    - Gọi TaskStorage.AddTask(selectedDate, task)
+    ///    - Clear txtTask
+    ///    - LoadTasks() để làm mới danh sách
+    ///    - DrawCalendar() để thêm dấu ● nếu cần
+    /// 
+    /// 8. btnDelete_Click(object sender, EventArgs e)
+    ///    - Lấy các item đã check (CheckedItems)
+    ///    - Với mỗi item (duyệt từ cuối để tránh index shift):
+    ///      * Gọi TaskStorage.RemoveTask(selectedDate, task)
+    ///    - LoadTasks() để refresh
+    ///    - DrawCalendar() để cập nhật dấu ●
+    /// 
+    /// 9. lvTasks_ItemSelectionChanged(...)
+    ///    - Khi chọn item: item.Checked = selected
+    /// 
+    /// 10. btnToday_Click(object sender, EventArgs e)
+    ///     - Reset: currentMonth = DateTime.Today, selectedDate = DateTime.Today
+    ///     - DrawCalendar() + LoadTasks()
+    /// 
+    /// 11. btnNext_Click(object sender, EventArgs e)
+    ///     - Tăng tháng (wrap around năm)
+    ///     - DrawCalendar()
+    /// 
+    /// 12. btnPrev_Click(object sender, EventArgs e)
+    ///     - Giảm tháng (wrap around năm)
+    ///     - DrawCalendar()
+    /// 
+    /// NESTED CLASS:
+    /// StudentTask
+    ///    - Title: string (nội dung công việc)
+    ///    - Completed: bool (đã hoàn thành?)
+    ///    - Date: DateTime (ngày của công việc)
+    /// 
+    /// BIẾN TOÀN CỤC:
+    /// - currentMonth: Tháng đang xem
+    /// - selectedDate: Ngày được chọn (xem công việc)
+    /// 
+    /// DỊCH VỤ LIÊN KẾT:
+    /// - TaskStorage: Quản lý lưu/tải công việc từ file
+    /// 
+    /// GHI CHÚ:
+    /// - Lịch hiển thị 6 hàng × 7 cột = 42 ngày (gồm cả ngày tháng trước/sau)
+    /// - Công việc lưu trữ dạng file (không database)
+    /// 
+    /// ============================================================================
+    /// </summary>
 
 
     public partial class ScheduleForm : Form

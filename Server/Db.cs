@@ -6,6 +6,135 @@ using System.Data.SqlClient;
 
 namespace Server
 {
+    /// <summary>
+    /// ============================================================================
+    /// Db.cs (Server) - Giao tiếp với SQL Server từ phía Server
+    /// ============================================================================
+    /// 
+    /// CHỨC NĂNG CHÍNH:
+    /// Xác thực người dùng (login, register, token)
+    /// Quản lý tin nhắn nhóm (lưu, tải lịch sử)
+    /// Quản lý thành viên lớp
+    /// Lưu/tải tin nhắn riêng (1-1)
+    /// Cập nhật mật khẩu (reset)
+    /// 
+    /// CÔNG VIỆC CỤ THỤ:
+    /// 
+    /// 1. UsernameExists(string email) → bool
+    ///    - Kiểm tra email đã tồn tại trong database không
+    ///    - Dùng lúc register (prevent duplicate email)
+    ///    
+    ///    USAGE:
+    ///    ```csharp
+    ///    if (Db.UsernameExists("user@email.com")) {
+    ///        // Email đã tồn tại
+    ///    }
+    ///    ```
+    /// 
+    /// 2. InsertUser(firstname, surname, birthday, gender, email, passwordHex)
+    ///    - INSERT user mới vào bảng Users
+    ///    - Lưu password dạng hex (SHA256)
+    ///    - birthday có thể null
+    ///    
+    ///    USAGE:
+    ///    ```csharp
+    ///    Db.InsertUser("Nguyễn", "Văn A", new DateTime(2000,1,1), 
+    ///                  "Male", "user@email.com", passwordHashHex);
+    ///    ```
+    /// 
+    /// 3. FindByLogin(email, passwordHex) → UserInfo?
+    ///    - SELECT user từ Users WHERE email AND passwordHex match
+    ///    - Trả về tuple (Firstname, Surname, Birthday, Gender, Email, Role, Avatar)
+    ///    - Trả về null nếu không tìm thấy
+    ///    
+    ///    USAGE:
+    ///    ```csharp
+    ///    var user = Db.FindByLogin("user@email.com", passwordHash);
+    ///    if (user.HasValue) {
+    ///        // Login thành công
+    ///        var (fn, sn, bd, gd, em, role, av) = user.Value;
+    ///    }
+    ///    ```
+    /// 
+    /// 4. GetByEmail(email) → UserInfo?
+    ///    - SELECT user từ Users WHERE email
+    ///    - Dùng để lấy thông tin user (không kiểm tra password)
+    ///    
+    /// 5. InsertGroupMessage(roomCode, fromEmail, fromName, message, sentAt = null)
+    ///    - INSERT tin nhắn nhóm vào bảng GroupMessages
+    ///    - SentAt = sentAt ?? DateTime.UtcNow (nếu null → thời hiện tại)
+    ///    
+    ///    USAGE:
+    ///    ```csharp
+    ///    Db.InsertGroupMessage("class001", "user@email.com", "Nguyễn Văn A", 
+    ///                          "Xin chào!", DateTime.UtcNow);
+    ///    ```
+    /// 
+    /// 6. GetGroupMessages(roomCode, take = 50) → List<GroupChatMsgEx>
+    ///    - SELECT TOP (take) tin từ GroupMessages WHERE roomCode
+    ///    - ORDER BY SentAt ASC (tin cũ trước)
+    ///    - Trả về list kèm timestamp (sentAt)
+    ///    - Dùng lúc client request lịch sử
+    ///    
+    ///    USAGE:
+    ///    ```csharp
+    ///    var messages = Db.GetGroupMessages("class001", 100);
+    ///    foreach (var msg in messages) {
+    ///        // msg.fromEmail, msg.message, msg.sentAt
+    ///    }
+    ///    ```
+    /// 
+    /// 7. InsertPrivateMessage(fromEmail, toEmail, message)  [MỚI]
+    ///    - INSERT tin nhắn riêng vào bảng PrivateMessages
+    ///    - Tự động ghi SentAt = DateTime.UtcNow
+    ///    
+    ///    USAGE:
+    ///    ```csharp
+    ///    Db.InsertPrivateMessage("user1@email.com", "user2@email.com", 
+    ///                            "Chào bạn!");
+    ///    ```
+    /// 
+    /// 8. GetPrivateMessages(userEmail, friendEmail, take = 100)
+    ///    → List<(FromEmail, ToEmail, Message, SentAt)>  [MỚI]
+    ///    - SELECT tin nhắn 2 chiều (A→B hoặc B→A)
+    ///    - ORDER BY SentAt ASC (tin cũ trước)
+    ///    - Dùng lúc client load lịch sử chat 1-1
+    ///    
+    ///    USAGE:
+    ///    ```csharp
+    ///    var history = Db.GetPrivateMessages("user1@email.com", "user2@email.com", 100);
+    ///    foreach (var (from, to, msg, time) in history) {
+    ///        // Hiển thị tin nhắn
+    ///    }
+    ///    ```
+    /// 
+    /// 9. GetGroupMembers(roomCode) → List<GroupMemberDto>
+    ///    - SELECT tất cả member của lớp (từ ClassMembers + Users)
+    ///    - Trả về: email, fullName, role
+    ///    - Dùng lúc client request danh sách thành viên
+    ///    
+    /// 10. UpdateUserPassword(email, passwordHex)
+    ///     - UPDATE password của user
+    ///     - Dùng lúc reset mật khẩu
+    /// 
+    /// 11. GetAllUsers() → DataTable
+    ///     - SELECT Email, Role từ Users
+    ///     - Dùng để load danh sách user (cho admin panel hoặc stats)
+    /// 
+    /// DATABASE TABLES:
+    /// - Users: email, passwordHex, firstname, surname, birthday, gender, role, avatar
+    /// - GroupMessages: roomCode, fromEmail, fromName, message, sentAt
+    /// - PrivateMessages: fromEmail, toEmail, message, sentAt (MỚI)
+    /// - ClassMembers: classId, email, role
+    /// - Classes: id, name, code, ownerEmail
+    /// 
+    /// SQL PATTERNS:
+    /// - Parameterized queries (chống SQL injection)
+    /// - Nullable datetime (birthday có thể null)
+    /// - UNION để query tin 2 chiều (from→to hoặc to→from)
+    /// 
+    /// ============================================================================
+    /// </summary>
     internal static class Db
     {
         #region Connection String
@@ -222,6 +351,62 @@ namespace Server
 
             return list;
         }
+        #endregion
+
+        #region PrivateMessages
+
+        public static void InsertPrivateMessage(string fromEmail, string toEmail, string message)
+        {
+            using (var cn = new SqlConnection(ConnStr))
+            using (var cmd = new SqlCommand(
+                @"INSERT INTO dbo.PrivateMessages(FromEmail, ToEmail, Message, SentAt) 
+                  VALUES (@from, @to, @msg, @sentAt)", cn))
+            {
+                cmd.Parameters.AddWithValue("@from", fromEmail);
+                cmd.Parameters.AddWithValue("@to", toEmail);
+                cmd.Parameters.AddWithValue("@msg", message);
+                cmd.Parameters.AddWithValue("@sentAt", DateTime.UtcNow);
+
+                cn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public static List<(string FromEmail, string ToEmail, string Message, DateTime SentAt)> 
+            GetPrivateMessages(string userEmail, string friendEmail, int take = 100)
+        {
+            var list = new List<(string, string, string, DateTime)>();
+
+            using (var cn = new SqlConnection(ConnStr))
+            using (var cmd = new SqlCommand(
+                @"SELECT TOP (@take) FromEmail, ToEmail, Message, SentAt 
+                  FROM dbo.PrivateMessages 
+                  WHERE (FromEmail = @user AND ToEmail = @friend) 
+                     OR (FromEmail = @friend AND ToEmail = @user)
+                  ORDER BY SentAt ASC", cn))
+            {
+                cmd.Parameters.AddWithValue("@take", take);
+                cmd.Parameters.AddWithValue("@user", userEmail);
+                cmd.Parameters.AddWithValue("@friend", friendEmail);
+
+                cn.Open();
+                using (var rd = cmd.ExecuteReader())
+                {
+                    while (rd.Read())
+                    {
+                        list.Add((
+                            rd.GetString(0),
+                            rd.GetString(1),
+                            rd.GetString(2),
+                            rd.GetDateTime(3)
+                        ));
+                    }
+                }
+            }
+
+            return list;
+        }
+
         #endregion
 
     }

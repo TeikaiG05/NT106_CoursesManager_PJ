@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -11,6 +12,122 @@ using Common;
 
 namespace NT106_BT2
 {
+    /// <summary>
+    /// ============================================================================
+    /// ChatForm.cs - Giao diện chat 1-1 giữa 2 người dùng
+    /// ============================================================================
+    /// 
+    /// CHỨC NĂNG CHÍNH:
+    /// Hiển thị danh sách bạn chat
+    /// Tìm kiếm và thêm bạn mới
+    /// Gửi tin nhắn text
+    /// Gửi emoji
+    /// Gửi file/ảnh dạng base64
+    /// Lưu lịch sử chat vào database
+    /// Load lịch sử chat khi mở form
+    /// Hiển thị lịch sử chat theo người
+    /// 
+    /// CÔNG VIỆC CỤ THỂ:
+    /// 
+    /// 1. ChatForm_Load(object sender, EventArgs e)
+    ///    - Khởi tạo: oTimKiem.Text = "Search by email"
+    ///    - Load danh sách bạn từ database (LoadFriendsFromDatabase)
+    ///    - Vẽ friend banners
+    /// 
+    /// 2. oTimKiem_KeyDown(object sender, KeyEventArgs e)
+    ///    - Khi user nhấn ENTER trong ô tìm kiếm
+    ///    - Validate: không được trống, không chat với chính mình
+    ///    - Thêm bạn mới nếu chưa có
+    ///    - Gọi SelectFriend() để mở chat
+    /// 
+    /// 3. SelectFriend(string email)
+    ///    - Đặt toEmail = email
+    ///    - Cập nhật labelChatTitle với tên bạn
+    ///    - Load lịch sử chat từ database (LoadChatHistoryFromDatabase)
+    /// 
+    /// 4. LoadChatHistoryFromDatabase(string friendEmail)  [MỚI]
+    ///    - Gọi DbClient.GetPrivateMessages(currentUserEmail, friendEmail)
+    ///    - Xóa khung tin nhắn cũ
+    ///    - Duyệt qua từng tin nhắn:
+    ///      * Nếu [FILE]|... → DisplayFileFromPayload()
+    ///      * Nếu [EMOJI]... → DisplayEmoji()
+    ///      * Nếu text thường → AddMessageToUI()
+    ///    - Scroll xuống dưới cùng
+    /// 
+    /// 5. nutGui_Click(object sender, EventArgs e)
+    ///    - Lấy nội dung từ oNhapTin.Text
+    ///    - Validate: không trống, có người nhận
+    ///    - Tạo PrivateChatMsg và gửi qua TcpHelper
+    ///    - **LƯU VÀO DATABASE** (DbClient.InsertPrivateMessage)  [MỚI]
+    ///    - Hiển thị tin nhắn lên UI (AddMessageToUI)
+    ///    - Cập nhật LastMessage, LastTime của bạn
+    ///    - Vẽ lại friend banners
+    ///    - Xóa text box
+    /// 
+    /// 6. TcpHelper_OnMessageReceived(string line)
+    ///    - Lắng nghe event OnMessageReceived từ TCP
+    ///    - Parse JSON để lấy type = "PRIVATE_CHAT"
+    ///    - Kiểm tra tin là dành cho user hiện tại (to == currentUserEmail)
+    ///    - **LƯU TỪNG TIN NHẮN VÀO DATABASE**  [MỚI]
+    ///    - Nếu là person hiện đang chat: hiển thị (DisplayFileFromPayload, DisplayEmoji, AddMessageToUI)
+    ///    - Cập nhật friend banner
+    /// 
+    /// 7. LoadFriendsFromDatabase()  [MỚI]
+    ///    - Gọi DbClient.GetAllUsers()
+    ///    - Với mỗi user: lấy 1 tin gần nhất (GetPrivateMessages(..., take=1))
+    ///    - Thêm vào friends dict với LastTime, LastMessage
+    /// 
+    /// 8. SaveToHistory(string friendEmail, ChatMessage msg)
+    ///    - Lưu tin nhắn vào chatHistory dictionary (in-memory)
+    ///    - Dùng cho display
+    /// 
+    /// 9. AddMessageToUI(ChatMessage msg)
+    ///    - Tạo Panel chứa Label bubble
+    ///    - Nếu IsFromCurrentUser: màu xanh, căn phải
+    ///    - Nếu từ bạn: màu xám, căn trái
+    ///    - Thêm vào khungTinNhan
+    /// 
+    /// 10. ReloadFriendBanners()
+    ///     - Clear luongChatItems
+    ///     - Vẽ label "Chat"
+    ///     - Duyệt friends sắp xếp theo LastTime DESC
+    ///     - Vẽ CreateFriendBanner cho từng bạn
+    /// 
+    /// 11. CreateFriendBanner(Friend f) → Control
+    ///     - Tạo Panel chứa avatar, name, last message
+    ///     - Click → SelectFriend(email)
+    /// 
+    /// 12. nutEmoji_Click(object sender, EventArgs e)
+    ///     - Mở form chọn emoji (30 emojis)
+    ///     - Gửi "[EMOJI]" + emoji
+    ///     - Lưu và hiển thị
+    /// 
+    /// 13. nutFile_Click(object sender, EventArgs e)
+    ///     - OpenFileDialog để chọn file
+    ///     - Validate file size ≤ 5MB
+    ///     - Convert file thành base64
+    ///     - Gửi "[FILE]|FileName|Base64Data"
+    ///     - Lưu và hiển thị
+    /// 
+    /// 14. DisplayFileFromPayload(string payload, bool isMe)
+    ///     - Parse "[FILE]|FileName|Base64" → lấy FileName, Base64
+    ///     - Convert base64 → bytes → temp file
+    ///     - Tạo PictureBox để hiển thị ảnh
+    /// 
+    /// 15. DisplayEmoji(string emoji, bool isMe)
+    ///     - Hiển thị emoji dưới dạng Label lớn
+    ///     - Font: "Segoe UI Emoji", size 28
+    /// 
+    /// DỊCH VỤ LIÊN KẾT:
+    /// - TcpHelper: Gửi/nhận tin nhắn
+    /// - DbClient: Lưu/tải tin nhắn từ database
+    /// 
+    /// CÓ 2 NƠI LƯU DỮ LIỆU:
+    /// 1. In-memory: Dictionary<string, List<ChatMessage>> chatHistory
+    /// 2. Database: PrivateMessages table
+    /// 
+    /// ============================================================================
+    /// </summary>
     public partial class ChatForm : Form
     {
         private readonly string currentUserEmail;
@@ -47,6 +164,10 @@ namespace NT106_BT2
         {
             oTimKiem.Text = "Search by email";
             labelChatTitle.Text = "Chat";
+            
+            // Load lịch sử từ database khi form mở
+            LoadFriendsFromDatabase();
+            
             ReloadFriendBanners();
         }
 
@@ -80,31 +201,59 @@ namespace NT106_BT2
                 labelChatTitle.Text = f.Name;
             else
                 labelChatTitle.Text = email;
-            LoadChatHistory(email);
+            
+            // Load lịch sử từ database nếu có
+            LoadChatHistoryFromDatabase(email);
         }
 
-        private void LoadChatHistory(string email)
+        // Thêm phương thức mới để load từ database
+        private void LoadChatHistoryFromDatabase(string friendEmail)
         {
             khungTinNhan.Controls.Clear();
-            if (chatHistory.ContainsKey(email))
+            
+            try
             {
-                foreach (var msg in chatHistory[email])
+                // Lấy tin nhắn từ database
+                var dbMessages = DbClient.GetPrivateMessages(currentUserEmail, friendEmail);
+                
+                // Xóa lịch sử cũ trong memory và load từ database
+                if (chatHistory.ContainsKey(friendEmail))
+                    chatHistory[friendEmail].Clear();
+                else
+                    chatHistory[friendEmail] = new List<ChatMessage>();
+
+                foreach (var msg in dbMessages)
                 {
-                    if (msg.Content.StartsWith("[FILE]|"))
+                    var chatMsg = new ChatMessage
                     {
-                        DisplayFileFromPayload(msg.Content, msg.IsFromCurrentUser);
+                        Content = msg.Message,
+                        IsFromCurrentUser = string.Equals(msg.FromEmail, currentUserEmail, StringComparison.OrdinalIgnoreCase),
+                        Time = msg.SentAt
+                    };
+                    
+                    chatHistory[friendEmail].Add(chatMsg);
+                    
+                    // Hiển thị tin nhắn
+                    if (msg.Message.StartsWith("[FILE]|"))
+                    {
+                        DisplayFileFromPayload(msg.Message, chatMsg.IsFromCurrentUser);
                     }
-                    else if (msg.Content.StartsWith("[EMOJI]"))
+                    else if (msg.Message.StartsWith("[EMOJI]"))
                     {
-                        string emoji = msg.Content.Substring(7);
-                        DisplayEmoji(emoji, msg.IsFromCurrentUser);
+                        string emoji = msg.Message.Substring(7);
+                        DisplayEmoji(emoji, chatMsg.IsFromCurrentUser);
                     }
                     else
                     {
-                        AddMessageToUI(msg);
+                        AddMessageToUI(chatMsg);
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi khi load lịch sử từ database: " + ex.Message);
+            }
+
             khungTinNhan.VerticalScroll.Value = khungTinNhan.VerticalScroll.Maximum;
         }
 
@@ -132,6 +281,17 @@ namespace NT106_BT2
             };
 
             SaveToHistory(toEmail, msg);
+            
+            // LƯU VÀO DATABASE
+            try
+            {
+                DbClient.InsertPrivateMessage(currentUserEmail, toEmail, content);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi khi lưu tin nhắn vào database: " + ex.Message);
+            }
+
             AddMessageToUI(msg);
 
             if (friends.ContainsKey(toEmail))
@@ -182,6 +342,17 @@ namespace NT106_BT2
                                 Time = DateTime.Now
                             };
                             SaveToHistory(fromEmail, fileMsg);
+                            
+                            // LƯU VÀO DATABASE
+                            try
+                            {
+                                DbClient.InsertPrivateMessage(fromEmail, to, msgContent);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine("Lỗi lưu file chat vào DB: " + ex.Message);
+                            }
+                            
                             if (toEmail == fromEmail)
                                 DisplayFileFromPayload(msgContent, false);
                         }
@@ -194,6 +365,17 @@ namespace NT106_BT2
                                 Time = DateTime.Now
                             };
                             SaveToHistory(fromEmail, emojiMsg);
+                            
+                            // LƯU VÀO DATABASE
+                            try
+                            {
+                                DbClient.InsertPrivateMessage(fromEmail, to, msgContent);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine("Lỗi lưu emoji chat vào DB: " + ex.Message);
+                            }
+                            
                             if (toEmail == fromEmail)
                             {
                                 string emoji = msgContent.Substring(7);
@@ -209,6 +391,17 @@ namespace NT106_BT2
                                 Time = DateTime.Now
                             };
                             SaveToHistory(fromEmail, chatMsg);
+                            
+                            // LƯU VÀO DATABASE
+                            try
+                            {
+                                DbClient.InsertPrivateMessage(fromEmail, to, msgContent);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine("Lỗi lưu text chat vào DB: " + ex.Message);
+                            }
+                            
                             if (toEmail == fromEmail)
                                 AddMessageToUI(chatMsg);
                         }
@@ -456,6 +649,48 @@ namespace NT106_BT2
             container.Controls.Add(lbl);
             khungTinNhan.Controls.Add(container);
             khungTinNhan.ScrollControlIntoView(container);
+        }
+
+        private void LoadFriendsFromDatabase()
+        {
+            try
+            {
+                // Lấy tất cả người dùng từ database
+                var dt = DbClient.GetAllUsers();
+                
+                foreach (DataRow row in dt.Rows)
+                {
+                    string userEmail = row["Email"].ToString();
+                    if (userEmail.Equals(currentUserEmail, StringComparison.OrdinalIgnoreCase))
+                        continue;
+                    
+                    // Lấy lịch sử với mỗi người
+                    var messages = DbClient.GetPrivateMessages(currentUserEmail, userEmail, 1);
+                    
+                    if (messages.Count > 0)
+                    {
+                        var lastMsg = messages[messages.Count - 1];
+                        
+                        if (!friends.ContainsKey(userEmail))
+                        {
+                            friends[userEmail] = new Friend
+                            {
+                                Email = userEmail,
+                                Name = userEmail.Split('@')[0]
+                            };
+                        }
+                        
+                        friends[userEmail].LastTime = lastMsg.SentAt;
+                        friends[userEmail].LastMessage = lastMsg.Message.Length > 20 
+                            ? lastMsg.Message.Substring(0, 20) + "..." 
+                            : lastMsg.Message;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi load bạn bè từ database: " + ex.Message);
+            }
         }
     }
 }

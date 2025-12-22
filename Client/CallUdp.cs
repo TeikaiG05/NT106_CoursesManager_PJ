@@ -8,6 +8,65 @@ using System.Threading.Tasks;
 
 namespace NT106_BT2
 {
+    /// <summary>
+    /// ============================================================================
+    /// CallUdp.cs - Quản lý truyền video/audio cho cuộc gọi qua UDP
+    /// ============================================================================
+    /// 
+    /// CHỨC NĂNG CHÍNH:
+    /// Khởi động UDP client để truyền media (video/audio)
+    /// Gửi khung video (JPEG) dưới dạng các chunk
+    /// Nhận khung video từ các user khác và lắp ráp lại
+    /// Nhận dữ liệu audio (PCM raw)
+    /// Xử lý reassembly (ghép các chunk thành frame hoàn chỉnh)
+    /// 
+    /// CÔNG VIỆC CỤ THể:
+    /// 1. EnsureStarted()
+    ///    - Khởi động UDP client nếu chưa có
+    ///    - OS tự chọn port local (port = 0)
+    ///    - Bắt đầu ReceiveLoop() để lắng nghe gói UDP
+    /// 
+    /// 2. SetIds(int roomId, int userId)
+    ///    - Lưu roomId và userId của user hiện tại
+    ///    - Dùng để định danh gói tin khi gửi
+    /// 
+    /// 3. SendFrameChunkAsync(frameId, chunkIndex, chunkCount, payload, payloadLen)
+    ///    - Gửi một chunk của frame video
+    ///    - Sử dụng MediaPacket.Pack() để đóng gói
+    ///    - Gửi tới server (relay) qua UDP
+    /// 
+    /// 4. ReceiveLoop(CancellationToken token)
+    ///    - Chạy async trong background
+    ///    - Liên tục nhận gói UDP từ server
+    ///    - Unpack bằng MediaPacket.TryUnpack()
+    ///    - Nếu là audio (chunkCount == 0): gọi OnAudioReceived
+    ///    - Nếu là video: sử dụng FrameAssembler để ghép chunks
+    ///    - Khi đủ chunks: gọi OnFrameReceived với frame hoàn chỉnh
+    /// 
+    /// 5. Stop()
+    ///    - Dừng ReceiveLoop (hủy CancellationToken)
+    ///    - Đóng UDP client
+    ///    - Reset RoomId, UserId, LocalPort
+    /// 
+    /// EVENTS:
+    /// - OnFrameReceived(int fromUserId, byte[] jpegData)
+    ///   → Kích hoạt khi nhận xong 1 frame video
+    /// - OnAudioReceived(int fromUserId, byte[] pcmData)
+    ///   → Kích hoạt khi nhận dữ liệu audio
+    /// 
+    /// BIẾN TOÀN CỤC:
+    /// - udp: UdpClient instance
+    /// - cts: CancellationTokenSource để dừng receive loop
+    /// - assembler: FrameAssembler để ghép chunks thành frames
+    /// - LocalPort, RoomId, UserId: Thông tin định danh
+    /// 
+    /// GHI CHÚ:
+    /// - Sử dụng MediaPacket format chuẩn (16 bytes header)
+    /// - FrameAssembler có timeout 3s để dọn các frame unfinished
+    /// - Audio không cần ghép, gửi trực tiếp dưới dạng PCM
+    /// 
+    /// ============================================================================
+    /// </summary>
     internal static class CallUdp
     {
         private static UdpClient udp;
@@ -23,7 +82,7 @@ namespace NT106_BT2
         private static readonly int UdpPort = int.TryParse(ConfigurationManager.AppSettings["UdpPort"], out int p) ? p : 9001;
         private static IPEndPoint ServerEndPoint => new IPEndPoint(IPAddress.Parse(Host), UdpPort);
 
-        // jpeg bytes của frame share
+        // byte jpeg chia sẻ khung
         public static event Action<int /*fromUserId*/, byte[] /*jpeg*/> OnFrameReceived;
         public static event Action<int /*fromUserId*/, byte[] /*pcm*/> OnAudioReceived;
 
@@ -85,7 +144,7 @@ namespace NT106_BT2
 
                 if (RoomId > 0 && roomId != RoomId) continue;
 
-                // Audio packet: chunkCount == 0 -> raw PCM bytes, no reassembly
+                // Gói âm thanh: chunkCount == 0 -> byte PCM thô, không tái cấu trúc.
                 if (chunkCount == 0)
                 {
                     var pcm = payload;

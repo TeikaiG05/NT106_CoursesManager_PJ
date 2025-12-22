@@ -698,7 +698,7 @@ namespace Server
 
                     #endregion
 
-                    // Dòng cũ (để lại)
+                    // Dòng cũ
                     #region CALL_FRAME
                     if (type == MsgType.CALL_FRAME)
                     {
