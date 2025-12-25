@@ -206,6 +206,7 @@ namespace Common
         public const string CALL_SHARE = "CALL_SHARE";
         public const string CALL_FRAME = "CALL_FRAME";
 
+        public const string ROOM_FILE_ADDED = "ROOM_FILE_ADDED";
 
         public const string RESET_REQUEST = "RESET_REQUEST";
         public const string RESET_CONFIRM = "RESET_CONFIRM";
@@ -353,6 +354,16 @@ namespace Common
         public string type { get; set; } = MsgType.CALL_STATE;
         public string roomCode { get; set; }
         public System.Collections.Generic.List<CallMemberDto> members { get; set; }
+    }
+
+    public class RoomFileAddedMsg
+    {
+        public string type { get; set; } = MsgType.ROOM_FILE_ADDED;
+        public string roomCode { get; set; }
+        public string fileName { get; set; }
+        public string filePath { get; set; }
+        public long fileSizeBytes { get; set; }
+        public string uploadedBy { get; set; }
     }
 
 

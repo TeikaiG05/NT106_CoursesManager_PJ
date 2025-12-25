@@ -226,6 +226,7 @@ namespace Server
     {
         public int UserId { get; set; }
         public string DisplayName { get; set; }
+        public string Email { get; set; }
         public int RoomId { get; set; }
 
         public TcpClient Tcp { get; set; }
@@ -238,6 +239,7 @@ namespace Server
         public string RoomCode { get; set; }
 
         public string SharingUser { get; set; }
+        public HashSet<string> SharingUsers { get; } = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         public List<ClientSession> Clients { get; } = new List<ClientSession>();
 
         public string ParticipantsCsv()
@@ -254,7 +256,7 @@ namespace Server
         private int _nextRoomId = 1000;
         private int _nextUserId = 1;
 
-        public (RoomState room, int userId) JoinOrCreate(string roomCode, string displayName, TcpClient tcp, IPEndPoint udpEp)
+        public (RoomState room, int userId) JoinOrCreate(string roomCode, string email, string displayName, TcpClient tcp, IPEndPoint udpEp)
         {
             lock (_lock)
             {
@@ -270,12 +272,46 @@ namespace Server
                     _byId[room.RoomId] = room;
                 }
 
+                // Nếu đã có user này (theo email) thì cập nhật socket/UDP để tránh nhân bản avatar
+                ClientSession existing = null;
+                if (!string.IsNullOrWhiteSpace(email))
+                {
+                    existing = room.Clients.FirstOrDefault(c =>
+                        !string.IsNullOrWhiteSpace(c.Email) &&
+                        string.Equals(c.Email, email, StringComparison.OrdinalIgnoreCase));
+                }
+
+                if (existing == null)
+                {
+                    existing = room.Clients.FirstOrDefault(c => c.Tcp == tcp);
+                }
+
+                if (existing != null)
+                {
+                    if (!string.IsNullOrWhiteSpace(email))
+                    {
+                        room.Clients.RemoveAll(c =>
+                            c != existing &&
+                            !string.IsNullOrWhiteSpace(c.Email) &&
+                            string.Equals(c.Email, email, StringComparison.OrdinalIgnoreCase));
+                    }
+
+                    existing.DisplayName = displayName;
+                    existing.Tcp = tcp;
+                    existing.UdpEndPoint = udpEp;
+                    if (!string.IsNullOrWhiteSpace(email))
+                        existing.Email = email;
+                    existing.RoomId = room.RoomId;
+                    return (room, existing.UserId);
+                }
+
                 int userId = _nextUserId++;
 
                 var sess = new ClientSession
                 {
                     UserId = userId,
                     DisplayName = displayName,
+                    Email = email,
                     RoomId = room.RoomId,
                     Tcp = tcp,
                     UdpEndPoint = udpEp
@@ -296,8 +332,12 @@ namespace Server
                     if (found != null)
                     {
                         room.Clients.Remove(found);
-                        if (!string.IsNullOrWhiteSpace(room.SharingUser) && room.SharingUser == found.DisplayName)
-                            room.SharingUser = "";
+                        if (!string.IsNullOrWhiteSpace(found.DisplayName))
+                        {
+                            room.SharingUsers.Remove(found.DisplayName);
+                            if (!string.IsNullOrWhiteSpace(room.SharingUser) && room.SharingUser == found.DisplayName)
+                                room.SharingUser = room.SharingUsers.LastOrDefault() ?? "";
+                        }
 
                         if (room.Clients.Count == 0)
                         {
@@ -336,13 +376,26 @@ namespace Server
             }
         }
 
-        public void UpdateSharing(int roomId, string displayNameOrEmpty)
+        public void UpdateSharing(int roomId, string displayNameOrEmpty, string actorDisplayName = null)
         {
             lock (_lock)
             {
                 if (_byId.TryGetValue(roomId, out var room))
                 {
-                    room.SharingUser = displayNameOrEmpty ?? "";
+                    bool turnOn = !string.IsNullOrWhiteSpace(displayNameOrEmpty);
+                    string who = turnOn
+                        ? displayNameOrEmpty?.Trim()
+                        : (actorDisplayName ?? "").Trim();
+
+                    if (!string.IsNullOrWhiteSpace(who))
+                    {
+                        if (turnOn)
+                            room.SharingUsers.Add(who);
+                        else
+                            room.SharingUsers.Remove(who);
+                    }
+
+                    room.SharingUser = room.SharingUsers.LastOrDefault() ?? "";
                 }
             }
         }

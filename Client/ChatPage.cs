@@ -14,6 +14,7 @@ namespace NT106_BT2
     {
         private LobbyForm lobby;
         private bool joinBubbleShown = false;
+        private Control joinCallBubble;
         private readonly string roomCode;
 
         #region CONSTRUCTOR
@@ -23,7 +24,7 @@ namespace NT106_BT2
             this.roomCode = roomCode?.Trim();
             btnCall.Click += btnCall_Click;
             InitTableLayout();
-            btnBrowse.Click += btnBrowse_Click;
+            //btnBrowse.Click += btnBrowse_Click;
             btnSend.Enabled = false;
             System.Diagnostics.Debug.WriteLine($"[ChatPage] ctor room={this.roomCode}, email={Session.Email}");
 
@@ -88,6 +89,7 @@ namespace NT106_BT2
         }
         #endregion
 
+        #region TIMELINE ITEM
         private enum TimelineKind
         {
             Text,
@@ -103,6 +105,7 @@ namespace NT106_BT2
 
             public DataRow FileRow { get; set; }
         }
+        #endregion
 
         #region SEND
         private async void btnSend_Click(object sender, EventArgs e)
@@ -285,18 +288,20 @@ namespace NT106_BT2
 
                     bool hasCall = state.members != null && state.members.Count > 0;
 
-                    if (hasCall && !isMember && !joinBubbleShown)
+                    if (hasCall && !isMember)
                     {
+                        // luôn refresh bubble theo trạng thái mới
+                        RemoveJoinCallBubble();
                         AddJoinCallBubble();
-                        joinBubbleShown = true;
                     }
-
-                    if (!hasCall)
+                    else
                     {
-                        joinBubbleShown = false;
+                        RemoveJoinCallBubble();
                     }
 
-                    SetCallButtonEnabled(!hasCall || !isMember);
+                    joinBubbleShown = joinCallBubble != null;
+
+                    SetCallButtonEnabled(!hasCall || isMember);
                 }
                 catch (Exception ex)
                 {
@@ -316,6 +321,7 @@ namespace NT106_BT2
                         return;
 
                     CallUdp.SetIds(res.roomId, res.userId);
+                    _ = CallUdp.SendWarmupAsync();
 
                     System.Diagnostics.Debug.WriteLine($"[ChatPage] CALL_JOIN RES roomId={res.roomId}, userId={res.userId}");
                 }
@@ -339,6 +345,30 @@ namespace NT106_BT2
                 return;
             }
 
+            if (type.Equals(MsgType.ROOM_FILE_ADDED, StringComparison.OrdinalIgnoreCase))
+            {
+                RoomFileAddedMsg f;
+                try { f = JsonConvert.DeserializeObject<RoomFileAddedMsg>(json); }
+                catch { return; }
+
+                if (f == null) return;
+                if (!string.Equals(f.roomCode?.Trim(), roomCode, StringComparison.OrdinalIgnoreCase))
+                    return;
+
+                bool isMyFile = string.Equals(f.uploadedBy?.Trim(), Session.Email?.Trim(), StringComparison.OrdinalIgnoreCase);
+
+                if (!isMyFile)
+                {
+                    if (IsImage(f.filePath))
+                        AddImageBubble(f.filePath, false, f.uploadedBy ?? "Unknown");
+                    else
+                        AddFileBubble(f.filePath, f.fileName, f.fileSizeBytes, false, f.uploadedBy ?? "Unknown");
+                }
+
+                GroupChatForm.NotifyFileAdded(f.roomCode);
+                return;
+            }
+
             if (!type.Equals(MsgType.GROUP_CHAT, StringComparison.OrdinalIgnoreCase))
                 return;
 
@@ -352,15 +382,17 @@ namespace NT106_BT2
             if (!string.Equals(rc, roomCode, StringComparison.OrdinalIgnoreCase))
                 return;
 
-            bool me = string.Equals(
+            bool isMyChat = string.Equals(
                 chat.fromEmail?.Trim(),
                 Session.Email?.Trim(),
                 StringComparison.OrdinalIgnoreCase);
 
-            if (me) return;
+            if (isMyChat) return;
 
             string displayText = $"{chat.fromName ?? chat.fromEmail}: {chat.message}";
             AddBubble(displayText, false);
+
+            return;
         }
         #endregion
 
@@ -420,6 +452,8 @@ namespace NT106_BT2
                 return;
             }
 
+            RemoveJoinCallBubble(); // tránh nhân đôi bubble cũ
+
             int maxWidth = tblMessages.ClientSize.Width - 60;
             if (maxWidth < 200) maxWidth = 200;
 
@@ -459,7 +493,6 @@ namespace NT106_BT2
             bubble.Controls.Add(lbl);
             bubble.Controls.Add(btnJoin);
 
-            // click "Tham gia"
             btnJoin.Click += async (s, e) =>
             {
                 OpenLobbyForm();
@@ -471,6 +504,26 @@ namespace NT106_BT2
             tblMessages.Controls.Add(bubble, 0, tblMessages.RowCount - 1);
 
             tblMessages.ScrollControlIntoView(bubble);
+
+            joinCallBubble = bubble;
+        }
+
+        private void RemoveJoinCallBubble()
+        {
+            if (IsDisposed) return;
+
+            if (InvokeRequired)
+            {
+                BeginInvoke(new Action(RemoveJoinCallBubble));
+                return;
+            }
+
+            if (joinCallBubble != null)
+            {
+                try { tblMessages.Controls.Remove(joinCallBubble); } catch { }
+                joinCallBubble.Dispose();
+                joinCallBubble = null;
+            }
         }
 
         #endregion
@@ -490,6 +543,7 @@ namespace NT106_BT2
         }
         #endregion
 
+        #region BTN BROWSE CLICK
         private void btnBrowse_Click(object sender, EventArgs e)
         {
             using (var ofd = new OpenFileDialog())
@@ -519,8 +573,13 @@ namespace NT106_BT2
                     AddImageBubble_Me(destPath);
                 else
                     AddFileBubble_Me(destPath, fileName, fi.Length);
+
+                _ = TcpHelper.SendRoomFileAddedAsync(roomCode, fileName, destPath, fi.Length);
             }
         }
+        #endregion
+
+        #region HELPER METHODS
         private bool IsImage(string path)
         {
             string ext = Path.GetExtension(path).ToLowerInvariant();
@@ -549,60 +608,65 @@ namespace NT106_BT2
             if (!File.Exists(filePath)) return;
 
             int maxWidth = tblMessages.ClientSize.Width - 60;
-            if (maxWidth < 150) maxWidth = 150;
+            if (maxWidth < 180) maxWidth = 180;
 
-            var panel = new Panel
+            var bubble = new Panel
             {
                 AutoSize = true,
                 MaximumSize = new Size(maxWidth, 0),
-                Padding = new Padding(5),
+                BackColor = isMe ? Color.SteelBlue : Color.Gainsboro,
+                Padding = new Padding(10),
                 Margin = isMe ? new Padding(150, 5, 10, 5) : new Padding(10, 5, 150, 5),
-                BackColor = Color.Transparent,
-                Anchor = isMe ? AnchorStyles.Right | AnchorStyles.Top
-                              : AnchorStyles.Left | AnchorStyles.Top
+                Anchor = isMe ? AnchorStyles.Right | AnchorStyles.Top : AnchorStyles.Left | AnchorStyles.Top,
+                Cursor = Cursors.Hand
             };
+
+            string senderLine = string.IsNullOrWhiteSpace(senderName) ? "" : senderName + ":";
 
             var lblSender = new Label
             {
                 AutoSize = true,
                 MaximumSize = new Size(maxWidth - 20, 0),
-                Text = string.IsNullOrWhiteSpace(senderName) ? "" : senderName + ":",
+                Text = senderLine,
                 Font = new Font("Segoe UI", 8, FontStyle.Bold),
-                ForeColor = Color.DimGray,
-                Padding = new Padding(0, 0, 0, 2)
+                ForeColor = isMe ? Color.WhiteSmoke : Color.DimGray
             };
 
             var pic = new PictureBox
             {
-                Width = 200,
-                Height = 150,
+                Width = Math.Min(260, maxWidth - 20),
+                Height = 160,
                 SizeMode = PictureBoxSizeMode.Zoom,
                 Cursor = Cursors.Hand
             };
-
             using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            using (var img = Image.FromStream(fs))
             {
-                pic.Image = Image.FromStream(fs);
+                pic.Image = new Bitmap(img);
             }
 
-            pic.Click += (s, e) =>
+            bubble.Controls.Add(lblSender);
+            bubble.Controls.Add(pic);
+
+            pic.Top = lblSender.Bottom + 6;
+
+            EventHandler openPreview = (s, e) =>
             {
                 using (var f = new ImagePreviewForm(filePath))
-                {
                     f.ShowDialog(this);
-                }
             };
 
-            panel.Controls.Add(lblSender);
-            panel.Controls.Add(pic);
-            pic.Top = lblSender.Bottom + 2;
+            bubble.Click += openPreview;
+            lblSender.Click += openPreview;
+            pic.Click += openPreview;
 
             tblMessages.RowCount++;
             tblMessages.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-            tblMessages.Controls.Add(panel, 0, tblMessages.RowCount - 1);
+            tblMessages.Controls.Add(bubble, 0, tblMessages.RowCount - 1);
 
-            tblMessages.ScrollControlIntoView(panel);
+            tblMessages.ScrollControlIntoView(bubble);
         }
+
 
         private void AddFileBubble(string filePath, string fileName, long sizeBytes, bool isMe, string senderName)
         {
@@ -615,87 +679,91 @@ namespace NT106_BT2
             }
 
             int maxWidth = tblMessages.ClientSize.Width - 60;
-            if (maxWidth < 150) maxWidth = 150;
+            if (maxWidth < 180) maxWidth = 180;
 
-            var row = new Panel
+            var bubble = new Panel
             {
                 AutoSize = true,
                 MaximumSize = new Size(maxWidth, 0),
+                BackColor = isMe ? Color.SteelBlue : Color.Gainsboro,
+                Padding = new Padding(10),
                 Margin = isMe ? new Padding(150, 5, 10, 5) : new Padding(10, 5, 150, 5),
-                BackColor = Color.WhiteSmoke,
                 Anchor = isMe ? AnchorStyles.Right | AnchorStyles.Top : AnchorStyles.Left | AnchorStyles.Top,
-                Padding = new Padding(10, 8, 10, 8)
+                Cursor = Cursors.Hand
             };
+
+            string senderLine = string.IsNullOrWhiteSpace(senderName) ? "" : senderName + ":";
 
             var lblSender = new Label
             {
-                Left = 0,
-                Top = 0,
                 AutoSize = true,
                 MaximumSize = new Size(maxWidth - 20, 0),
-                Text = string.IsNullOrWhiteSpace(senderName) ? "" : senderName + ":",
+                Text = senderLine,
                 Font = new Font("Segoe UI", 8, FontStyle.Bold),
-                ForeColor = Color.DimGray
+                ForeColor = isMe ? Color.WhiteSmoke : Color.DimGray
+            };
+
+            var fileCard = new Panel
+            {
+                AutoSize = true,
+                MaximumSize = new Size(maxWidth - 20, 0),
+                BackColor = isMe ? Color.FromArgb(40, 255, 255, 255) : Color.WhiteSmoke,
+                Padding = new Padding(8),
+                Margin = new Padding(0, 6, 0, 0)
             };
 
             var icon = new PictureBox
             {
                 Width = 32,
                 Height = 32,
-                Left = 0,
-                Top = lblSender.Bottom + 6,
                 SizeMode = PictureBoxSizeMode.Zoom,
                 Image = SystemIcons.Application.ToBitmap()
             };
 
             var lblName = new Label
             {
-                Left = 40,
-                Top = lblSender.Bottom,
                 AutoSize = true,
-                MaximumSize = new Size(maxWidth - 60, 0),
+                MaximumSize = new Size(maxWidth - 80, 0),
                 Text = fileName,
-                Font = new Font("Segoe UI", 9, FontStyle.Bold)
+                Font = new Font("Segoe UI", 9, FontStyle.Bold),
+                ForeColor = isMe ? Color.White : Color.Black
             };
 
             var lblSize = new Label
             {
-                Left = 40,
-                Top = lblName.Bottom + 2,
                 AutoSize = true,
                 Text = FormatSize(sizeBytes),
                 Font = new Font("Segoe UI", 8),
-                ForeColor = Color.Gray
+                ForeColor = isMe ? Color.WhiteSmoke : Color.Gray
             };
 
-            Action<object, EventArgs> openHandler = (s, e) => TryOpenFile(filePath);
+            icon.Location = new Point(0, 0);
+            lblName.Location = new Point(icon.Right + 8, 0);
+            lblSize.Location = new Point(icon.Right + 8, lblName.Bottom + 2);
 
-            row.Cursor = Cursors.Hand;
-            row.Click += new EventHandler(openHandler);
+            fileCard.Controls.Add(icon);
+            fileCard.Controls.Add(lblName);
+            fileCard.Controls.Add(lblSize);
 
-            lblSender.Cursor = Cursors.Hand;
-            lblSender.Click += new EventHandler(openHandler);
+            bubble.Controls.Add(lblSender);
+            bubble.Controls.Add(fileCard);
+            fileCard.Top = lblSender.Bottom + 6;
 
-            icon.Cursor = Cursors.Hand;
-            icon.Click += new EventHandler(openHandler);
-
-            lblName.Cursor = Cursors.Hand;
-            lblName.Click += new EventHandler(openHandler);
-
-            lblSize.Cursor = Cursors.Hand;
-            lblSize.Click += new EventHandler(openHandler);
-
-            row.Controls.Add(lblSender);
-            row.Controls.Add(icon);
-            row.Controls.Add(lblName);
-            row.Controls.Add(lblSize);
+            EventHandler open = (s, e) => TryOpenFile(filePath);
+            bubble.Click += open;
+            lblSender.Click += open;
+            fileCard.Click += open;
+            icon.Click += open;
+            lblName.Click += open;
+            lblSize.Click += open;
 
             tblMessages.RowCount++;
             tblMessages.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-            tblMessages.Controls.Add(row, 0, tblMessages.RowCount - 1);
+            tblMessages.Controls.Add(bubble, 0, tblMessages.RowCount - 1);
 
-            tblMessages.ScrollControlIntoView(row);
+            tblMessages.ScrollControlIntoView(bubble);
         }
+      
 
         private void TryOpenFile(string filePath)
         {
@@ -776,5 +844,6 @@ namespace NT106_BT2
                     "Loi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        #endregion
     }
 }

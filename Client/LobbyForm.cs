@@ -173,9 +173,24 @@ namespace NT106_BT2
             }
 
             if (string.IsNullOrWhiteSpace(sharerName))
+            {
                 lblShareInfo.Text = "No one is sharing screen";
+                lblShareInfo.Visible = true;
+                lblShareInfo.BringToFront();
+
+                // Clear frame đang xem để tránh đứng hình
+                if (picShare.Image != null)
+                {
+                    var old = picShare.Image;
+                    picShare.Image = null;
+                    old.Dispose();
+                }
+            }
             else
+            {
                 lblShareInfo.Text = $"Screen shared by {sharerName}";
+                lblShareInfo.Visible = false;
+            }
         }
 
         #endregion

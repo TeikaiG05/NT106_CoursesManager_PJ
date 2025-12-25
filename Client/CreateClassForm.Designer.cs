@@ -119,7 +119,7 @@
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "CreateClassForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "CreateClassForm";
             this.ResumeLayout(false);
             this.PerformLayout();

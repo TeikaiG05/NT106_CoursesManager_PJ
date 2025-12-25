@@ -365,7 +365,7 @@ namespace Server
                         var remoteIp = ((IPEndPoint)cli.Client.RemoteEndPoint).Address;
                         var udpEp = new IPEndPoint(remoteIp, req.udpPort);
 
-                        var (room, userId) = rooms.JoinOrCreate(req.roomCode, myInfo.FullName, cli, udpEp);
+                        var (room, userId) = rooms.JoinOrCreate(req.roomCode, myInfo.Email, myInfo.FullName, cli, udpEp);
 
                         myInfo.RoomCode = req.roomCode;
                         myInfo.RoomId = room.RoomId;
@@ -398,7 +398,7 @@ namespace Server
                         if (myInfo == null) { await SendErr(wr, "Bạn cần đăng nhập trước"); continue; }
                         if (myInfo.RoomId <= 0) { await SendErr(wr, "Bạn chưa CALL_JOIN"); continue; }
 
-                        rooms.UpdateSharing(myInfo.RoomId, req.sharerName ?? "");
+                        rooms.UpdateSharing(myInfo.RoomId, req.sharerName ?? "", myInfo.FullName ?? myInfo.Email);
                         await BroadcastCallShare(myInfo.RoomId);
 
                         continue;
@@ -511,14 +511,13 @@ namespace Server
                         {
                             try
                             {
-                                Log("GROUP_CHAT",
-                                    $"Sending to client: {c.Email ?? "null"}, Connected: {c.Client?.Connected ?? false}");
+                                Log("GROUP_CHAT", $"Sending to client: {c.Email ?? "null"}, Connected: {c.Client?.Connected ?? false}");
 
                                 await c.Writer.WriteLineAsync(json);
                                 await c.Writer.FlushAsync();
 
                                 sentCount++;
-                                Log("GROUP_CHAT", $"✓ Successfully sent to {c.Email ?? "null"}");
+                                Log("GROUP_CHAT", $"Successfully sent to {c.Email ?? "null"}");
                             }
                             catch (Exception ex)
                             {
@@ -539,6 +538,39 @@ namespace Server
                         continue;
                     }
 
+                    #endregion
+
+                    #region ROOM_FILE_ADDED
+                    if (type == MsgType.ROOM_FILE_ADDED)
+                    {
+                        RoomFileAddedMsg fmsg = null;
+                        try { fmsg = JsonConvert.DeserializeObject<RoomFileAddedMsg>(line); }
+                        catch { await SendErr(wr, "ROOM_FILE_ADDED: Dữ liệu không hợp lệ"); continue; }
+
+                        if (myInfo == null)
+                        {
+                            await SendErr(wr, "Ban can dang nhap truoc");
+                            continue;
+                        }
+
+                        List<ClientInfo> snapshot;
+                        lock (clientsLock) snapshot = clients.ToList();
+
+                        foreach (var c in snapshot.ToList())
+                        {
+                            try
+                            {
+                                await c.Writer.WriteLineAsync(line);
+                                await c.Writer.FlushAsync();
+                            }
+                            catch
+                            {
+                                try { c.Client?.Close(); } catch { }
+                                lock (clientsLock) { clients.Remove(c); }
+                            }
+                        }
+                        continue;
+                    }
                     #endregion
 
                     #region PASSWORD RESET (NEW)
@@ -802,6 +834,18 @@ namespace Server
         #endregion
 
         #region Broadcast helpers
+        private static string BuildMemberKey(CallMemberDto m)
+        {
+            if (m == null) return "null";
+
+            var email = (m.email ?? "").Trim();
+            if (!string.IsNullOrWhiteSpace(email))
+                return "email:" + email.ToLowerInvariant();
+
+            var name = (m.name ?? "").Trim();
+            return "name:" + name.ToLowerInvariant();
+        }
+
         private async Task BroadcastCallState(int roomId)
         {
             var room = rooms.GetRoomById(roomId);
@@ -822,17 +866,23 @@ namespace Server
                 };
             }).ToList();
 
+            // Gộp các kết nối trùng email/name để không hiện nhiều avatar cho cùng một người
+            var distinctMembers = members
+                .GroupBy(m => BuildMemberKey(m))
+                .Select(g => g.Last())
+                .ToList();
+
             var res = new CallStateRes
             {
                 roomCode = room.RoomCode,
-                members = members
+                members = distinctMembers
             };
 
             string json = JsonConvert.SerializeObject(res);
 
-            foreach (var cs in room.Clients.ToList())
+            // Gửi cho tất cả client đang kết nối để những người chưa JOIN call vẫn thấy bubble tham gia
+            foreach (var info in snapshot.ToList())
             {
-                var info = snapshot.FirstOrDefault(x => x.Client == cs.Tcp);
                 if (info?.Writer == null) continue;
                 try { await info.Writer.WriteLineAsync(json); await info.Writer.FlushAsync(); } catch { }
             }

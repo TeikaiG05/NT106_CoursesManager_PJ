@@ -42,7 +42,7 @@ namespace Server
     ///    - Foreign key:
     ///      * FromEmail → Users.Email
     ///      * ToEmail → Users.Email
-    ///    - In log: "✓ Bảng PrivateMessages đã sẵn sàng"
+    ///    - In log: "Bảng PrivateMessages đã sẵn sàng"
     /// 
     /// 3. CreateIndexes(Action<string, string> log)
     ///    - Tạo index cho PrivateMessages nếu chưa tồn tại
@@ -51,7 +51,7 @@ namespace Server
     ///    - Lợi ích:
     ///      * Tìm kiếm tin nhắn 2 chiều nhanh hơn
     ///      * ORDER BY SentAt cũng được index
-    ///    - In log: "✓ Index PrivateMessages đã sẵn sàng"
+    ///    - In log: "Index PrivateMessages đã sẵn sàng"
     /// 
     /// IDEMPOTENT PATTERN:
     /// - Tất cả CREATE statement dùng IF NOT EXISTS
@@ -107,11 +107,11 @@ namespace Server
                 CreatePrivateMessagesTable(log);
                 CreateIndexes(log);
 
-                log?.Invoke("Migration", "✓ Hoàn tất migration");
+                log?.Invoke("Migration", "Hoàn tất migration");
             }
             catch (Exception ex)
             {
-                log?.Invoke("Migration", $"❌ Lỗi migration: {ex.Message}");
+                log?.Invoke("Migration", $"Lỗi migration: {ex.Message}");
             }
         }
 
@@ -141,7 +141,7 @@ namespace Server
                       END", cn))
                 {
                     cmd.ExecuteNonQuery();
-                    log?.Invoke("Migration", "✓ Bảng PrivateMessages đã sẵn sàng");
+                    log?.Invoke("Migration", "Bảng PrivateMessages đã sẵn sàng");
                 }
             }
         }
@@ -165,7 +165,7 @@ namespace Server
                       END", cn))
                 {
                     cmd.ExecuteNonQuery();
-                    log?.Invoke("Migration", "✓ Index PrivateMessages đã sẵn sàng");
+                    log?.Invoke("Migration", "Index PrivateMessages đã sẵn sàng");
                 }
             }
         }

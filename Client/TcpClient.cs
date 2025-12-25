@@ -282,6 +282,20 @@ namespace NT106_BT2
             };
             return SendLineAsync(JsonConvert.SerializeObject(req));
         }
+
+        public static Task SendRoomFileAddedAsync(string roomCode, string fileName, string filePath, long fileSizeBytes)
+        {
+            var msg = new RoomFileAddedMsg
+            {
+                roomCode = roomCode,
+                fileName = fileName,
+                filePath = filePath,
+                fileSizeBytes = fileSizeBytes,
+                uploadedBy = Session.Email
+            };
+
+            return SendLineAsync(JsonConvert.SerializeObject(msg));
+        }
         #endregion
 
         #region DISCONNECT

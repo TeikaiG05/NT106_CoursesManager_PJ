@@ -97,6 +97,7 @@
             this.Controls.Add(this.label2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "JoinClassForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "JoinClassForm";
             this.ResumeLayout(false);
             this.PerformLayout();

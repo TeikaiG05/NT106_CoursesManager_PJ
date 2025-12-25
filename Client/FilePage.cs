@@ -15,6 +15,7 @@ namespace NT106_BT2
             roomCode = RoomCode;
 
             this.Load += FilePage_Load;
+            this.FormClosed += (s, e) => GroupChatForm.OnRoomFileAdded -= OnRoomFileAdded;
             btnAnh.Click += BtnAnh_Click;
             btnFileTab.Click += BtnFileTab_Click;
         }
@@ -25,6 +26,7 @@ namespace NT106_BT2
             flpFiles.Visible = false;
 
             LoadFilesForRoom();
+            GroupChatForm.OnRoomFileAdded += OnRoomFileAdded;
         }
 
         private void BtnAnh_Click(object sender, EventArgs e)
@@ -156,6 +158,20 @@ namespace NT106_BT2
 
             double mb = kb / 1024.0;
             return $"{mb:0.##} MB";
+        }
+
+        private void OnRoomFileAdded(string rc)
+        {
+            if (!string.Equals(rc?.Trim(), roomCode?.Trim(), StringComparison.OrdinalIgnoreCase))
+                return;
+
+            if (InvokeRequired)
+            {
+                BeginInvoke(new Action<string>(OnRoomFileAdded), rc);
+                return;
+            }
+
+            LoadFilesForRoom();
         }
     }
 }
